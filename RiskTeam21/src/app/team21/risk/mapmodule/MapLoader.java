@@ -25,13 +25,11 @@ public class MapLoader {
 	public static void main(String[] args) throws IOException{
 		readMap();
 	}
-	
-	
-	/**
-	 * The method readMap is used to read .txt file and gain logical information from it about the map.
-	 * @param path contains the path of the map file location
-	 */
 		
+	/**
+	 * This method reads text file of map and converts it to Java output
+	 * @throws IOException
+	 */
 	public static void readMap()throws IOException{
 		
 		String FilePath = "C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/India.map";
