@@ -34,6 +34,7 @@ public class MapLoader{
 	 * @throws IOException
 	 */
 	public static void readMap()throws IOException{
+		
 		String file_path = "/Users/samip/Desktop/TestMap.txt";
 		HashMap<String, String> map = new HashMap<String, String>();
 		country_list = new ArrayList<String>();
