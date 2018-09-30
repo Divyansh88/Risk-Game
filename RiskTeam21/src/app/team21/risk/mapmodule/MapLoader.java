@@ -19,6 +19,7 @@ import java.util.HashMap;
 public class MapLoader {
 
 	static HashMap<String, ArrayList> map_details;
+	static ArrayList<String> country_list;
 	/**
 	 * Main method. 
 	 * @param args
@@ -34,11 +35,12 @@ public class MapLoader {
 	 */
 	public static void readMap()throws IOException{
 		
-		String FilePath = "C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/India.map";
+		String file_path = "/Users/samip/Desktop/TestMap.txt";
 		HashMap<String, String> map = new HashMap<String, String>();
+		country_list = new ArrayList<String>();
 		map_details = new HashMap<String, ArrayList>();
 		String line;
-		BufferedReader reader = new BufferedReader(new FileReader(FilePath));
+		BufferedReader reader = new BufferedReader(new FileReader(file_path));
 		while ((line = reader.readLine()) != null){
 			String[] MapDetails=line.split("=",2);
 			if (MapDetails.length >= 2){
@@ -51,8 +53,7 @@ public class MapLoader {
 					}
 				else{
 				System.out.println(key +" = " + map.get(key));
-				}
-				
+				}			
 			}
 			else{
 				String[] headers=line.split("]",2);
@@ -66,28 +67,23 @@ public class MapLoader {
 					}
 				}
 				else{
-					String [] CountryDetails = line.split(",");
-					if(CountryDetails.length>=2){
-						ArrayList country_details = new ArrayList();
-						String Country = CountryDetails[0];
-						String X = CountryDetails[1];
-						String Y = CountryDetails[2];
-						String Continent = CountryDetails[3];
-						System.out.println("Country: "+Country);
-						System.out.println("X-Coordinate: "+X);
-						System.out.println("Y-Coordinate: "+Y);
-						System.out.println("Continent: "+Continent);
-						for(int j=4,i=1;j<CountryDetails.length;j++){
-							String Neighbours = CountryDetails[j];
-							System.out.println("Neighbour "+i+":"+ Neighbours);
-							i++;
+					String [] country_details = line.split(",");
+					if(country_details.length>=2){
+						String country_name=country_details[0];
+						country_list.add(country_name);
+						ArrayList country_info = new ArrayList();
+						country_info.add(country_details[1]);
+						country_info.add(country_details[2]);
+						country_info.add(country_details[3]);
+						for(int j=4;j<country_details.length;j++){
+							country_info.add(country_details[j]);
 						}
-						map_details.put(Country, country_details);
+						map_details.put(country_name, country_info);
 					}
 					else{
-						String BlankLine = line;
-						if(BlankLine.length()==0){
-							System.out.println(BlankLine);
+						String blank_line = line;
+						if(blank_line.length()==0){
+							System.out.println(blank_line);
 						}
 						else{
 							System.out.println("Invalid format");
