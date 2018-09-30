@@ -16,7 +16,7 @@ import java.util.HashMap;
  *
  */
 
-public class MapLoader {
+public class MapLoader{
 
 	static HashMap<String, ArrayList> map_details;
 	static ArrayList<String> country_list;
