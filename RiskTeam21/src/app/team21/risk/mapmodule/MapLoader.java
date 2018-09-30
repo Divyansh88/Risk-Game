@@ -3,6 +3,7 @@ package app.team21.risk.mapmodule;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -17,6 +18,7 @@ import java.util.HashMap;
 
 public class MapLoader {
 
+	static HashMap<String, ArrayList> map_details;
 	/**
 	 * Main method. 
 	 * @param args
@@ -36,6 +38,7 @@ public class MapLoader {
 		
 		String FilePath = "C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/India.map";
 		HashMap<String, String> map = new HashMap<String, String>();
+		map_details = new HashMap<String, ArrayList>();
 		String line;
 		BufferedReader reader = new BufferedReader(new FileReader(FilePath));
 		while ((line = reader.readLine()) != null){
@@ -67,11 +70,11 @@ public class MapLoader {
 				else{
 					String [] CountryDetails = line.split(",");
 					if(CountryDetails.length>=2){
+						ArrayList country_details = new ArrayList();
 						String Country = CountryDetails[0];
 						String X = CountryDetails[1];
 						String Y = CountryDetails[2];
 						String Continent = CountryDetails[3];
-						
 						System.out.println("Country: "+Country);
 						System.out.println("X-Coordinate: "+X);
 						System.out.println("Y-Coordinate: "+Y);
@@ -81,7 +84,7 @@ public class MapLoader {
 							System.out.println("Neighbour "+i+":"+ Neighbours);
 							i++;
 						}
-						
+						map_details.put(Country, country_details);
 					}
 					else{
 						String BlankLine = line;
