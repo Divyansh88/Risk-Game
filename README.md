@@ -1,2 +1,4 @@
 # RiskTeam21
-APP Project APP Team 21. Team Members Yash Sheth, Samip Thakkar, Divyansh Thakar, Harsh Vaghani &amp; Mahy Salama
+RISK Project By APP # Team 21. 
+Concordia University
+Team Members Yash Sheth, Samip Thakkar, Divyansh Thakar, Harsh Vaghani &amp; Mahy Salama
