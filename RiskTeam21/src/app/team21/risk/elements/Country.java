@@ -14,8 +14,8 @@ import app.team21.risk.elements.Player;
 
 public class Country{
     public String countryName;
-    public int startPixel;
-    public int endPixel;
+    public int x_cordinate;
+    public int y_cordinate;
     public String belongsToContinent;// to Represent county belongs to which continent
     public List<Country> neighborNodes; // to Represents adjacent country nodes
     public int currentArmiesDeployed;
@@ -26,14 +26,14 @@ public class Country{
      * This constructor will create country object based provided parameters
      *
      * @param countryName   name of the country
-     * @param startPixel    For UI purpose start pixel
-     * @param endPixel      For UI purpose end pixel
+     * @param x_cordinate    For UI purpose start pixel
+     * @param y_cordinate      For UI purpose end pixel
      * @param continentName name of the continent
      */
-    public Country(String countryName, int startPixel, int endPixel, String continentName) {
+    public Country(String countryName, int x_cordinate, int y_cordinate, String continentName) {
         this.countryName = countryName;
-        this.startPixel = startPixel;
-        this.endPixel = endPixel;
+        this.x_cordinate = x_cordinate;
+        this.y_cordinate = y_cordinate;
         this.belongsToContinent = continentName;
     }
 
@@ -139,32 +139,32 @@ public class Country{
      * getter method gives the starting pixel of the country
      * @return value of starting pixel
      */
-    public int getStartPixel() {
-        return startPixel;
+    public int getx_cordinate() {
+        return x_cordinate;
     }
 
     /**
      * setter method assigns starting pixel to the country
-     * @param startPixel value of pixel
+     * @param x_cordinate value of pixel
      */
-    public void setStartPixel(int startPixel) {
-        this.startPixel = startPixel;
+    public void setx_cordinate(int x_cordinate) {
+        this.x_cordinate = x_cordinate;
     }
 
     /**
      * getter method gives the ending pixel of the country
      * @return value of ending pixel
      */
-    public int getEndPixel() {
-        return endPixel;
+    public int gety_cordinate() {
+        return y_cordinate;
     }
 
     /**
      * setter method assigns ending pixel to the country
-     * @param endPixel value of pixel
+     * @param y_cordinate value of pixel
      */
-    public void setEndPixel(int endPixel) {
-        this.endPixel = endPixel;
+    public void sety_cordinate(int y_cordinate) {
+        this.y_cordinate = y_cordinate;
     }
 
     /**

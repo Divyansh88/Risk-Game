@@ -1,6 +1,3 @@
-/**
- * 
- */
 package app.team21.risk.elements;
 
 /**
