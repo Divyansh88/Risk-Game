@@ -16,7 +16,6 @@ public class Continent implements Serializable{
 
     public String continentName;
     public List<Country> memberCountriesList = new ArrayList<Country>();
-    public int numberOfTerritories;
     public int controlValue;
 
     /**
@@ -89,24 +88,7 @@ public class Continent implements Serializable{
         this.memberCountriesList = memberCountriesList;
     }
 
-    /**
-     * getter method gives total value of territories assigned to the player
-     *
-     * @return value of total number of territories assigned to the player
-     */
-    public int getNumberOfTerritories() {
-        return numberOfTerritories;
-    }
-
-    /**
-     * setter method assigns number of territories to the player
-     *
-     * @param numberOfTerritories count for individual player
-     */
-    public void setNumberOfTerritories(int numberOfTerritories) {
-        this.numberOfTerritories = numberOfTerritories;
-    }
-
+   
     /**
      * getter method gives the control value
      *

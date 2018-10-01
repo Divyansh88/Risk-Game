@@ -17,7 +17,7 @@ public class Country{
     public int x_cordinate;
     public int y_cordinate;
     public String belongsToContinent;// to Represent county belongs to which continent
-    public List<Country> neighborNodes; // to Represents adjacent country nodes
+    public List<Country> neighbourNodes; // to Represents adjacent country nodes
     public int currentArmiesDeployed;
     public Player belongsToPlayer;
 
@@ -184,19 +184,19 @@ public class Country{
     }
 
     /**
-     * getter method gives details of neighbor countries 
-     * @return list of neighbor countries
+     * getter method gives details of neighbour countries 
+     * @return list of neighbour countries
      */
-    public List<Country> getNeighborNodes() {
-        return neighborNodes;
+    public List<Country> getNeighbourNodes() {
+        return neighbourNodes;
     }
 
     /**
-     * setter method assigns details of neighbor countries
-     * @param neighborNodes list of neighbor countries
+     * setter method assigns details of neighbour countries
+     * @param neighbourNodes list of neighbour countries
      */
-    public void setNeighborNodes(List<Country> neighborNodes) {
-        this.neighborNodes = neighborNodes;
+    public void setNeighbourNodes(List<Country> neighbourNodes) {
+        this.neighbourNodes = neighbourNodes;
     }
 
     /**

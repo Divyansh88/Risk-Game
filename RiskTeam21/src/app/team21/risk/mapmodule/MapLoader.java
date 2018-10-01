@@ -18,7 +18,6 @@ import app.team21.risk.elements.Country;
  * Last Updated on: 29-09-2018, Saturday
  * This class file handles .txt map file and creates a GUI of connected graph.
  * @author Yash Sheth
- * @author Samip Thakkar
  * @version 1
  *
  */
@@ -29,6 +28,7 @@ public class MapLoader{
 	static List<Continent> continent_list;
 	static List<Country> country_list;
 	static HashMap<Continent, List<Country>> continent_country_map;
+	static HashMap<Country,List<Country>> country_neighbour_map;
 	
 	/**
 	 * Main method. 
@@ -62,6 +62,7 @@ public class MapLoader{
             country_list = new ArrayList<>();
         	map_details = new HashMap<String,String>();
         	continent_country_map = new HashMap<Continent, List<Country>>();
+        	country_neighbour_map = new HashMap<Country,List<Country>>();
         	
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("[")) {
@@ -99,6 +100,9 @@ public class MapLoader{
                         if (is_map_present) {
                             readTerritories(reader);
                             getContinentCountryMap(country_list, continent_list);
+                            for(Country c:country_list){
+                            	country_neighbour_map.put(c, c.getNeighbourNodes());
+                            }
                             System.out.println("Reading of Territories Completed");
                         }
                     }
@@ -167,7 +171,7 @@ public class MapLoader{
                         Country neighbour = new Country(neighbour_country_name);
                         neighbour_nodes.add(neighbour);
                     }
-                    country.setNeighborNodes(neighbour_nodes);
+                    country.setNeighbourNodes(neighbour_nodes);
                     country_list.add(country);
 
                 }
@@ -188,13 +192,12 @@ public class MapLoader{
      * @param reader BufferReader object that read the .map file for continent
      */
     public static void readContinents(BufferedReader reader) {
-        String Continents;
+        String line;
         try {
-            while ((Continents = reader.readLine()) != null && !Continents.startsWith("[")) {
-                if (!Continents.isEmpty() && Continents!=null && !Continents.equals("")) {
+            while ((line = reader.readLine()) != null && !line.startsWith("[")) {
+                if (!line.isEmpty() && line!=null && !line.equals("")) {
                     Continent continents = new Continent();
-                    List<Integer> allContinents = new ArrayList<Integer>();
-                    String[] ConProperties = Continents.split("=");
+                    String[] ConProperties = line.split("=");
                     continents.setContinentName(ConProperties[0].trim());
                     continents.setControlValue(Integer.parseInt(ConProperties[1].trim()));
                     continent_list.add(continents);
@@ -208,7 +211,7 @@ public class MapLoader{
         }
         System.out.println("Continents on the Map");
         for(Continent c : continent_list){
-        System.out.println(c.getContinentName()+" "+c.getControlValue()+" "+c.getNumberOfTerritories());
+        System.out.println(c.getContinentName()+" "+c.getControlValue());
         }
     }
     
