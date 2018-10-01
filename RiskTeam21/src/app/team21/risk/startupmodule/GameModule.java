@@ -36,11 +36,12 @@ public class GameModule {
 	
 	public static void dropDownList() {
     	JFrame frame = new JFrame("Select map & Players");
-		frame.setSize(200,200);
+		frame.setSize(800,800);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 		JComboBox list = new JComboBox(listOfFiles);
+		list.setEditable(true);
 		System.out.println(list);
 		
 		JPanel panel = new JPanel();
@@ -48,7 +49,7 @@ public class GameModule {
 		JLabel selectMapLabel = new JLabel("Select Map");
 		panel.add(selectMapLabel);
 		panel.add(list);
-		frame.getContentPane().add(panel);
+		frame.getContentPane().add(panel, BorderLayout.NORTH);
 //		
 //		messageList.setSelectedIndex(0);
 //		messageList.addActionListener(this);
