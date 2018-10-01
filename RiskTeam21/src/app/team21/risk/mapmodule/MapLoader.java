@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import app.team21.risk.elements.Continent;
+import app.team21.risk.elements.Country;
+
 
 
 /**
@@ -32,8 +35,8 @@ public class MapLoader{
 	 * @throws IOException
 	 */
 	
-	public void main(String[] args) throws IOException{
-		String file_path = "C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/India.map";
+	public static void main(String[] args) throws IOException{
+		String file_path = "C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/World.map";
 		readMapFile(file_path);
 //		readMap();
 	}
@@ -108,52 +111,58 @@ public class MapLoader{
 //		reader.close();
 //	}
 	
-	public void readMapFile(String filePath) {
-        BufferedReader bufferReaderForFile = null;
-        boolean isMAPPresent = false; //to check [MAP] is available in file or not
+	public static void readMapFile(String file_path) {
+		boolean isMAPPresent = false; //to check [MAP] is available in file or not
         boolean isContinentPresent = false;//to check [Continent] is available in file or not
         boolean isTerritoryPresent = false;//to check [Territory] is available in file or not
         try {
-            File file = new File(filePath);
+            File file = new File(file_path);
             String validationMessage = validateFile(file);
             if (!validationMessage.equalsIgnoreCase("Valid File")) {
 				System.out.println("Invalid File");
             }
-            bufferReaderForFile = new BufferedReader(new FileReader(file));
-            String st, maps;
+            String line;
+    		BufferedReader reader = new BufferedReader(new FileReader(file_path));
+            
+            String maps;
             List<Continent> listOfContinents = new ArrayList<>();
-            while ((st = bufferReaderForFile.readLine()) != null) {
-                if (st.startsWith("[")) {
-                    HashMap<String, String> mapDetail = new HashMap<>();
-                    String id = st.substring(st.indexOf("[") + 1, st.indexOf("]"));
+        	HashMap<String, String> mapDetail = new HashMap<>();
+
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("[")) {
+                    String id = line.substring(line.indexOf("[") + 1, line.indexOf("]"));
+                    
                     // Parsing the [MAP] portion of the map file
                     if (id.equalsIgnoreCase("Map")) {
+                    	System.out.println("Map Tag Present");
                         isMAPPresent = true;
-                        while ((maps = bufferReaderForFile.readLine()) != null && !maps.startsWith("[")) {
-                            if (!maps.isEmpty()||maps!=null){
+                        while ((maps = reader.readLine()) != null && !maps.startsWith("[")) {
+                            if (!maps.isEmpty() && maps!=null && !maps.equals("")){
                                 String[] mapsEntry = maps.split("=");
                                 mapDetail.put(mapsEntry[0], mapsEntry[1]);
-                                bufferReaderForFile.mark(0);
+                                reader.mark(0);
                             }
                         }
-                        
-                        
+                        reader.reset();
                     }
+                    
                     //Parsing the [Continents] portion of the map file
-                    if (id.equalsIgnoreCase("Continents")) {
+                    if (id.equalsIgnoreCase("Continents")){
+                    	System.out.println("Continents Tag Present");
                         isContinentPresent = true;
                         if (isMAPPresent) {
-                            listOfContinents = MapLoader.readContinents(bufferReaderForFile);
+                            listOfContinents = MapLoader.readContinents(reader);
                             System.out.println("Reading of Continents Completed");
                         }
-
                     }
+                    
                     //Parsing the  [Territories] portion of the map file
                     if (id.equalsIgnoreCase("Territories")) {
+                    	System.out.println("Territories Tag Present");
                         isTerritoryPresent = true;
                         if (isMAPPresent) {
-                            List<Country> countryAndNeighbor = MapLoader.readTerritories(bufferReaderForFile);
-//                            HashMap<Country, List<Country>> graphReadyMap = MapLoader.assignContinentToNeighbors(countryAndNeighbor);
+                            List<Country> countryAndNeighbor = MapLoader.readTerritories(reader);
+
                             HashMap<Continent, List<Country>> continentCountryMap = getContinentCountryMap(countryAndNeighbor, listOfContinents);
                             List<Continent> updatedcontinentList = new ArrayList<>();// we need to assign number of territories to continent objects
                             System.out.println("Reading of Territories Completed");
@@ -165,7 +174,7 @@ public class MapLoader{
             if (isMAPPresent && isContinentPresent && isTerritoryPresent) {
                 System.out.println("Map Continents and Territories tags are present");
             } else {
-                System.out.println("MAP or Continents or Territories tags not present");
+                System.out.println("Map or Continents or Territories tags not present");
             }
 
         } catch (Exception exception) {
@@ -179,7 +188,7 @@ public class MapLoader{
      * @param file File class object is passed where input file is selected by user and is check for validation
      * @return error/success Message
      */
-    public String validateFile(File file) {
+    public static String validateFile(File file) {
 
         //check if file is present or not
         if (!file.exists()) {
@@ -203,15 +212,15 @@ public class MapLoader{
     /**
      * This method will read [Territories] part of map file
      *
-     * @param bufferReaderForFile BufferedReader class object as param
+     * @param reader BufferedReader class object as param
      * @return List of Country.Every single object of country will have countryname,continentname,start/end pixels;
      */
-    public static List<Country> readTerritories(BufferedReader bufferReaderForFile) {
+    public static List<Country> readTerritories(BufferedReader reader) {
         String Territories;
         List<Country> countryList = new ArrayList<>();
         try {
-            while ((Territories = bufferReaderForFile.readLine()) != null && !Territories.startsWith("[")) {
-                if (!Territories.isEmpty()||Territories!=null) {
+            while ((Territories = reader.readLine()) != null && !Territories.startsWith("[")) {
+                if (!Territories.isEmpty() && Territories!=null && !Territories.equals("")) {
                     String countryName, continentName = null;
                     int startPixel, endPixel = 0;
                     List<Country> neighbourNodes = new ArrayList<>();
@@ -230,27 +239,30 @@ public class MapLoader{
                     countryList.add(country);
 
                 }
-
             }
         } catch (NumberFormatException | IOException e) {
             e.printStackTrace();
 
         }
+        System.out.println("Territories on the Map");    
+        for(Country c : countryList){
+            System.out.println(c.getCountryName()+" of Continent "+c.getBelongsToContinent());
+            }
         return countryList;
     }
 
     /**
      * This method will read the continent part of map file
      *
-     * @param bufferReaderForFile BufferReader object that read the .map file for continent
+     * @param reader BufferReader object that read the .map file for continent
      * @return List of Continent. every single object of the list contains continentName and number of countries it hold.
      */
-    public static List<Continent> readContinents(BufferedReader bufferReaderForFile) {
+    public static List<Continent> readContinents(BufferedReader reader) {
         String Continents;
         List<Continent> continentsList = new ArrayList<>();
         try {
-            while ((Continents = bufferReaderForFile.readLine()) != null && !Continents.startsWith("[")) {
-                if (!Continents.isEmpty()||Continents!=null) {
+            while ((Continents = reader.readLine()) != null && !Continents.startsWith("[")) {
+                if (!Continents.isEmpty() && Continents!=null && !Continents.equals("")) {
                     Continent continents = new Continent();
                     List<Integer> allContinents = new ArrayList<Integer>();
                     String[] ConProperties = Continents.split("=");
@@ -258,12 +270,16 @@ public class MapLoader{
                     continents.setControlValue(Integer.parseInt(ConProperties[1].trim()));
                     continentsList.add(continents);
                 }
-                bufferReaderForFile.mark(0);
+                reader.mark(0);
             }
-            bufferReaderForFile.reset();
+            reader.reset();
         } catch (NumberFormatException | IOException e) {
 
             e.printStackTrace();
+        }
+        System.out.println("Continents on the Map");
+        for(Continent c : continentsList){
+        System.out.println(c.getContinentName()+" "+c.getControlValue());
         }
         return continentsList;
     }

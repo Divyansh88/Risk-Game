@@ -13,26 +13,26 @@ public class GameModule {
 	
     
     
-	
-	public static void main(String[] args) {
-		 
-	    
-	    dropDownList();
-	    
-	    
-	    //String[] fileNames;// = listOfFiles;
-		JComboBox messageList = new JComboBox(listOfFiles);
-		
-	 
-	    for (int i = 0; i < listOfFiles.length; i++) {
-	      if (listOfFiles[i].isFile()) {
-	        System.out.println("File " + listOfFiles[i].getName());
-	      } else if (listOfFiles[i].isDirectory()) {
-	        System.out.println("Directory " + listOfFiles[i].getName());
-	      }
-	    }
-	  }
-	
+//	
+//	public static void main(String[] args) {
+//		 
+//	    
+////	    dropDownList();
+////	    
+////	    
+////	    //String[] fileNames;// = listOfFiles;
+////		JComboBox messageList = new JComboBox(listOfFiles);
+////		
+////	 
+////	    for (int i = 0; i < listOfFiles.length; i++) {
+////	      if (listOfFiles[i].isFile()) {
+////	        System.out.println("File " + listOfFiles[i].getName());
+////	      } else if (listOfFiles[i].isDirectory()) {
+////	        System.out.println("Directory " + listOfFiles[i].getName());
+////	      }
+////	    }
+////	  }
+//	
 	
 	public static void dropDownList() {
     	JFrame frame = new JFrame("Select map & Players");
