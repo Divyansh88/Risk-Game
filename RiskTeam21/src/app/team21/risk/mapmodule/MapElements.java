@@ -160,7 +160,7 @@ public class MapElements {
 	 * @param countryAndNeighborsMap
 	 *            map object
 	 */
-	public void setCountryAndNeighboursMap(HashMap<Country, List<Country>> country_neighbour_map) {
+	public void setCountryNeighboursMap(HashMap<Country, List<Country>> country_neighbour_map) {
 		this.country_neighbour_map = country_neighbour_map;
 	}
 
