@@ -1,6 +1,7 @@
 package app.team21.risk.gamemodule;
-
+ 
 import javax.swing.*;
+
 
 import java.awt.*;
 import java.awt.event.*;
@@ -8,24 +9,30 @@ import java.awt.event.*;
 public class GameScreen {
 	
 	JFrame frame = new JFrame("Risk");
-	JTextField txt_p1,txt_p2;
-	JPanel mainpanel,panel,panel1,panel2,panel3,panel4;
-	JButton play_button,map_button,quit_button,rules_button,btn_browse,btn_map_continue,btn_player_conitnue;
-	JButton edit_map,create_map;
-	JLabel lbl_choose_map,lbl_or,lbl_choose_player,lbl_p1,lbl_p2,lbl_OR;
-	JLabel test=new JLabel("test");
-	JLabel Test=new JLabel("Test");
-	
+	JTextField txt_p1,txt_p2,txt_map_name,txt_author_name;
+	JPanel mainpanel,panel,panel1,panel2,panel3,panel4,panel5,panel6,phase_screen_panel,reinforcement_panel,attack_panel,fortify_panel;
+	JButton play_button,map_button,quit_button,rules_button,btn_browse,btn_map_continue,btn_player_conitnue,btn_selectmap_conitnue,btn_add_continent,btn_add_country,btn_add_neighbour,btn_save,btn_continue_rp;
+	JButton edit_map,create_map,btn_ok_fp;
+	JLabel lbl_choose_map,lbl_or,lbl_choose_player,lbl_p1,lbl_p2,lbl_OR,lbl_map_name,lbl_author_name,lbl_game_history,lbl_select_army,lbl_select_country;
+	JLabel lbl_select_from_country,lbl_select_to_country;
+	JTextArea text_area;
+	JScrollPane scroll_panel;
+		
 	private CardLayout cl = new CardLayout();
-	private JComboBox combobox_map,combobox_player;
+	private CardLayout cl_ps = new CardLayout();
+	
+	JComboBox combobox_map,combobox_player,combobox_armies,combobox_country;
 	String [] maps = {"map1","map2","map3"};//temp
+	Integer [] armies = new Integer[100];
 	String [] players = {"1","2","3","4","5"};//temp
-
-	public GameScreen(){
+	String [] country = {"India","USA","China"};
+	int reinforcement_army = 4;//temp
+ 	public GameScreen(){
 	 
 	createScreen();
 	
 	}
+ 	
 	public void PlayButton(int a){
 		 
 		cl.show(mainpanel,"1");
@@ -42,14 +49,18 @@ public class GameScreen {
  	    if(a==1){
  	    	btn_map_continue.addActionListener(new ActionListener() {
  	    		public void actionPerformed(ActionEvent e) {
- 	    		MapContinueButton();
+ 	    			MapContinueButton();
  	    		}
  	    	});
  	    }
  	    else if(a==0){
  	    	btn_map_continue.addActionListener(new ActionListener() {
- 	    		public void actionPerformed(ActionEvent e) {
- 	    		MapEditor();
+ 	    	/* (non-Javadoc)
+ 	    	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+ 	    	 * It is a click event which will redirect to select map and edit it
+ 	    	 */
+ 	    	public void actionPerformed(ActionEvent e) {
+ 	    			SelectMap();
  	    		}
  	    	});
  	    }
@@ -73,82 +84,271 @@ public class GameScreen {
  	    btn_player_conitnue=new JButton("Continue");
  	    panel2.add(btn_player_conitnue);
  	    btn_player_conitnue.addActionListener(new ActionListener() {
+	    	/* (non-Javadoc)
+	    	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	    	 * It is a click event which will redirect to main game screen
+	    	 */
 	    	public void actionPerformed(ActionEvent e) {
 	    		PlayerConitnueButton();
 	    	}
 	    });
 		
 	}
+	/**
+	 * It is the main game screen 
+	 */
 	public void PlayerConitnueButton(){
+		cl.show(mainpanel, "6");
+		JPanel master_panel = new JPanel();
+		master_panel.setPreferredSize(new Dimension(600,600));
+		master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		JPanel game_history_panel = new JPanel();
+		game_history_panel.setPreferredSize(new Dimension(400,600));
+		game_history_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		//code to direct it to gamescreen
+		text_area = new JTextArea(35,34);	
+		scroll_panel = new JScrollPane(text_area);
+		lbl_game_history = new JLabel("Game History");
+		scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
+		JPanel mr_panel = new JPanel();
+		mr_panel.setPreferredSize(new Dimension(600,200));
+		mr_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		JPanel turn_panel = new JPanel();
+		turn_panel.setPreferredSize(new Dimension(600,100));
+		turn_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		JPanel second_master_panel = new JPanel();
+		second_master_panel.setPreferredSize(new Dimension(600,280));
+		second_master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		
+		phase_screen_panel.setPreferredSize(new Dimension(440,260));
+		phase_screen_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		JPanel action_panel = new JPanel();
+		action_panel.setPreferredSize(new Dimension(130,260));
+		action_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		second_master_panel.add(phase_screen_panel);
+		second_master_panel.add(action_panel);
+		
+		JButton btn_reinforcement = new JButton("Reinforcement");
+		btn_reinforcement.setSize(100,100);
+		btn_reinforcement.setVisible(true);
+		JButton btn_attack = new JButton("Attack");
+		btn_attack.setPreferredSize(btn_reinforcement.getPreferredSize());
+		btn_attack.setVisible(true);
+		JButton btn_fortify = new JButton("Fortify");
+		btn_fortify.setPreferredSize(btn_reinforcement.getPreferredSize());
+		btn_fortify.setVisible(true);
+		
+		
+		
+		/*btn_reinforcement.setAlignmentX(btn_reinforcement.CENTER_ALIGNMENT);
+		btn_attack.setAlignmentX(btn_attack.CENTER_ALIGNMENT);
+		btn_fortify.setAlignmentX(btn_fortify.CENTER_ALIGNMENT);
+		
+		action_panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		
+		action_panel.setLayout( new GridBagLayout() ); 
+		action_panel.add(btn_reinforcement, new GridBagConstraints());
+		action_panel.add(btn_attack, new GridBagConstraints());
+		action_panel.add(btn_fortify, new GridBagConstraints());*/
+		
+		
+		
+		panel6.add(master_panel,BorderLayout.WEST);
+		panel6.add(game_history_panel,BorderLayout.EAST);
+		master_panel.add(mr_panel,BorderLayout.NORTH);
+		master_panel.add(turn_panel,BorderLayout.CENTER);
+		master_panel.add(second_master_panel,BorderLayout.SOUTH);
+		second_master_panel.add(phase_screen_panel,BorderLayout.WEST);
+		second_master_panel.add(action_panel,BorderLayout.EAST);
+		game_history_panel.add(lbl_game_history,BorderLayout.NORTH);
+		game_history_panel.add(scroll_panel,BorderLayout.SOUTH);
+		action_panel.add(btn_reinforcement);
+		action_panel.add(btn_attack);
+		action_panel.add(btn_fortify);
+		
+		btn_reinforcement.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ReinforcementButton(reinforcement_army);
+	    	}
+	    });
+		
+		btn_attack.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		AttackButton();
+	    	}
+	    });
+		
+		btn_fortify.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		FortifyButton();
+	    	}
+	    });
 	}
 	
-	public void MapEditor(){
+	
+	public void ReinforcementButton(int ps) {
+		cl_ps.show(phase_screen_panel,"rp");
+		for(int i=0;i<4;i++) {
+			armies[i]=i+1;
+			//System.out.println("armies " + armies[i]);
+		}
+		lbl_select_army = new JLabel("Select number of armies");
+		reinforcement_panel.add(lbl_select_army);
+ 		combobox_armies = new JComboBox<>(armies);
+ 		reinforcement_panel.add(combobox_armies);
+ 		lbl_select_country = new JLabel("Select country");
+ 		reinforcement_panel.add(lbl_select_country);
+ 		combobox_country = new JComboBox(country);
+ 		reinforcement_panel.add(combobox_country);
+ 		btn_continue_rp = new JButton("Continue");
+ 		reinforcement_panel.add(btn_continue_rp); 
+	}
+	
+	public void AttackButton() {
+		cl_ps.show(phase_screen_panel, "ap");
+		lbl_choose_player = new JLabel("Coming soon");
+		attack_panel.add(lbl_choose_player);
+	}
+	
+	public void FortifyButton() {
+		cl_ps.show(phase_screen_panel,"fp");
+		for(int i=0;i<4;i++) {
+			armies[i]=i+1;
+			//System.out.println("armies " + armies[i]);
+		}
+		lbl_select_from_country = new JLabel("Fortify from");
+		fortify_panel.add(lbl_select_from_country);
+		combobox_country = new JComboBox(country);
+		fortify_panel.add(combobox_country);
+		lbl_select_army = new JLabel("Select number of armies");
+		fortify_panel.add(lbl_select_army);
+ 		combobox_armies = new JComboBox<>(armies);
+ 		fortify_panel.add(combobox_armies);
+ 		lbl_select_to_country = new JLabel("Fortify to");
+ 		fortify_panel.add(lbl_select_to_country);
+ 		combobox_country = new JComboBox(country);
+ 		fortify_panel.add(combobox_country);
+ 		btn_ok_fp = new JButton("Ok");
+ 		fortify_panel.add(btn_ok_fp); 
+	}
+	
+	
+	/**
+	 * It will ask the player name and author name 
+	 * It doesn't return any value and no parameter is passed 
+	 */
+	public void SelectMap() {
+		cl.show(mainpanel, "5");
+ 	    lbl_map_name = new JLabel("Enter Map Name");
+ 	    panel5.add(lbl_map_name);
+ 	    txt_map_name = new JTextField(15);
+	    panel5.add(txt_map_name);
+ 	    lbl_author_name = new JLabel("Enter Author Name");
+	    panel5.add(lbl_author_name);
+ 	    txt_author_name = new JTextField(15);
+ 	    panel5.add(txt_author_name);
+ 	    btn_selectmap_conitnue = new JButton("Continue");
+ 	    panel5.add(btn_selectmap_conitnue);
+ 	    btn_selectmap_conitnue.addActionListener(new ActionListener() {
+	    	/* (non-Javadoc)
+	    	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	    	 * It is a click event which will redirect to add continent, country and neighbour and shows map representation
+	    	 */
+	    	public void actionPerformed(ActionEvent e) {
+	    		SelectMapConitnueButton();
+	    	}
+	    });
+	}
+	
+	/**
+	 * It will show map representation and user can also edit the map
+	 */
+	public void SelectMapConitnueButton(){
 		cl.show(mainpanel, "4");
 		JPanel mr_panel = new JPanel();
 		mr_panel.setPreferredSize(new Dimension(600,600));
 		mr_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		JPanel buttons = new JPanel();
-		buttons.setPreferredSize(new Dimension(200,600));
-		buttons.setBorder(BorderFactory.createLineBorder(Color.black));
-		panel4.add(mr_panel,BorderLayout.WEST);
-		panel4.add(buttons,BorderLayout.EAST);
+		JPanel master_panel = new JPanel();
+		master_panel.setPreferredSize(new Dimension(600,600));
+		master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
+		JPanel buttons_panel = new JPanel();
+		buttons_panel.setPreferredSize(new Dimension(600,100));
+		buttons_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		JPanel cards_panel = new JPanel();
+		cards_panel.setPreferredSize(new Dimension(600,380));
+		cards_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		JPanel save_btn_panel = new JPanel();
+		save_btn_panel.setPreferredSize(new Dimension(600,100));
+		save_btn_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		master_panel.add(buttons_panel);
+		master_panel.add(save_btn_panel);
+		master_panel.add(cards_panel);
+		
+		btn_add_continent = new JButton("Add Continent");
+		btn_add_country = new JButton("Add Country");
+		btn_add_neighbour = new JButton("Add Neighbour");
+		btn_save = new JButton("Save");
+		buttons_panel.add(btn_add_continent);
+		buttons_panel.add(btn_add_country);
+		buttons_panel.add(btn_add_neighbour);	
+		save_btn_panel.add(btn_save);
+		
+		panel4.add(mr_panel,BorderLayout.WEST);
+		panel4.add(master_panel,BorderLayout.EAST);
+		master_panel.add(buttons_panel,BorderLayout.NORTH);
+		master_panel.add(cards_panel,BorderLayout.CENTER);
+		master_panel.add(save_btn_panel,BorderLayout.SOUTH);
 	}
 	
-
-	public void createScreen(){
+ 	public void createScreen(){
 	
 	
-	frame.setSize(400,400);
-	frame.setVisible(true);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-	
-	
-	mainpanel= new JPanel();
-	mainpanel.setLayout(cl);
-	panel = new JPanel();
-	map_button = new JButton("Map");
-	map_button.setSize(100,100);
-	map_button.setVisible(true);
-	map_button.setAlignmentX(map_button.CENTER_ALIGNMENT);
-	
-	map_button.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			
-			cl.show(mainpanel, "3");
-	 	    edit_map = new JButton("Edit an existing Map");
-	 	    panel3.add(edit_map);
-	 	    
-	 	    edit_map.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					PlayButton(0);//temp almost only continue button should direct to map editing screen
-					
-				}
-			});
-	 	    
-	 	    lbl_OR=new JLabel("OR");
-	 	    panel3.add(lbl_OR);
-	 	    create_map = new JButton("Create a new Map");
-	 	    panel3.add(create_map);
-	 	    create_map.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					MapEditor();
-				}
-			});
-		}
+		frame.setSize(400,400);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+		
+		phase_screen_panel = new JPanel();
+		phase_screen_panel.setLayout(cl_ps);
+		mainpanel= new JPanel();
+		mainpanel.setLayout(cl);
+		panel = new JPanel();
+		map_button = new JButton("Map");
+		map_button.setSize(100,100);
+		map_button.setVisible(true);
+		map_button.setAlignmentX(map_button.CENTER_ALIGNMENT);
+		
+		map_button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				cl.show(mainpanel, "3");
+		 	    edit_map = new JButton("Edit an existing Map");
+		 	    panel3.add(edit_map);
+		 	    
+		 	    edit_map.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						PlayButton(0);//temp almost only continue button should direct to map editing screen
+						
+					}
+				});
+		 	    
+		 	    lbl_OR=new JLabel("OR");
+		 	    panel3.add(lbl_OR);
+		 	    create_map = new JButton("Create a new Map");
+		 	    panel3.add(create_map);
+		 	    create_map.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						SelectMap();
+					}
+				});
+			}
 	});
 	
 		
-	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); //set buttons vertically
-	    //mainpanel.add(panel2,"2");
-	    //panel.add(panel3,"3");
-	    
-	    //frame.getContentPane().add(panel);
-	    
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); //set buttons vertically	    
 	    
 	    play_button = new JButton("Play");
 	    play_button.addActionListener(new ActionListener() {
@@ -208,10 +408,16 @@ public class GameScreen {
     gbc_mainpanel.gridx = 7;
     gbc_mainpanel.gridy = 6;
     frame.getContentPane().add(mainpanel, gbc_mainpanel);
+    
     panel1 = new JPanel();
     panel2 =new JPanel();
     panel3=new JPanel();
     panel4=new JPanel(new BorderLayout());
+    panel5=new JPanel();
+    panel6=new JPanel();
+    reinforcement_panel = new JPanel();
+    attack_panel = new JPanel();
+    fortify_panel = new JPanel();
     FlowLayout flowLayout = (FlowLayout) panel1.getLayout();
     flowLayout.setAlignOnBaseline(true);
     
@@ -219,11 +425,14 @@ public class GameScreen {
     mainpanel.add(panel2,"2");
     mainpanel.add(panel3,"3");
     mainpanel.add(panel4,"4");
-    
+    mainpanel.add(panel5,"5");
+    mainpanel.add(panel6,"6");
+    phase_screen_panel.add(reinforcement_panel,"rp");
+    phase_screen_panel.add(attack_panel,"ap");
+    phase_screen_panel.add(fortify_panel,"fp");
     
 }
-
-	public static void main( String args[]){
+ 	public static void main( String args[]){
 		new GameScreen();
 	}
-}
+} 
