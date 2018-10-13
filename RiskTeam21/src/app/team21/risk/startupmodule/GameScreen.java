@@ -5,28 +5,35 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameScreen {
 	
 	JFrame frame = new JFrame("Risk");
-	JTextField txt_p1,txt_p2,txt_map_name,txt_author_name;
-	JPanel mainpanel,panel,panel1,panel2,panel3,panel4,panel5,panel6,phase_screen_panel,reinforcement_panel,attack_panel,fortify_panel;
+	JTextField txt_p1,txt_p2,txt_p3,txt_p4,txt_p5,txt_map_name,txt_author_name;
+	JPanel mainpanel,panel,panel1,panel2,panel3,panel4,panel5,panel6,phase_screen_panel,reinforcement_panel,attack_panel,fortify_panel,player_panel,player_name_panel,player_conitnue_panel,player_select_panel,main_player_panel,master_panel,game_history_panel  ;
+	JPanel mr_panel,turn_panel,second_master_panel,action_panel,buttons_panel,cards_panel,save_btn_panel;
 	JButton play_button,map_button,quit_button,rules_button,btn_browse,btn_map_continue,btn_player_conitnue,btn_selectmap_conitnue,btn_add_continent,btn_add_country,btn_add_neighbour,btn_save,btn_continue_rp;
-	JButton edit_map,create_map,btn_ok_fp;
-	JLabel lbl_choose_map,lbl_or,lbl_choose_player,lbl_p1,lbl_p2,lbl_OR,lbl_map_name,lbl_author_name,lbl_game_history,lbl_select_army,lbl_select_country;
+	JButton edit_map,create_map,btn_ok_fp,btn_player_ok,btn_reinforcement,btn_attack,btn_fortify;
+	JLabel lbl_choose_map,lbl_or,lbl_choose_player,lbl_p1,lbl_p2,lbl_p3,lbl_p4,lbl_p5,lbl_OR,lbl_map_name,lbl_author_name,lbl_game_history,lbl_select_army,lbl_select_country;
 	JLabel lbl_select_from_country,lbl_select_to_country;
 	JTextArea text_area;
 	JScrollPane scroll_panel;
-		
+	static List<JLabel> listOfLabels = new ArrayList<JLabel>();
+    static List<JTextField> listOfTextFields = new ArrayList<JTextField>();
+	
 	private CardLayout cl = new CardLayout();
 	private CardLayout cl_ps = new CardLayout();
+	private CardLayout cl_p = new CardLayout();
 	
 	JComboBox combobox_map,combobox_player,combobox_armies,combobox_country;
 	String [] maps = {"map1","map2","map3"};//temp
 	Integer [] armies = new Integer[100];
-	String [] players = {"1","2","3","4","5"};//temp
+	Integer [] players = {2,3,4,5};//temp
 	String [] country = {"India","USA","China"};
 	int reinforcement_army = 4;//temp
+	int number_of_player;
  	public GameScreen(){
 	 
 	createScreen();
@@ -67,23 +74,36 @@ public class GameScreen {
 	 }
 	
 	public void MapContinueButton(){
-		
 		cl.show(mainpanel, "2");
+		main_player_panel = new JPanel();
+		main_player_panel.setPreferredSize(new Dimension(600, 600));
+		main_player_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		player_panel = new JPanel();
+		player_panel.setPreferredSize(new Dimension(600,100));
+		player_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		player_name_panel.setPreferredSize(new Dimension(600,380));
+		player_name_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		player_conitnue_panel = new JPanel();
+		player_conitnue_panel.setPreferredSize(new Dimension(600,100));
+		player_conitnue_panel.setBorder(BorderFactory.createLineBorder(Color.black));		
 		lbl_choose_player = new JLabel("Choose number of Players");
- 		panel2.add(lbl_choose_player);
+		player_panel.add(lbl_choose_player);
  		combobox_player = new JComboBox(players);
- 	    panel2.add(combobox_player);
- 	    lbl_p1= new JLabel("Player 1");
- 	    panel2.add(lbl_p1);
- 	    txt_p1 = new JTextField(15);
-	    panel2.add(txt_p1);
- 	    lbl_p2= new JLabel("Player 2");
-	    panel2.add(lbl_p2);
- 	    txt_p2 = new JTextField(15);
- 	    panel2.add(txt_p2);
- 	    btn_player_conitnue=new JButton("Continue");
- 	    panel2.add(btn_player_conitnue);
- 	    btn_player_conitnue.addActionListener(new ActionListener() {
+ 		player_panel.add(combobox_player);
+ 	    
+ 	    btn_player_ok=new JButton("Ok");
+ 	    player_panel.add(btn_player_ok);
+ 	    
+ 	    btn_player_ok.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		PlayerSelectButton();
+	    	}
+	    });
+		
+		btn_player_conitnue = new JButton("Continue");
+		player_conitnue_panel.add(btn_player_conitnue);
+		btn_player_conitnue.addActionListener(new ActionListener() {
 	    	/* (non-Javadoc)
 	    	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	    	 * It is a click event which will redirect to main game screen
@@ -93,16 +113,30 @@ public class GameScreen {
 	    	}
 	    });
 		
+		panel2.add(main_player_panel);
+		main_player_panel.add(player_panel,BorderLayout.NORTH);
+		main_player_panel.add(player_name_panel,BorderLayout.CENTER);
+		main_player_panel.add(player_conitnue_panel,BorderLayout.SOUTH);		
 	}
+	
+	public void PlayerSelectButton() {
+		System.out.println("hi");
+		
+		JLabel lbl_choose = new JLabel("Coming soon");
+		player_select_panel.add(lbl_choose);
+		cl_p.show(player_name_panel, "p");
+		System.out.println("bye");
+	}
+	
 	/**
 	 * It is the main game screen 
 	 */
 	public void PlayerConitnueButton(){
 		cl.show(mainpanel, "6");
-		JPanel master_panel = new JPanel();
+		master_panel = new JPanel();
 		master_panel.setPreferredSize(new Dimension(600,600));
 		master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		JPanel game_history_panel = new JPanel();
+		game_history_panel = new JPanel();
 		game_history_panel.setPreferredSize(new Dimension(400,600));
 		game_history_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
@@ -111,32 +145,32 @@ public class GameScreen {
 		lbl_game_history = new JLabel("Game History");
 		scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
-		JPanel mr_panel = new JPanel();
+		mr_panel = new JPanel();
 		mr_panel.setPreferredSize(new Dimension(600,200));
 		mr_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		JPanel turn_panel = new JPanel();
+		turn_panel = new JPanel();
 		turn_panel.setPreferredSize(new Dimension(600,100));
 		turn_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		JPanel second_master_panel = new JPanel();
+		second_master_panel = new JPanel();
 		second_master_panel.setPreferredSize(new Dimension(600,280));
 		second_master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		
 		phase_screen_panel.setPreferredSize(new Dimension(440,260));
 		phase_screen_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		JPanel action_panel = new JPanel();
+		action_panel = new JPanel();
 		action_panel.setPreferredSize(new Dimension(130,260));
 		action_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		second_master_panel.add(phase_screen_panel);
 		second_master_panel.add(action_panel);
 		
-		JButton btn_reinforcement = new JButton("Reinforcement");
+		btn_reinforcement = new JButton("Reinforcement");
 		btn_reinforcement.setSize(100,100);
 		btn_reinforcement.setVisible(true);
-		JButton btn_attack = new JButton("Attack");
+		btn_attack = new JButton("Attack");
 		btn_attack.setPreferredSize(btn_reinforcement.getPreferredSize());
 		btn_attack.setVisible(true);
-		JButton btn_fortify = new JButton("Fortify");
+		btn_fortify = new JButton("Fortify");
 		btn_fortify.setPreferredSize(btn_reinforcement.getPreferredSize());
 		btn_fortify.setVisible(true);
 		
@@ -267,20 +301,20 @@ public class GameScreen {
 	 */
 	public void SelectMapConitnueButton(){
 		cl.show(mainpanel, "4");
-		JPanel mr_panel = new JPanel();
+		mr_panel = new JPanel();
 		mr_panel.setPreferredSize(new Dimension(600,600));
 		mr_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		JPanel master_panel = new JPanel();
+		master_panel = new JPanel();
 		master_panel.setPreferredSize(new Dimension(600,600));
 		master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		JPanel buttons_panel = new JPanel();
+		buttons_panel = new JPanel();
 		buttons_panel.setPreferredSize(new Dimension(600,100));
 		buttons_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		JPanel cards_panel = new JPanel();
+		cards_panel = new JPanel();
 		cards_panel.setPreferredSize(new Dimension(600,380));
 		cards_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		JPanel save_btn_panel = new JPanel();
+		save_btn_panel = new JPanel();
 		save_btn_panel.setPreferredSize(new Dimension(600,100));
 		save_btn_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		master_panel.add(buttons_panel);
@@ -313,6 +347,8 @@ public class GameScreen {
 		
 		phase_screen_panel = new JPanel();
 		phase_screen_panel.setLayout(cl_ps);
+		player_name_panel = new JPanel();
+		player_name_panel.setLayout(cl_p);
 		mainpanel= new JPanel();
 		mainpanel.setLayout(cl);
 		panel = new JPanel();
@@ -418,6 +454,7 @@ public class GameScreen {
     reinforcement_panel = new JPanel();
     attack_panel = new JPanel();
     fortify_panel = new JPanel();
+    player_select_panel = new JPanel();
     FlowLayout flowLayout = (FlowLayout) panel1.getLayout();
     flowLayout.setAlignOnBaseline(true);
     
@@ -430,6 +467,7 @@ public class GameScreen {
     phase_screen_panel.add(reinforcement_panel,"rp");
     phase_screen_panel.add(attack_panel,"ap");
     phase_screen_panel.add(fortify_panel,"fp");
+    player_name_panel.add(player_select_panel,"p");
     
 }
  	public static void main( String args[]){
