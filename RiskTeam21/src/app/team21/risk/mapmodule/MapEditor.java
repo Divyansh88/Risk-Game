@@ -68,10 +68,31 @@ public class MapEditor {
     /**
      * @param continent
      */
-    public void validateContinent(Continent continent){
-    	//if(continent.getMemberCountriesList().size()>0)
-    	
-    	
+    public boolean validateContinent(MapElements map_element){
+    	boolean result=true;
+    	for(Continent c:map_element.getContinentList())
+    		if(!(c.getMemberCountriesList().size()>0)){
+    			result=false;
+    			break;
+    		}
+    		else
+    			continue;
+    	return result;
+    }
+    
+    /**
+     * @param continent
+     */
+    public boolean validateCountry(MapElements map_element){
+    	boolean result=true;
+    	for(Country c:map_element.getCountries())
+    		if(!(c.getNeighbourNodes().size()>0)){
+    			result=false;
+    			break;
+    		}
+    		else
+    			continue;
+    	return result;
     }
     
 /**
