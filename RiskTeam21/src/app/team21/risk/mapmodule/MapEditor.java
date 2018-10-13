@@ -53,18 +53,27 @@ public class MapEditor {
         }
     }
     
-	/**
-     * This method will add country in existing Map
-     *
-     * @param country      the country that you want to add
-     * @param gameMap      current map details
-     * @param neighbourList List of neighbourCountry
+	
+    /**
+     * @param continent
+     * @param map_elements
      */
     public void addContinent(Continent continent, MapElements map_elements) {
-        if (continent != null && continent.getControlValue()>=0 && !continent.getMemberCountriesList().isEmpty()) {
-        	
+        if (continent != null && continent.getControlValue()>=0) {
+        	map_elements.getContinentList().add(continent);
+        	map_elements.getContinentCountryMap().put(continent, continent.getMemberCountriesList());        	
         }
     }
+    
+    /**
+     * @param continent
+     */
+    public void validateContinent(Continent continent){
+    	//if(continent.getMemberCountriesList().size()>0)
+    	
+    	
+    }
+    
 /**
      * This method will create .map file based on input provided from user
      *
@@ -121,7 +130,6 @@ public class MapEditor {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 }

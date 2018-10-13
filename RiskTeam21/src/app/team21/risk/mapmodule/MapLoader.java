@@ -34,23 +34,28 @@ public class MapLoader {
 	 * @param args
 	 * @throws IOException
 	 */
-
 	public static void main(String[] args) throws IOException {
+		
 		String file_path = "C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/World.map";
-		MapElements map_elements=readMapFile(file_path);
+		MapElements map_elements = readMapFile(file_path);
 		System.out.println("======|CAPTURE THEM ALL|======");
-		for(Continent c:map_elements.getContinentList()){
-			System.out.println("\n\n"+c.getContinentName()+"\n");
-			for(Country c1:c.getMemberCountriesList())
-				System.out.println(c1.getCountryName()+" "+c1.getx_cordinate()+","+c1.gety_cordinate()+" "+c1.getBelongsToContinent());
+		for (Continent c : map_elements.getContinentList()) {
+			System.out.println("\n\n" + c.getContinentName() + "  " + c.getControlValue() + "\n");
+			for (Country c1 : c.getMemberCountriesList())
+				System.out.println(c1.getCountryName() + " " + c1.getx_cordinate() + "," + c1.gety_cordinate() + " "+c1.getBelongsToContinent());
 		}
 	}
 
+	/**
+	 * this map helps you to read th map file
+	 * @param file_path 
+	 * @return MapElements      
+	 */
 	public static MapElements readMapFile(String file_path) {
 
 		boolean is_map_present = false; // to check [MAP] is available in file
 										// or not
-		boolean is_continent_resent = false;// to check [Continent] is available
+		boolean is_continent_present = false;// to check [Continent] is available
 											// in file or not
 		boolean is_territory_present = false;// to check [Territory] is
 												// available in file or not
@@ -99,7 +104,7 @@ public class MapLoader {
 					// Parsing the [Continents] portion of the map file
 					if (id.equalsIgnoreCase("Continents")) {
 						System.out.println("Continents Tag Present");
-						is_continent_resent = true;
+						is_continent_present = true;
 						if (is_map_present) {
 							readContinents(reader);
 							map_elements.setContinentList(continent_list);
@@ -111,7 +116,7 @@ public class MapLoader {
 					if (id.equalsIgnoreCase("Territories")) {
 						System.out.println("Territories Tag Present");
 						is_territory_present = true;
-						List<Continent> new_continent_list = new ArrayList<>();// we need to assign number of territories to continent objects
+						List<Continent> new_continent_list = new ArrayList<>();
 						if (is_map_present) {
 							readTerritories(reader);
 							getContinentCountryMap(country_list, continent_list);
@@ -119,11 +124,10 @@ public class MapLoader {
 								country_neighbour_map.put(c, c.getNeighbourNodes());
 							}
 							for (Continent continent : map_elements.getInstance().getContinentList()) {
-                                //value of each key of continentCountryMap contains list of territories/country with in that continent
-                                //continent.setNumberOfTerritories(continentCountryMap.get(new Continent(continent.getContinentName())).size());
-                                continent.setMemberCountriesList(continent_country_map.get(new Continent(continent.getContinentName())));
-                                new_continent_list.add(continent);
-                            }
+								continent.setMemberCountriesList(
+								continent_country_map.get(new Continent(continent.getContinentName())));
+								new_continent_list.add(continent);
+							}
 							map_elements.setContinentCountryMap(continent_country_map);
 							map_elements.setCountryNeighboursMap(country_neighbour_map);
 							map_elements.setContinentCountryMap(continent_country_map);
@@ -134,14 +138,14 @@ public class MapLoader {
 				}
 			}
 
-			if (is_map_present && is_continent_resent && is_territory_present) {
+			if (is_map_present && is_continent_present && is_territory_present) {
 				System.out.println("Valid File.\nMap Continents and Territories tags are present");
-				
+
 			} else {
 				System.out.println("Invalid Map File.\nMap or Continents or Territories tags not present");
 				map_elements.setCorrectMap(false);
-                map_elements.setErrorMessage("Map or Continents or Territories tags not present");
-                return map_elements;
+				map_elements.setErrorMessage("Map or Continents or Territories tags not present");
+				return map_elements;
 			}
 
 		} catch (Exception exception) {

@@ -1,7 +1,6 @@
 package app.team21.risk.elements;
 
 
-import java.io.Serializable;
 import java.util.List;
 
 import app.team21.risk.elements.Player;
