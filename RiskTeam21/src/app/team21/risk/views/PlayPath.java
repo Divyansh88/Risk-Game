@@ -1,5 +1,7 @@
 package app.team21.risk.views;
 import app.team21.risk.elements.Player;
+import app.team21.risk.mapmodule.MapElements;
+import app.team21.risk.mapmodule.MapLoader;
 import app.team21.risk.views.StartGame;
 
 import java.awt.BorderLayout;
@@ -13,13 +15,20 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class PlayPath extends StartGame{
 	JPanel choose_player = new JPanel();
 	JComboBox maps = new JComboBox();
+	MapLoader map_loader=new MapLoader();
+	String browse_file_path;
+	String file_path="C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
+	MapElements map_elements;
+	
 	public void playButton(){
 		
 		
@@ -41,8 +50,19 @@ public class PlayPath extends StartGame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Add vaghani's code for browse here
-				
+				JFileChooser fileChooser = new JFileChooser();
+			  	 
+	  	        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
+	  	        FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP file", "map");
+	  	        fileChooser.setFileFilter(filter);
+	  	        fileChooser.setAcceptAllFileFilterUsed(false);
+	  	 
+	  	        int bopen = fileChooser.showOpenDialog(null); //open the dialog box
+	  	        if (bopen == JFileChooser.APPROVE_OPTION) {
+	  	        	browse_file_path=fileChooser.getSelectedFile().toString();
+	  	        	String short_name=browse_file_path.substring(browse_file_path.lastIndexOf("\\") + 1);
+	  	        	maps.addItem(short_name);
+	  	      		}
 			}
 		});
 		
@@ -51,10 +71,15 @@ public class PlayPath extends StartGame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				selectPlayers();
-				cl.show(main_panel, "choose_player");
-				
+				String selected_map = maps.getSelectedItem().toString();
+				map_elements=map_loader.readMapFile(file_path+selected_map);
+				if(map_elements.is_correct_map()){
+					selectPlayers();
+					cl.show(main_panel, "choose_player");
+				}
+				else{
+					//Label dialog for incorrect map file
+				}
 			}
 		});
 		
@@ -85,7 +110,7 @@ public class PlayPath extends StartGame{
 	
 	public void fillCombobox(){
 		
-		File dir = new File("/Users/samip/git/RiskTeam/RiskTeam21/src/app/team21/risk/maps");
+		File dir = new File("C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/");
         FilenameFilter filter = new FilenameFilter()
         {
         	public boolean accept(File dir, String name)
@@ -105,18 +130,18 @@ public class PlayPath extends StartGame{
             {
                 String filename = var[i];
                 maps.addItem(filename);
-       
             }
         }
 	}
 	
 	public void selectPlayers(){
 		
+		
 		JLabel choose_number_of_player = new JLabel("Choose number of players :");
 		JButton lets_go = new JButton("Let's go");
 		
 		JComboBox players = new JComboBox<Integer>();
-		int no_countries = 4;
+		int no_countries = map_elements.getCountries().size();
 		if(no_countries==2){
 			players.addItem("2");
 		}
@@ -129,12 +154,13 @@ public class PlayPath extends StartGame{
 			players.addItem("3");
 			players.addItem("4");
 		}
-		else if(no_countries==5){
+		else {
 			players.addItem("2");
 			players.addItem("3");
 			players.addItem("4");
-			players.addItem("4");
+			players.addItem("5");
 		}
+		
 		
 		lets_go.addActionListener(new ActionListener() {
 			
@@ -143,12 +169,11 @@ public class PlayPath extends StartGame{
 				List<Player> player_list = new ArrayList<Player>();
 				for(int i=1;i<4;i++){
 					Player p= new Player("Player "+i);
-					
 					player_list.add(p);
 				}
 				
 				GameScreen gs = new GameScreen();
-				gs.playerContinueButton();
+				gs.playerContinueButton(map_elements,player_list);
 				
 			}
 		});

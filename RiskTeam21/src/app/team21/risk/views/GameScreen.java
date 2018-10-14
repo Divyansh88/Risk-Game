@@ -1,4 +1,6 @@
 package app.team21.risk.views;
+import app.team21.risk.elements.Player;
+import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.views.StartGame;
 import javax.swing.*;
 import java.awt.*;
@@ -26,10 +28,9 @@ public class GameScreen {
 	/**
 	 * It is the main game screen 
 	 */
-	
-	
-	public void playerContinueButton(){
+	public void playerContinueButton(MapElements map_elements,List<Player> player_list){
 
+		
 		JPanel test = new JPanel();
 		StartGame sg =new StartGame();
 		test=sg.getPanel();
