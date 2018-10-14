@@ -27,37 +27,86 @@ public class GamePlay {
 		List<Player> player_list = new ArrayList<Player>();
 		List<Country> country_list=new ArrayList<Country>();
 
-		for(int i=1;i<6;i++){
-			Player p=new Player("Player"+i);
+		for(int i=1;i<4;i++){
+			Player p=new Player("Player "+i);
 			
 			player_list.add(p);
 		}
-		for(int i=1;i<20;i++){
-			Country c=new Country("Country"+1,123,123,"Mega");
+		for(int i=1;i<50;i++){
+			Country c=new Country("Country "+i,123,123,"Mega");
 			country_list.add(c);
 		}
 		
 		distributeCountries(player_list,country_list);
+		for(Player p:player_list){
+			System.out.println(p.getName()+" gets "+getReinforcementArmies(p)+" armies.");
+		}
+			
 		
 	}
 	
 	public static void distributeCountries(List<Player> players,List<Country> countries){
 		Collections.shuffle(countries);
-		System.out.println("Inside if"+countries.size());
-
+		int turn_value=0;
+		for(Player p:players){
+			turn_value++;
+			p.setTurnValue(turn_value);
+		}
 		while(countries.size()>0){
 			for(Player p:players){
-				List<Country> neww=p.getAssignedCountries();
-				if(countries.size()>0){
-					System.out.println("Inside if");
+				List<Country> new_list=p.getAssignedCountries();
+				if(countries.size()>0){					
 					Country c=countries.get(0);
-					neww.add(c);
+					//print on HISTORY Screen
+					System.out.println(p.getName()+" gets "+c.getCountryName());
+					new_list.add(c);
 					countries.remove(0);
-					p.setAssignedCountries(neww);
+					p.setAssignedCountries(new_list);
+					
 				}
 				else
 					break;
 			}
 		}
+
+	}
+	
+	public static int endTurn(Player player,List<Player> player_list){
+		int new_turn=player.getTurnValue()+1;
+		if(new_turn>player_list.size())
+			new_turn=1;
+		return new_turn;
+	}
+	
+	public static int getInitialArmies(List<Player> player_list){
+		int armies=0;
+		int num_of_players=player_list.size();
+		
+		if(num_of_players==2)
+			armies=40;
+		else if(num_of_players==3)
+			armies=35;
+		else if(num_of_players==4)
+			armies=30;
+		else if(num_of_players==5)
+			armies=25;
+		else if(num_of_players==6)
+			armies=20;
+		
+		return armies;
+	}
+	
+	public static int getReinforcementArmies(Player player){
+		int armies=0;
+		int player_countries=player.getAssignedCountries().size();
+		if(player_countries>9)
+			armies=player_countries/3;
+		else
+			armies=3;
+		return armies;
+	}
+	
+	public static void tryFortify(Player player, Country country_from, Country country_to){
+		
 	}
 }
