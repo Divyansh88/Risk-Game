@@ -151,6 +151,7 @@ public class MapLoader {
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
+		checkControlValue(map_elements);
 		return map_elements;
 	}
 
@@ -269,5 +270,15 @@ public class MapLoader {
 				}
 			}
 		}
+	}
+	
+	public static void checkControlValue(MapElements map_elements){
+		for(Continent continent: map_elements.getContinentList()) {
+        	if(continent.getControlValue()<=0) {
+        		map_elements.setCorrectMap(false);
+                map_elements.setErrorMessage("There is invalid  control value of the continent-->"+continent.getContinentName());
+                break;
+        	}
+        }
 	}
 }

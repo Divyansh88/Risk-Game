@@ -21,9 +21,14 @@ public class Player {
 
     public List<Country> assignedCountries;
     
-    public List<Player> playerList;
+    
+	public List<Player> playerList;
 
 
+    public Player(String name){
+    	this.name=name;
+    	this.assignedCountries=new ArrayList<Country>();
+    }
     /**
 	 * @return the turn_value
 	 */
