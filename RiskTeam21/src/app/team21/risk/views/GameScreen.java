@@ -1,6 +1,4 @@
 package app.team21.risk.views;
-import app.team21.risk.elements.Player;
-import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.views.StartGame;
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +8,7 @@ import java.util.List;
 
 public class GameScreen {
 	JButton btn_reinforcement,btn_attack,btn_fortify,btn_continue_rp,btn_ok_fp;
-	JLabel lbl_game_history,lbl_select_army,lbl_select_country,lbl_choose_player,lbl_select_from_country,lbl_select_to_country;
+	JLabel lbl_game_history,lbl_select_army,lbl_select_country,lbl_choose_player,lbl_select_from_country,lbl_select_to_country,turn_label;
 	JTextField txt_map_name,txt_author_name;
 	JPanel master_panel,game_history_panel,mr_panel,turn_panel,second_master_panel,phase_screen_panel,action_panel;
 	JPanel reinforcement_panel,attack_panel,fortify_panel;
@@ -19,6 +17,7 @@ public class GameScreen {
 	JComboBox combobox_armies,combobox_country;
 	CardLayout cl_ps = new CardLayout();
 	
+			
 	
 	int reinforcement_army = 4;//temp
 	Integer [] players = {2,3,4,5};//temp
@@ -28,9 +27,10 @@ public class GameScreen {
 	/**
 	 * It is the main game screen 
 	 */
-	public void playerContinueButton(MapElements map_elements,List<Player> player_list){
+	
+	
+	public void playerContinueButton(){
 
-		
 		JPanel test = new JPanel();
 		StartGame sg =new StartGame();
 		test=sg.getPanel();
@@ -77,11 +77,9 @@ public class GameScreen {
 		btn_reinforcement = new JButton("Reinforcement");
 		btn_reinforcement.setSize(100,100);
 		btn_reinforcement.setVisible(true);
-		
 		btn_attack = new JButton("Attack");
 		btn_attack.setPreferredSize(btn_reinforcement.getPreferredSize());
 		btn_attack.setVisible(true);
-		
 		btn_fortify = new JButton("Fortify");
 		btn_fortify.setPreferredSize(btn_reinforcement.getPreferredSize());
 		btn_fortify.setVisible(true);
@@ -100,7 +98,7 @@ public class GameScreen {
 		action_panel.add(btn_fortify, new GridBagConstraints());*/
 		
 		
-		
+		turn_label=new JLabel();
 		test.add(master_panel,BorderLayout.WEST);
 		test.add(game_history_panel,BorderLayout.EAST);
 		master_panel.add(mr_panel,BorderLayout.NORTH);
@@ -113,22 +111,26 @@ public class GameScreen {
 		action_panel.add(btn_reinforcement);
 		action_panel.add(btn_attack);
 		action_panel.add(btn_fortify);
+		turn_panel.add(turn_label);
 		
 		btn_reinforcement.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		ReinforcementButton(reinforcement_army);
+	    		turn_label.setText("Its Player1 turn and Reinforcement phase is running.");
 	    	}
 	    });
 		
 		btn_attack.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		AttackButton();
+	    		turn_label.setText("Its Player1 turn and Attack phase is running.");
 	    	}
 	    });
 		
 		btn_fortify.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		FortifyButton();
+	    		turn_label.setText("Its Player1 turn and Fortify phase is running.");
 	    	}
 	    });
 		
@@ -143,6 +145,7 @@ public class GameScreen {
 	
 	
 	public void ReinforcementButton(int ps) {
+		reinforcement_panel.removeAll();
 		cl_ps.show(phase_screen_panel,"rp");
 		for(int i=0;i<4;i++) {
 			armies[i]=i+1;
@@ -158,15 +161,23 @@ public class GameScreen {
  		reinforcement_panel.add(combobox_country);
  		btn_continue_rp = new JButton("Continue");
  		reinforcement_panel.add(btn_continue_rp); 
+ 		reinforcement_panel.revalidate();
+ 		reinforcement_panel.repaint();
 	}
 	
 	public void AttackButton() {
+		attack_panel.removeAll();
+		
 		cl_ps.show(phase_screen_panel, "ap");
 		lbl_choose_player = new JLabel("Coming soon");
 		attack_panel.add(lbl_choose_player);
+		attack_panel.revalidate();
+		attack_panel.repaint();
 	}
 	
 	public void FortifyButton() {
+		fortify_panel.removeAll();
+		
 		cl_ps.show(phase_screen_panel,"fp");
 		for(int i=0;i<4;i++) {
 			armies[i]=i+1;
@@ -186,5 +197,7 @@ public class GameScreen {
  		fortify_panel.add(combobox_country);
  		btn_ok_fp = new JButton("Ok");
  		fortify_panel.add(btn_ok_fp); 
+ 		fortify_panel.revalidate();
+ 		fortify_panel.repaint();
 	}
 }
