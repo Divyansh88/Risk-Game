@@ -22,8 +22,6 @@ import app.team21.risk.mapmodule.MapLoader;
  */
 public class GamePlay {
 
-	
-	
 	public static void main(String[] args) {
 
 		//Remove everything before getSequence once done.
