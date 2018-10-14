@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Continent Bean class that will hold the properties of continent.
  *
- * @author prashantp95
+ * @author Yash Sheth
  */
 public class Continent {
 

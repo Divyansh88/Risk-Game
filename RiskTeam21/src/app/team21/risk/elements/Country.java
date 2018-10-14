@@ -8,7 +8,7 @@ import app.team21.risk.elements.Player;
 /**
  * Country Bean class to get and set properties related to country
  *
- * @author prashantp95
+ * @author Yash Sheth
  */
 
 public class Country{
