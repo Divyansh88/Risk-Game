@@ -2,7 +2,6 @@ package app.team21.risk.views;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
-import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -71,6 +70,17 @@ public class StartGame {
 				}
 			});
 			
+			quit_button = new JButton("Quit");
+			quit_button.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					System.exit(0);
+					
+				}
+			});
+			
 			JPanel start_panel= new JPanel();
 			start_panel.setLayout(new BorderLayout());
 			start_panel.setLayout(new GridLayout());
@@ -78,6 +88,7 @@ public class StartGame {
 			start_panel.add(play_button,BorderLayout.CENTER);
 			start_panel.add(map_button,BorderLayout.CENTER);
 			start_panel.add(rules_button,BorderLayout.CENTER);
+			start_panel.add(quit_button,BorderLayout.CENTER);
 			
 			main_frame.getContentPane().setLayout(new GridBagLayout());
 			GridBagConstraints gbc = new GridBagConstraints();
