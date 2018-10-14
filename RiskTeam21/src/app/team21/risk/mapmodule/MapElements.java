@@ -121,7 +121,7 @@ public class MapElements {
 	 *            generates a error message
 	 */
 	public void setErrorMessage(String error_message) {
-		this.error_message = error_message;
+		this.error_message += "\n"+error_message;
 
 	}
 

@@ -10,8 +10,11 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Random;
 
+import app.team21.risk.elements.Continent;
 import app.team21.risk.elements.Country;
 import app.team21.risk.elements.Player;
+import app.team21.risk.mapmodule.MapElements;
+import app.team21.risk.mapmodule.MapLoader;
 
 /**
  * @author Yash Sheth
@@ -26,7 +29,8 @@ public class GamePlay {
 		//Remove everything before getSequence once done.
 		List<Player> player_list = new ArrayList<Player>();
 		List<Country> country_list=new ArrayList<Country>();
-
+		MapLoader ml=new MapLoader();
+		
 		for(int i=1;i<4;i++){
 			Player p=new Player("Player "+i);
 			
@@ -96,13 +100,30 @@ public class GamePlay {
 		return armies;
 	}
 	
-	public static int getReinforcementArmies(Player player){
+	public static int getReinforcementArmies(Player player,MapElements map){
 		int armies=0;
 		int player_countries=player.getAssignedCountries().size();
 		if(player_countries>9)
 			armies=player_countries/3;
 		else
 			armies=3;
+		
+		//check if user holds any continents
+		for(Continent c:map.getContinentList()){	
+			List<Country> co=c.getMemberCountriesList();
+			boolean continent_control=true;
+			for(Country check:co){
+				if(check.getBelongsToPlayer()==player){
+					continue;
+				}
+				else{
+					continent_control=false;
+					break;
+				}
+			}
+			if(continent_control)
+				armies+=c.getControlValue();
+		}
 		return armies;
 	}
 	

@@ -102,13 +102,19 @@ public class MapLoader {
 					}
 
 					// Parsing the [Continents] portion of the map file
-					if (id.equalsIgnoreCase("Continents")) {
+					if (id.equalsIgnoreCase("Continents")&&map_elements.is_correct_map()) {
 						System.out.println("Continents Tag Present");
 						is_continent_present = true;
 						if (is_map_present) {
-							readContinents(reader);
-							map_elements.setContinentList(continent_list);
-							System.out.println("Reading of Continents Completed");
+							map_elements=readContinents(reader,map_elements);
+							if(map_elements.is_correct_map()){
+								map_elements.setContinentList(continent_list);
+								System.out.println("Reading of Continents Completed");
+							}
+							else{
+								map_elements.setCorrectMap(false);
+								map_elements.setErrorMessage("Invalid Properties in Continent");
+							}
 						}
 					}
 
@@ -138,13 +144,14 @@ public class MapLoader {
 				}
 			}
 
-			if (is_map_present && is_continent_present && is_territory_present) {
+			if (is_map_present && is_continent_present && is_territory_present&&map_elements.is_correct_map()) {
 				System.out.println("Valid File.\nMap Continents and Territories tags are present");
 
 			} else {
 				System.out.println("Invalid Map File.\nMap or Continents or Territories tags not present");
 				map_elements.setCorrectMap(false);
 				map_elements.setErrorMessage("Map or Continents or Territories tags not present");
+				//System.out.println(map_elements.getErrorMessage());
 				return map_elements;
 			}
 
@@ -226,24 +233,33 @@ public class MapLoader {
 	 * @param reader
 	 *            BufferReader object that read the .map file for continent
 	 */
-	public static void readContinents(BufferedReader reader) {
+	public static MapElements readContinents(BufferedReader reader,MapElements map_elements) throws IOException{
 		String line;
 		try {
 			while ((line = reader.readLine()) != null && !line.startsWith("[")) {
-				if (!line.isEmpty() && line != null && !line.equals("")) {
+				if (!line.isEmpty() && line != null && !line.equals("")&&line.contains("=")) {
 					Continent continents = new Continent();
 					String[] ConProperties = line.split("=");
-					continents.setContinentName(ConProperties[0].trim());
-					continents.setControlValue(Integer.parseInt(ConProperties[1].trim()));
-					continent_list.add(continents);
+					System.out.println(ConProperties[0]+"  "+ConProperties[1]);
+					if(!ConProperties[0].equals("")&&!ConProperties[1].equals("")&&!ConProperties[0].isEmpty()&&!ConProperties[1].isEmpty()){
+		
+						continents.setContinentName(ConProperties[0].trim());
+						continents.setControlValue(Integer.parseInt(ConProperties[1].trim()));
+						continent_list.add(continents);	
+					}
+					else{
+						map_elements.setCorrectMap(false);
+						break;
+					}
 				}
 				reader.mark(0);
+
 			}
 			reader.reset();
 		} catch (NumberFormatException | IOException e) {
-
 			e.printStackTrace();
 		}
+		return map_elements;
 	}
 
 	/**
@@ -275,8 +291,10 @@ public class MapLoader {
 	public static void checkControlValue(MapElements map_elements){
 		for(Continent continent: map_elements.getContinentList()) {
         	if(continent.getControlValue()<=0) {
+        		
         		map_elements.setCorrectMap(false);
-                map_elements.setErrorMessage("There is invalid  control value of the continent-->"+continent.getContinentName());
+                
+        		map_elements.setErrorMessage("There is invalid  control value of the continent-->"+continent.getContinentName());
                 break;
         	}
         }
