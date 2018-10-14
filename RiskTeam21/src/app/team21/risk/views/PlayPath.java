@@ -1,5 +1,5 @@
-package app.team.risk.views;
-import app.team.risk.views.StartGame;
+package app.team21.risk.views;
+import app.team21.risk.views.StartGame;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;

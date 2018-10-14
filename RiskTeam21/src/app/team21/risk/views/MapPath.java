@@ -1,4 +1,4 @@
-package app.team.risk.views;
+package app.team21.risk.views;
 
 public class MapPath {
 
