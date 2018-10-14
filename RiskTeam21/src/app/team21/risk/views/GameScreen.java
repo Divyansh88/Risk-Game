@@ -77,9 +77,11 @@ public class GameScreen {
 		btn_reinforcement = new JButton("Reinforcement");
 		btn_reinforcement.setSize(100,100);
 		btn_reinforcement.setVisible(true);
+		
 		btn_attack = new JButton("Attack");
 		btn_attack.setPreferredSize(btn_reinforcement.getPreferredSize());
 		btn_attack.setVisible(true);
+		
 		btn_fortify = new JButton("Fortify");
 		btn_fortify.setPreferredSize(btn_reinforcement.getPreferredSize());
 		btn_fortify.setVisible(true);

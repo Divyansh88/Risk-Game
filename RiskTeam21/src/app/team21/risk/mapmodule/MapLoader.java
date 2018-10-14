@@ -240,7 +240,6 @@ public class MapLoader {
 				if (!line.isEmpty() && line != null && !line.equals("")&&line.contains("=")) {
 					Continent continents = new Continent();
 					String[] ConProperties = line.split("=");
-					System.out.println(ConProperties[0]+"  "+ConProperties[1]);
 					if(!ConProperties[0].equals("")&&!ConProperties[1].equals("")&&!ConProperties[0].isEmpty()&&!ConProperties[1].isEmpty()){
 		
 						continents.setContinentName(ConProperties[0].trim());
