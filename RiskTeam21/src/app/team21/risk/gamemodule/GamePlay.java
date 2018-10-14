@@ -47,8 +47,9 @@ public class GamePlay {
 		
 	}
 	
-	public static void distributeCountries(List<Player> players,List<Country> countries){
+	public static String distributeCountries(List<Player> players,List<Country> countries){
 		Collections.shuffle(countries);
+		StringBuilder sb=new StringBuilder();
 		int turn_value=0;
 		for(Player p:players){
 			turn_value++;
@@ -60,7 +61,7 @@ public class GamePlay {
 				if(countries.size()>0){					
 					Country c=countries.get(0);
 					//print on HISTORY Screen
-					System.out.println(p.getName()+" gets "+c.getCountryName());
+					sb.append(p.getName()+" gets "+c.getCountryName()+"\n");
 					new_list.add(c);
 					countries.remove(0);
 					p.setAssignedCountries(new_list);
@@ -70,6 +71,8 @@ public class GamePlay {
 					break;
 			}
 		}
+		
+		return sb.toString();
 
 	}
 	
