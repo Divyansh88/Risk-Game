@@ -41,7 +41,7 @@ public class GamePlay {
 		
 		distributeCountries(player_list,country_list);
 		for(Player p:player_list){
-			System.out.println(p.getName()+" gets "+getReinforcementArmies(p)+" armies.");
+			//System.out.println(p.getName()+" gets "+getReinforcementArmies(p)+" armies.");
 		}
 			
 		
