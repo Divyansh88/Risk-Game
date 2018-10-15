@@ -20,10 +20,10 @@ public class GameScreen {
 	JComboBox combobox_armies,combobox_country;
 	CardLayout cl_ps = new CardLayout();
 	
-		
 	MapElements map_elements;
 	List<Player> player_list;
 	GamePlay game_play;
+	Player current_player;
 	
 	int reinforcement_army = 4;//temp
 	Integer [] players = {2,3,4,5};//temp
@@ -35,13 +35,15 @@ public class GameScreen {
 	 */
 	
 	
-	public void playerContinueButton(MapElements map_elements, List<Player> player_list){
+	public void playerContinueButton(MapElements map_elements, List<Player> player_list,int turn_value){
 
 		this.map_elements=map_elements;
 		this.player_list=player_list;
 		game_play=new GamePlay();
 		String first_print=game_play.distributeCountries(player_list, map_elements.getCountries());
-		
+		game_play.setInitialArmies(player_list);
+		String second_print=game_play.placeInitialArmiesInRR(player_list);
+		String mr=game_play.updateMR(map_elements);
 		
 		JPanel test = new JPanel();
 		StartGame sg =new StartGame();
@@ -66,11 +68,13 @@ public class GameScreen {
 		scroll_panel = new JScrollPane(text_area);
 		lbl_game_map = new JLabel("Game Map");
 		scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		text_area.setText(mr);
 		
 		text_area1 = new JTextArea(20,50);	
 		scroll_panel1 = new JScrollPane(text_area1);
 		lbl_game_history = new JLabel("Game History");
 		scroll_panel1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		text_area1.setText(first_print+second_print);
 		
 		turn_panel = new JPanel();
 		turn_panel.setPreferredSize(new Dimension(600,30));
@@ -110,6 +114,7 @@ public class GameScreen {
 		btn_end_turn = new JButton("End Turn");
 		btn_end_turn.setPreferredSize(btn_reinforcement.getPreferredSize());
 		btn_end_turn.setVisible(true);
+		
 		
 		
 		test.add(master_panel,BorderLayout.WEST);
@@ -157,6 +162,8 @@ public class GameScreen {
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+		
+		current_player=game_play.getCurrentPlayer(player_list,turn_value);
 		
 	}
 	

@@ -21,35 +21,18 @@ import app.team21.risk.mapmodule.MapLoader;
  *
  */
 public class GamePlay {
-
-	public static void main(String[] args) {
-
-		//Remove everything before getSequence once done.
-		List<Player> player_list = new ArrayList<Player>();
-		List<Country> country_list=new ArrayList<Country>();
-		MapLoader ml=new MapLoader();
-		
-		for(int i=1;i<4;i++){
-			Player p=new Player("Player "+i);
-			
-			player_list.add(p);
-		}
-		for(int i=1;i<50;i++){
-			Country c=new Country("Country "+i,123,123,"Mega");
-			country_list.add(c);
-		}
-		
-		distributeCountries(player_list,country_list);
-		for(Player p:player_list){
-			//System.out.println(p.getName()+" gets "+getReinforcementArmies(p)+" armies.");
-		}
-			
-		
-	}
+	
+	static Player current_player;
+	static int playerCount;
+	static StringBuilder tb=new StringBuilder();
+	
 	
 	public static String distributeCountries(List<Player> players,List<Country> countries){
+		tb.append("-----USER STARTS PUTTING ARMIES-----\n\n");
+		playerCount=players.size();
 		Collections.shuffle(countries);
 		StringBuilder sb=new StringBuilder();
+		
 		int turn_value=0;
 		for(Player p:players){
 			turn_value++;
@@ -60,20 +43,31 @@ public class GamePlay {
 				List<Country> new_list=p.getAssignedCountries();
 				if(countries.size()>0){					
 					Country c=countries.get(0);
-					//print on HISTORY Screen
-					sb.append(p.getName()+" gets "+c.getCountryName()+"\n");
+					c.setBelongsToPlayer(p);
+					c.addArmy(1);
+					sb.append(p.getName()+" gets "+c.getCountryName()+".\n");
+					tb.append(p.getName()+" puts 1 army on "+c.getCountryName()+".\n");
 					new_list.add(c);
 					countries.remove(0);
 					p.setAssignedCountries(new_list);
-					
 				}
 				else
 					break;
 			}
 		}
-		
+		sb.append("-----COUNTRIES ASSIGNED-----\n\n");
 		return sb.toString();
 
+	}
+	
+	public Player getCurrentPlayer(List<Player> player_list,int turn_value){
+		for(Player p:player_list){
+			if(turn_value==p.getTurnValue()){
+				current_player=p;
+				break;
+			}
+		}
+		return current_player;
 	}
 	
 	public static int endTurn(Player player,List<Player> player_list){
@@ -83,7 +77,7 @@ public class GamePlay {
 		return new_turn;
 	}
 	
-	public static int getInitialArmies(List<Player> player_list){
+	public static void setInitialArmies(List<Player> player_list){
 		int armies=0;
 		int num_of_players=player_list.size();
 		
@@ -98,8 +92,55 @@ public class GamePlay {
 		else if(num_of_players==6)
 			armies=20;
 		
-		return armies;
+		for(Player p:player_list){
+			p.setInitialArmies(armies);
+			System.out.println(p.getName()+" has "+p.getInitialArmies());
+		}
+		
+		for(Player p:player_list){
+			int deployed_armies=armies-p.getAssignedCountries().size();
+			p.setInitialArmies(deployed_armies);
+			System.out.println(p.getName()+" has "+p.getInitialArmies());
+		}
 	}
+	
+	
+	 /**
+     * This method will add initial armies to the country of the player in round robin fashion
+     */
+    public String placeInitialArmiesInRR(List<Player> player_list) {
+        int j = 0;
+        int playersLeftForAssign = player_list.size();
+        while (playersLeftForAssign > 0) {
+        	
+            if (player_list.get(j % playerCount).getInitialArmies() > 0) {
+            	System.out.println(""+player_list.get(j % playerCount).getInitialArmies()+"  -" );
+                List<Country> playerCountryList = player_list.get(j % playerCount).getAssignedCountries();
+                Country randomCountry = playerCountryList.get(new Random().nextInt(playerCountryList.size()));
+                System.out.println("-- "+randomCountry.getCountryName());
+                randomCountry.addArmy(1);
+                player_list.get(j % playerCount).setInitialArmies(player_list.get(j % playerCount).getInitialArmies()- 1);
+                tb.append(player_list.get(j % playerCount).getName() + " put 1 army on "+ randomCountry.getCountryName()+".\n");
+            } else {
+                playersLeftForAssign--;
+            }
+            j++;
+        }
+        tb.append("\n\n==Allocating armies as well as country is done===");
+        return tb.toString();
+    }
+
+	public static String updateMR(MapElements map_elements){
+		StringBuilder sb=new StringBuilder();
+		sb.append("======|CAPTURE THEM ALL|======\n");
+		for (Continent c : map_elements.getContinentList()) {
+			sb.append("\n\n" + c.getContinentName() + "  " + c.getControlValue() + "\n");
+			for (Country c1 : c.getMemberCountriesList())
+				sb.append("\n"+c1.getCountryName() + " - " +c1.getCurrentArmiesDeployed()+ " - " + c1.getBelongsToPlayer().getName());
+		}
+		return	sb.toString();
+	}
+	
 	
 	public static int getReinforcementArmies(Player player,MapElements map){
 		int armies=0;

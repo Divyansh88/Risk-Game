@@ -28,23 +28,7 @@ public class MapLoader {
 	static HashMap<Continent, List<Country>> continent_country_map;
 	static HashMap<Country, List<Country>> country_neighbour_map;
 
-	/**
-	 * Main method.
-	 * 
-	 * @param args
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws IOException {
-		
-		String file_path = "C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/World.map";
-		MapElements map_elements = readMapFile(file_path);
-		System.out.println("======|CAPTURE THEM ALL|======");
-		for (Continent c : map_elements.getContinentList()) {
-			System.out.println("\n\n" + c.getContinentName() + "  " + c.getControlValue() + "\n");
-			for (Country c1 : c.getMemberCountriesList())
-				System.out.println(c1.getCountryName() + " " + c1.getx_cordinate() + "," + c1.gety_cordinate() + " "+c1.getBelongsToContinent());
-		}
-	}
+
 
 	/**
 	 * this map helps you to read th map file

@@ -34,6 +34,7 @@ public class Country{
         this.x_cordinate = x_cordinate;
         this.y_cordinate = y_cordinate;
         this.belongsToContinent = continentName;
+        this.currentArmiesDeployed = 0;
     }
 
     /**

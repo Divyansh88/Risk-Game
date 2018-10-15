@@ -28,6 +28,7 @@ public class PlayPath extends StartGame{
 	String browse_file_path;
 	String file_path="C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
 	MapElements map_elements;
+	JComboBox players;
 	
 	public void playButton(){
 		
@@ -140,7 +141,7 @@ public class PlayPath extends StartGame{
 		JLabel choose_number_of_player = new JLabel("Choose number of players :");
 		JButton lets_go = new JButton("Let's go");
 		
-		JComboBox players = new JComboBox<Integer>();
+		players = new JComboBox<Integer>();
 		int no_countries = map_elements.getCountries().size();
 		if(no_countries==2){
 			players.addItem("2");
@@ -167,13 +168,13 @@ public class PlayPath extends StartGame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				List<Player> player_list = new ArrayList<Player>();
-				for(int i=1;i<4;i++){
+				for(int i=1;i<=Integer.valueOf(players.getSelectedItem().toString());i++){
 					Player p= new Player("Player "+i);
 					player_list.add(p);
 				}
 				
 				GameScreen gs = new GameScreen();
-				gs.playerContinueButton(map_elements,player_list);
+				gs.playerContinueButton(map_elements,player_list,1);
 				
 			}
 		});

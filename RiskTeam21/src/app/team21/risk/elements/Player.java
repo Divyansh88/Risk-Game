@@ -21,6 +21,8 @@ public class Player {
 
     public List<Country> assignedCountries;
     
+    public int initial_armies;
+	public int reinforce_armies;
     
 	public List<Player> playerList;
 
@@ -85,6 +87,30 @@ public class Player {
 		this.playerList = playerList;
 	}
 
+    /**
+	 * @return the intial_armies
+	 */
+	public int getInitialArmies() {
+		return initial_armies;
+	}
+	/**
+	 * @param intial_armies the intial_armies to set
+	 */
+	public void setInitialArmies(int intial_armies) {
+		this.initial_armies = intial_armies;
+	}
+	/**
+	 * @return the reinforce_armies
+	 */
+	public int getReinforceArmies() {
+		return reinforce_armies;
+	}
+	/**
+	 * @param reinforce_armies the reinforce_armies to set
+	 */
+	public void setReinforceArmies(int reinforce_armies) {
+		this.reinforce_armies = reinforce_armies;
+	}
 
 
 
