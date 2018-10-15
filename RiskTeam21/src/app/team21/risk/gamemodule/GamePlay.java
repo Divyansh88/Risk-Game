@@ -169,7 +169,26 @@ public class GamePlay {
 		return armies;
 	}
 	
-	public static void tryFortify(Player player, Country country_from, Country country_to){
+	public static boolean tryFortify(Player player, Country country_from, Country country_to, int armies){
+		if(country_from.getNeighbourNodes().contains(country_to)&&country_to.getNeighbourNodes().contains(country_from)&&country_from.getCurrentArmiesDeployed()>armies){
+			country_from.subtractArmy(armies);
+			country_to.addArmy(armies);
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	/**
+	 * @param current_player2
+	 * @param player_list
+	 * @param map_elements
+	 */
+	public void startTurn(Player current_player, List<Player> player_list, MapElements map_elements) {
+		current_player.setCanReinforce(true);
+		
+		
 		
 	}
 }

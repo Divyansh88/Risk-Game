@@ -24,6 +24,7 @@ public class GameScreen {
 	List<Player> player_list;
 	GamePlay game_play;
 	Player current_player;
+	int turn_value;
 	
 	int reinforcement_army = 4;//temp
 	Integer [] players = {2,3,4,5};//temp
@@ -39,6 +40,7 @@ public class GameScreen {
 
 		this.map_elements=map_elements;
 		this.player_list=player_list;
+		this.turn_value=turn_value;
 		game_play=new GamePlay();
 		String first_print=game_play.distributeCountries(player_list, map_elements.getCountries());
 		game_play.setInitialArmies(player_list);
@@ -134,6 +136,7 @@ public class GameScreen {
 		action_panel.add(btn_attack);
 		action_panel.add(btn_fortify);
 		action_panel.add(btn_end_turn);
+		
 
 		btn_reinforcement.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
@@ -164,6 +167,7 @@ public class GameScreen {
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 		
 		current_player=game_play.getCurrentPlayer(player_list,turn_value);
+		game_play.startTurn(current_player, player_list,map_elements);
 		
 	}
 	

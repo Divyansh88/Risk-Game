@@ -23,13 +23,24 @@ public class Player {
     
     public int initial_armies;
 	public int reinforce_armies;
+	
+    public boolean can_reinforce;
+	public boolean can_attack;
+    public boolean can_fortify;
+    public boolean can_end_turn;
     
-	public List<Player> playerList;
+    public int phase;
+	
+    public List<Player> playerList;
 
 
     public Player(String name){
     	this.name=name;
-    	this.assignedCountries=new ArrayList<Country>();
+    	assignedCountries=new ArrayList<Country>();
+    	can_reinforce=false;
+    	can_attack=false;
+    	can_fortify=false;
+    	can_end_turn=false;
     }
     /**
 	 * @return the turn_value
@@ -111,7 +122,65 @@ public class Player {
 	public void setReinforceArmies(int reinforce_armies) {
 		this.reinforce_armies = reinforce_armies;
 	}
-
-
-
+	/**
+	 * @return the canReinforce
+	 */
+	public boolean isCanReinforce() {
+		return can_reinforce;
+	}
+	/**
+	 * @param canReinforce the canReinforce to set
+	 */
+	public void setCanReinforce(boolean canReinforce) {
+		this.can_reinforce = can_reinforce;
+	}
+	/**
+	 * @return the can_attack
+	 */
+	public boolean isCanAttack() {
+		return can_attack;
+	}
+	/**
+	 * @param can_attack the can_attack to set
+	 */
+	public void setCanAttack(boolean can_attack) {
+		this.can_attack = can_attack;
+	}
+	/**
+	 * @return the can_fortify
+	 */
+	public boolean isCanFortify() {
+		return can_fortify;
+	}
+	/**
+	 * @param can_fortify the can_fortify to set
+	 */
+	public void setCanFortify(boolean can_fortify) {
+		this.can_fortify = can_fortify;
+	}
+	/**
+	 * @return the can_end_turn
+	 */
+	public boolean isCanEndTurn() {
+		return can_end_turn;
+	}
+	/**
+	 * @param can_end_turn the can_end_turn to set
+	 */
+	public void setCanEndTurn(boolean can_end_turn) {
+		this.can_end_turn = can_end_turn;
+	}
+	/**
+	 * @return the phase
+	 */
+	public int getPhase() {
+		return phase;
+	}
+	/**
+	 * @param phase the phase to set
+	 */
+	public void setPhase(int phase) {
+		this.phase = phase;
+	}
+	
 }
