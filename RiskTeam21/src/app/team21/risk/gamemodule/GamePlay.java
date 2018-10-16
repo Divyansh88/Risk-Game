@@ -171,7 +171,7 @@ public class GamePlay {
 	}
 	
 	public static boolean tryFortify(Player player, Country country_from, Country country_to, int armies){
-		if(country_from.getNeighbourNodes().contains(country_to)&&country_to.getNeighbourNodes().contains(country_from)&&country_from.getCurrentArmiesDeployed()>armies){
+		if(country_from.getNeighbourNodes().contains(country_to)&&country_to.getNeighbourNodes().contains(country_from)&&(country_from.getCurrentArmiesDeployed())-1>=armies){
 			country_from.subtractArmy(armies);
 			country_to.addArmy(armies);
 			return true;

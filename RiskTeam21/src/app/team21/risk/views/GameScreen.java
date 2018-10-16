@@ -13,16 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameScreen {
-	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn;
+	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn,btn_endturn_ep;
 	JLabel lbl_game_history, lbl_select_army, lbl_select_country, lbl_choose_player, lbl_select_from_country,
 			lbl_select_to_country, turn_label, lbl_game_map;
-	JTextField txt_map_name, txt_author_name;
+	JTextField txt_armies;
 	JPanel master_panel, game_history_panel, mr_panel, turn_panel, second_master_panel, phase_screen_panel,
 			action_panel;
-	JPanel reinforcement_panel, attack_panel, fortify_panel, mr_master_panel, status_panel;
+	JPanel reinforcement_panel, attack_panel, fortify_panel, mr_master_panel, status_panel,endturn_panel;
 	JTextArea text_area, text_area1;
 	JScrollPane scroll_panel, scroll_panel1;
-	JComboBox combobox_armies, combobox_country;
+	JComboBox combobox_armies, combobox_country,combobox_country2;
 	CardLayout cl_ps = new CardLayout();
 
 	MapElements map_elements;
@@ -30,7 +30,8 @@ public class GameScreen {
 	GamePlay game_play;
 	Player current_player;
 	int turn_value;
-
+	GameScreen view;
+	
 	int reinforcement_army = 4;// temp
 	Integer[] players = { 2, 3, 4, 5 };// temp
 	String[] country = { "India", "USA", "China" };
@@ -58,11 +59,13 @@ public class GameScreen {
 		reinforcement_panel = new JPanel();
 		attack_panel = new JPanel();
 		fortify_panel = new JPanel();
-
+		endturn_panel = new JPanel();
+		
 		phase_screen_panel.setLayout(cl_ps);
 		phase_screen_panel.add(reinforcement_panel, "rp");
 		phase_screen_panel.add(attack_panel, "ap");
 		phase_screen_panel.add(fortify_panel, "fp");
+		phase_screen_panel.add(endturn_panel, "ep");
 
 		master_panel = new JPanel();
 		master_panel.setPreferredSize(new Dimension(600, 600));
@@ -145,7 +148,7 @@ public class GameScreen {
 				if(current_player.isCanReinforce())
 					ReinforcementButton(reinforcement_army,current_player,map_elements);
 				else
-					text_area1.append("Sorry. You cannot reinforce right now.");
+					text_area1.append("\nSorry. You cannot reinforce right now.");
 			}
 		});
 
@@ -155,7 +158,7 @@ public class GameScreen {
 				if(current_player.isCanAttack())
 					AttackButton();
 				else
-					text_area1.append("Sorry. You cannot attack right now. Feature Coming Soon.");
+					text_area1.append("\nSorry. You cannot attack right now. Feature Coming Soon.");
 			}
 		});
 
@@ -165,10 +168,20 @@ public class GameScreen {
 				if(current_player.isCanFortify())
 					FortifyButton(current_player,map_elements);
 				else
-					text_area1.append("Sorry. You cannot fortify right now.");
+					text_area1.append("\nSorry. You cannot fortify right now.");
 			}
 		});
-
+		
+		btn_end_turn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// if can endturn call method
+				if(current_player.isCanEndTurn())
+					EndTurnButton();
+				else
+					text_area1.append("\nSorry. You cannot End Turn right now.");
+			}
+		});
+		
 		JFrame jf = new JFrame();
 		jf = (JFrame) sg.getFrame();
 		jf.add(test);
@@ -177,7 +190,8 @@ public class GameScreen {
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 
 		current_player = game_play.getCurrentPlayer(player_list, turn_value);
-		game_play.startTurn(current_player, player_list, map_elements,this);
+		view=this;
+		game_play.startTurn(current_player, player_list, map_elements,view);
 
 	}
 
@@ -239,18 +253,6 @@ public class GameScreen {
 						
 						// status print not enough armies
 					}
-					
-				//	System.out.println(selected_country);
-				// if not selected -> label update
-				// if current_player.getReinforceArmies()<=0 and
-				// reinforcesucessful -> canReinforce=false. canFortify=true
-				// canFortify()
-				// }
-				// else{
-				// ReinforcementButton()
-				}
-				else{
-					// status you cannot reinforce as of now.
 				}
 				
 				if(current_player.getReinforceArmies()>0&&reinforce_successful){
@@ -260,6 +262,7 @@ public class GameScreen {
 					text_area1.append("\nREINFORCEMENT PHASE COMPLETED.\nFORTIFICATION PHASE BEGINS...");
 					current_player.setCanReinforce(false);
 					current_player.setCanFortify(true);
+					current_player.setCanEndTurn(true);
 					FortifyButton(current_player,map_elements);
 				}
 			}
@@ -286,47 +289,113 @@ public class GameScreen {
 		
 		lbl_select_from_country = new JLabel("Fortify from");
 		fortify_panel.add(lbl_select_from_country);
-		
 		combobox_country = new JComboBox();
 		combobox_country=bindCountryCombobox(combobox_country,current_player);
 		fortify_panel.add(combobox_country);
 		
-		lbl_select_army = new JLabel("Select number of armies");
-		fortify_panel.add(lbl_select_army);
-		combobox_armies = new JComboBox<>(armies);
-		fortify_panel.add(combobox_armies);
 		lbl_select_to_country = new JLabel("Fortify to");
 		fortify_panel.add(lbl_select_to_country);
-		combobox_country = new JComboBox(country);
-		fortify_panel.add(combobox_country);
+		combobox_country2= new JComboBox();
+		combobox_country2=bindCountryCombobox(combobox_country2,current_player);
+		fortify_panel.add(combobox_country2);
+		
+		lbl_select_army = new JLabel("Type number of armies you want to send");
+		fortify_panel.add(lbl_select_army);
+		txt_armies=new JTextField(10);
+		txt_armies.setToolTipText("Enter an integer value");
+		fortify_panel.add(txt_armies);
+
 		btn_ok_fp = new JButton("Try Fortify");
 		fortify_panel.add(btn_ok_fp);
+		
 		fortify_panel.revalidate();
 		fortify_panel.repaint();
 
 		btn_ok_fp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// if(current_player.isCanReinforce()){
-				// selected items -> tryreinforce
-				// if not selected -> label update
-				// if current_player.getReinforceArmies()<=0 and
-				// reinforcesucessful -> canReinforce=false. canFortify=true
-				// canFortify()
-				// }
-				// else{
-				// ReinforcementButton()
-				// }
+
+				System.out.println("inside success");
+				boolean fortify_successful=false;
+				if(current_player.isCanFortify()){
+					
+					String s=txt_armies.getText().toString().trim();
+					System.out.println("canreinforce success "+s);
+					if(s != null && s.matches("^[0-9]*$")){
+						System.out.println("INSIDE IF SUCEESSFULL");
+						int armies=Integer.valueOf(s);
+						Country selected_from=null,selected_to=null;
+						
+						for(Country c:map_elements.getCountries()){
+							if(c.getCountryName().equals(combobox_country.getSelectedItem().toString())){
+								selected_from=c;
+								break;
+							}
+						}
+						
+						for(Country c:map_elements.getCountries()){
+							if(c.getCountryName().equals(combobox_country2.getSelectedItem().toString())){
+								selected_to=c;
+								break;
+							}
+						}
+						
+						System.out.println("details"+selected_from.getCountryName()+selected_to.getCountryName()+armies);
+
+						fortify_successful=GamePlay.tryFortify(current_player, selected_from, selected_to, armies);
+						System.out.println("fortify result"+fortify_successful);
+
+						if(fortify_successful){
+							current_player.setCanFortify(false);
+							text_area1.append("\nFortify Successful. You can End your Turn Now.");
+							EndTurnButton();
+						}
+						else{
+							text_area1.append("\nFortify Unsuccessful. Enter valid armies or Select Valid Country to Fortify.");
+							//panel same.
+							//error display
+							FortifyButton(current_player, map_elements);
+						}
+							
+						
+					}
+					else{
+						text_area1.append("\nPlease Enter a valid positive integer.");
+					}
+				}
+				
 			}
 		});
 
 	}
+	
+	public void EndTurnButton() {
+		System.out.println("INSIDE ENDTURN BUTTON");
+		endturn_panel.removeAll();
+		
+		cl_ps.show(phase_screen_panel, "ep");
+		
+		lbl_choose_player = new JLabel("Click 'End My Turn' Button to end your turn when you feel like ");
+		endturn_panel.add(lbl_choose_player);
+		
+		btn_endturn_ep = new JButton("End My Turn");
+		endturn_panel.add(btn_endturn_ep);
+		
+		endturn_panel.revalidate();
+		endturn_panel.repaint();
+		
+		btn_endturn_ep.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				turn_value=game_play.endTurn(current_player, player_list);
+				current_player=game_play.getCurrentPlayer(player_list, turn_value);
+				game_play.startTurn(current_player, player_list, map_elements,view);
+				
+			
+			}
+		});
+		
+	}
 
-//	public void bindContinentCombobox() {
-//
-//		for (Continent c : map_elements.getContinentList()) {
-//			combobox_continents.addItem(conti.getContinentName());
-//		}
-//	}
+
 	public JComboBox bindCountryCombobox(JComboBox combobox_country, Player current_player) {
 
 		for (Country c : current_player.getAssignedCountries()) {
@@ -334,15 +403,5 @@ public class GameScreen {
 		}
 		return combobox_country;
 	}
-//	public void bindArmyCombobox() {
-//
-//		
-//	}
-//	public void bindNeighbourCombobox() {
-//
-//		for (Country c : Country.getNeighbourNodes()) {
-//			combobox_continents.addItem(conti.getContinentName());
-//		}
-//	}
-	
+//	
 }
