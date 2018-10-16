@@ -32,11 +32,7 @@ public class GameScreen {
 	int turn_value;
 	GameScreen view;
 	
-	int reinforcement_army = 4;// temp
-	Integer[] players = { 2, 3, 4, 5 };// temp
-	String[] country = { "India", "USA", "China" };
-	Integer[] armies = new Integer[100];
-
+	int reinforcement_army;
 	/**
 	 * It is the main game screen
 	 */
@@ -82,8 +78,9 @@ public class GameScreen {
 		text_area.setText(mr);
 
 		text_area1 = new JTextArea(20, 50);
+		text_area1.setEditable(false);
 		scroll_panel1 = new JScrollPane(text_area1);
-		lbl_game_history = new JLabel("Game History");
+		lbl_game_history = new JLabel("Game Map");
 		scroll_panel1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		text_area1.setText(first_print + second_print+"\n-------------------------------\n");
 
@@ -201,9 +198,7 @@ public class GameScreen {
 		
 		reinforcement_panel.removeAll();
 		cl_ps.show(phase_screen_panel, "rp");
-		for (int i = 0; i < reinforce_armies; i++) {
-			armies[i] = i + 1;
-		}
+		
 		
 		lbl_select_army = new JLabel("Select number of armies");
 		reinforcement_panel.add(lbl_select_army);
@@ -388,8 +383,6 @@ public class GameScreen {
 				turn_value=game_play.endTurn(current_player, player_list);
 				current_player=game_play.getCurrentPlayer(player_list, turn_value);
 				game_play.startTurn(current_player, player_list, map_elements,view);
-				
-			
 			}
 		});
 		
@@ -403,5 +396,4 @@ public class GameScreen {
 		}
 		return combobox_country;
 	}
-//	
 }

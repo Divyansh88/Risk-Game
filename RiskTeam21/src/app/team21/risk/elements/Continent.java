@@ -21,9 +21,18 @@ public class Continent {
      *
      * @param continentName name of the continent
      */
+    public Continent(String continentName,int controlValue) {
+        this.continentName = continentName;
+        this.controlValue = controlValue;
+    }
+    /**
+     * This constructor will create continent object based provided continent name
+     *
+     * @param continentName name of the continent
+     */
     public Continent(String continentName) {
         this.continentName = continentName;
-        this.controlValue = 1;
+        this.controlValue = controlValue;
     }
 
     /**

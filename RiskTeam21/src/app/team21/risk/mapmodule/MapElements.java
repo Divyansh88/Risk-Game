@@ -14,7 +14,6 @@ public class MapElements {
 	private static MapElements map_elements;
 	public HashMap<String, String> map_details=new HashMap<>();
 	public List<Continent> continent_list=new ArrayList<>();
-	public List<Country> country_list=new ArrayList<>();
 	public HashMap<Continent, List<Country>> continent_country_map=new HashMap<>();
 	public HashMap<Country, List<Country>> country_neighbour_map=new HashMap<>();
 	public List<Player> player_list = new ArrayList<>();
@@ -246,6 +245,8 @@ public class MapElements {
 		countries.addAll(getCountryNeighboursMap().keySet());
 		return countries;
 	}
+	
+	
 
 	/**
 	 * To get the currentPlayer Playing in map
@@ -264,6 +265,17 @@ public class MapElements {
 	 */
 	public void setCurrentPlayer(Player current_player) {
 		this.current_player = current_player;
+	}
+	
+	public String updateMR(){
+		StringBuilder sb=new StringBuilder();
+		sb.append("======|HOW THE MAP LOOKS LIKE|======\n");
+		for (Continent c : getContinentList()) {
+			sb.append("\n\n" + c.getContinentName() + "  " + c.getControlValue() + "\n");
+			for (Country c1 : c.getMemberCountriesList())
+				sb.append("\n"+c1.getCountryName());
+		}
+		return	sb.toString();
 	}
 
 }
