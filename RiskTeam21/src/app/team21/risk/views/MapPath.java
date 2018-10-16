@@ -21,7 +21,7 @@ public class MapPath {
 	CardLayout cl = new CardLayout();
 	JComboBox combobox_continents,combobox_neighbours,combobox_countries;
 	String browse_file_path;
-	String file_path = "C:/Users/ADMIN/git/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
+	String file_path = "C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
 	MapLoader map_loader = new MapLoader();
 	MapElements map_elements;
 	JComboBox maps = new JComboBox<>();
@@ -388,7 +388,7 @@ public void playButton(){
 	}
 public void fillCombobox(){
 	
-	File dir = new File("C:/Users/ADMIN/git/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/");
+	File dir = new File("C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/");
     FilenameFilter filter = new FilenameFilter()
     {
     	public boolean accept(File dir, String name)

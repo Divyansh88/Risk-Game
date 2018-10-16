@@ -131,7 +131,7 @@ public class Player {
 	/**
 	 * @param canReinforce the canReinforce to set
 	 */
-	public void setCanReinforce(boolean canReinforce) {
+	public void setCanReinforce(boolean can_reinforce) {
 		this.can_reinforce = can_reinforce;
 	}
 	/**
@@ -181,6 +181,12 @@ public class Player {
 	 */
 	public void setPhase(int phase) {
 		this.phase = phase;
+	}
+	/**
+	 * @param armies_selected
+	 */
+	public void subReinforceArmies(int armies_selected) {
+		reinforce_armies-=armies_selected;
 	}
 	
 }

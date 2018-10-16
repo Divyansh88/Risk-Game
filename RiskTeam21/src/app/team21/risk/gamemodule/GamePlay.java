@@ -15,6 +15,7 @@ import app.team21.risk.elements.Country;
 import app.team21.risk.elements.Player;
 import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
+import app.team21.risk.views.GameScreen;
 
 /**
  * @author Yash Sheth
@@ -94,13 +95,13 @@ public class GamePlay {
 		
 		for(Player p:player_list){
 			p.setInitialArmies(armies);
-			System.out.println(p.getName()+" has "+p.getInitialArmies());
+			
 		}
 		
 		for(Player p:player_list){
 			int deployed_armies=armies-p.getAssignedCountries().size();
 			p.setInitialArmies(deployed_armies);
-			System.out.println(p.getName()+" has "+p.getInitialArmies());
+			
 		}
 	}
 	
@@ -114,10 +115,10 @@ public class GamePlay {
         while (playersLeftForAssign > 0) {
         	
             if (player_list.get(j % playerCount).getInitialArmies() > 0) {
-            	System.out.println(""+player_list.get(j % playerCount).getInitialArmies()+"  -" );
+            	
                 List<Country> playerCountryList = player_list.get(j % playerCount).getAssignedCountries();
                 Country randomCountry = playerCountryList.get(new Random().nextInt(playerCountryList.size()));
-                System.out.println("-- "+randomCountry.getCountryName());
+                
                 randomCountry.addArmy(1);
                 player_list.get(j % playerCount).setInitialArmies(player_list.get(j % playerCount).getInitialArmies()- 1);
                 tb.append(player_list.get(j % playerCount).getName() + " put 1 army on "+ randomCountry.getCountryName()+".\n");
@@ -185,10 +186,18 @@ public class GamePlay {
 	 * @param player_list
 	 * @param map_elements
 	 */
-	public void startTurn(Player current_player, List<Player> player_list, MapElements map_elements) {
+	public void startTurn(Player current_player, List<Player> player_list, MapElements map_elements, GameScreen view) {
 		current_player.setCanReinforce(true);
-		
-		
-		
+		int armies=getReinforcementArmies(current_player, map_elements);
+		System.out.println(armies);
+		current_player.setReinforceArmies(armies);
+		view.ReinforcementButton(armies,current_player,map_elements);
 	}
+
+	
+	
+	
+	
+	
+	
 }
