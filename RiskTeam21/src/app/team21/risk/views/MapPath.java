@@ -27,7 +27,7 @@ public class MapPath {
 	JList<String> combobox_neighbour;
 	JTextArea text_area_mr;
 	JScrollPane scroll_panel_mr,scroll_pane_neighbours;
-	JComboBox combobox_continents,combobox_countries;
+	JComboBox combobox_continents,combobox_countries,combobox_neighbours;
 	String browse_file_path;
 	String file_path = "C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
 	MapLoader map_loader = new MapLoader();
@@ -145,7 +145,7 @@ public class MapPath {
 		mr_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbl_game_map = new JLabel("Map Representation");
 
-		text_area_mr=new JTextArea(36,52);
+		text_area_mr=new JTextArea(35,52);
 		text_area_mr.setEditable(false);
 		scroll_panel_mr=new JScrollPane(text_area_mr);
 		scroll_panel_mr.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -291,11 +291,12 @@ public class MapPath {
  		
  		DefaultListModel<String> listModel=getNeighboursModel();
  		combobox_neighbour=new JList(listModel);
- 		combobox_neighbour=bindNeighbours(combobox_neighbour,map_elements);
+ 		//combobox_neighbour=bindNeighbours(combobox_neighbour,map_elements);
+ 		
  		combobox_neighbour.setFixedCellHeight(20);
 		combobox_neighbour.setFixedCellWidth(100);
-		combobox_neighbour.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		combobox_neighbour.setVisibleRowCount(10);
+		combobox_neighbour.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		combobox_neighbour.setVisibleRowCount(7);
  		scroll_pane_neighbours=new JScrollPane(combobox_neighbour);
 		scroll_pane_neighbours.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
  		card_country_panel.add(scroll_pane_neighbours);
@@ -310,7 +311,7 @@ public class MapPath {
 				String country_name=txt_country_name.getText().toString().trim();
 				if(country_name!=null && country_name.length()>0){
 					Continent selected_continent=null;
-					Country selected_neighbour;
+					Country selected_neighbour=null;
 					for(Continent c:map_elements.getContinentList()){
 						if(c.getContinentName().equals(combobox_continents.getSelectedItem().toString())){
 							selected_continent=c;
@@ -325,8 +326,13 @@ public class MapPath {
 					}
 					Country new_country=new Country(country_name,selected_continent.getContinentName());
 					
-					List<Country> new_neighbour_list=new ArrayList<>();
+					
 					HashMap<Country, List<Country>> new_country_neighbour_map=map_elements.getCountryNeighboursMap();
+					List<Country> new_neighbour_list=new_country_neighbour_map.get(selected_neighbour);
+					new_neighbour_list.add(new_country);
+					new_country_neighbour_map.put(selected_neighbour, new_neighbour_list);
+					new_neighbour_list=new ArrayList<>();
+					new_neighbour_list.add(selected_neighbour);
 					new_country_neighbour_map.put(new_country, new_neighbour_list);
 					
 					HashMap<Continent, List<Country>> new_continent_country_map=map_elements.getContinentCountryMap();
@@ -355,14 +361,11 @@ public class MapPath {
 	 * @param combobox_neighbour
 	 * @return
 	 */
-	private JList<String> bindNeighbours(JList<String> combobox_neighbour,MapElements map_elements) {
-		DefaultListModel<String> listModel = new DefaultListModel<>();
+	private JComboBox bindCountries(JComboBox combobox_countries,MapElements map_elements) {
 		for(Country c:map_elements.getCountries()){
-			listModel.addElement(c.getCountryName());
+			combobox_countries.addItem(c.getCountryName().toString().trim());
 		}
-		combobox_neighbour=new JList<>(listModel);
-		
-		return combobox_neighbour;
+		return combobox_countries;
 	}
 	
 	private DefaultListModel<String> getNeighboursModel() {
@@ -374,9 +377,7 @@ public class MapPath {
 	}
 	
 	public JComboBox bindContinentCombobox(JComboBox combobox_continent,MapElements map_elements) {
-
 		for (Continent c : map_elements.getContinentList()) {
-			//System.out.println(c.getContinentName().toString().trim());
 			combobox_continent.addItem(c.getContinentName().toString().trim());
 		}
 		return combobox_continent;
@@ -388,26 +389,70 @@ public class MapPath {
 		
 		card_neighbour_panel.removeAll();
 		cl.show(cards_panel, "card_neighbour");
-		lbl_select_continent = new JLabel("Select continent");
-		card_neighbour_panel.add(lbl_select_continent);
- 		combobox_continents = new JComboBox(continents);
- 		card_neighbour_panel.add(combobox_continents);
+//		lbl_select_continent = new JLabel("Select continent");
+//		card_neighbour_panel.add(lbl_select_continent);
+// 		combobox_continents = new JComboBox(continents);
+// 		card_neighbour_panel.add(combobox_continents);
  		lbl_select_country = new JLabel("Select country");;
  		card_neighbour_panel.add(lbl_select_country);
- 		combobox_countries = new JComboBox(countries);
+ 		combobox_countries = new JComboBox();
+ 		combobox_countries = bindCountries(combobox_countries, map_elements);
  		card_neighbour_panel.add(combobox_countries);
  		lbl_select_neighbour = new JLabel("Select neighbour");
-// 		card_neighbour_panel.add(lbl_select_neighbour);
-// 		combobox_neighbour = new JComboBox(neighbours);
-// 		card_neighbour_panel.add(combobox_neighbour);
+ 		card_neighbour_panel.add(lbl_select_neighbour);
+ 		combobox_neighbours = new JComboBox();
+ 		combobox_neighbours = bindCountries(combobox_neighbours, map_elements);
+ 		card_neighbour_panel.add(combobox_neighbours);
  		
- 		btn_ok = new JButton("Ok");
+ 		btn_ok = new JButton("Add Neighbour");
  		card_neighbour_panel.add(btn_ok); 
  		btn_ok.addActionListener(new ActionListener() {
  			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				lbl_state.setText("Neighbour Added");
+				String country=combobox_countries.getSelectedItem().toString().trim();
+				String neighbour=combobox_neighbours.getSelectedItem().toString().trim();
+				if(!neighbour.equals(country)){
+					Country selected_country=null,selected_neighbour = null;
+					for(Country c:map_elements.getCountries()){
+						if(c.getCountryName().equals(country)){
+							selected_country=c;
+							break;
+						}
+					}
+					for(Country c:map_elements.getCountries()){
+						if(c.getCountryName().equals(neighbour)){
+							selected_neighbour=c;
+							break;
+						}
+					}
+					if(!selected_country.getNeighbourNodes().contains(selected_neighbour)){
+						HashMap<Country, List<Country>> new_country_neighbour_map=map_elements.getCountryNeighboursMap();
+						
+						List<Country> new_neighbour_list=new_country_neighbour_map.get(selected_neighbour);
+						new_neighbour_list.add(selected_country);
+						selected_neighbour.setNeighbourNodes(new_neighbour_list);
+						new_country_neighbour_map.put(selected_neighbour, new_neighbour_list);
+						
+						new_neighbour_list=new_country_neighbour_map.get(selected_country);
+						new_neighbour_list.add(selected_neighbour);
+						selected_country.setNeighbourNodes(new_neighbour_list);
+						new_country_neighbour_map.put(selected_country, new_neighbour_list);
+						
+						map_elements.setCountryNeighboursMap(new_country_neighbour_map);
+						
+						lbl_state.setText("NEIGHBOURS ADDED");
+					}
+					else{
+						lbl_state.setText("They both are already neighbours");
+					}
+					
+					
+					
+				}
+				else{
+					lbl_state.setText("Same countries cannot be selected. Choose 2 different countries.");
+				}
 				
 			}
 		});

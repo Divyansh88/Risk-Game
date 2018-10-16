@@ -200,6 +200,7 @@ public class MapLoader {
 						Country neighbour = new Country(neighbour_country_name);
 						neighbour_nodes.add(neighbour);
 					}
+
 					country.setNeighbourNodes(neighbour_nodes);
 					country_list.add(country);
 
