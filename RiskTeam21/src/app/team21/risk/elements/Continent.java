@@ -6,33 +6,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Continent Bean class that will hold the properties of continent.
+ * Last Updated on : 17/10/2018, Wednesday
+ * Continent class that retrieves and assigns different properties for the continent object.
  *
  * @author Yash Sheth
+ * @version 1.0.0
  */
 public class Continent {
 
-    public String continentName;
-    public List<Country> memberCountriesList = new ArrayList<Country>();
-    public int controlValue;
+    public String continent_name;
+    public List<Country> member_countries_list = new ArrayList<Country>();
+    public int control_value;
 
     /**
      * This constructor will create continent object based provided continent name
      *
-     * @param continentName name of the continent
+     * @param continent_name name of the continent
      */
-    public Continent(String continentName,int controlValue) {
-        this.continentName = continentName;
-        this.controlValue = controlValue;
+    public Continent(String continent_name,int control_value) {
+        this.continent_name = continent_name;
+        this.control_value = control_value;
     }
     /**
      * This constructor will create continent object based provided continent name
      *
-     * @param continentName name of the continent
+     * @param continent_name name of the continent
      */
-    public Continent(String continentName) {
-        this.continentName = continentName;
-        this.controlValue = controlValue;
+    public Continent(String continent_name) {
+        this.continent_name = continent_name;
+        this.control_value = control_value;
     }
 
     /**
@@ -46,9 +48,9 @@ public class Continent {
      * Over ride equals method in order to compare compare objects based on continent name not continent objects
      */
     @Override
-    public boolean equals(Object continentObject) {
-        String continentName = ((Continent) continentObject).getContinentName();
-        return continentName.equals(this.getContinentName());
+    public boolean equals(Object continent_object) {
+        String continent_name = ((Continent) continent_object).getContinentName();
+        return continent_name.equals(this.getContinentName());
     }
 
     /**
@@ -56,7 +58,7 @@ public class Continent {
      */
     @Override
     public int hashCode() {
-        return this.continentName.hashCode();
+        return this.continent_name.hashCode();
     }
 
     /**
@@ -65,34 +67,34 @@ public class Continent {
      * @return name of the continent (String format)
      */
     public String getContinentName() {
-        return continentName;
+        return continent_name;
     }
 
     /**
      * setter method assigns the continent name
      *
-     * @param continentName continent object
+     * @param continent_name continent object
      */
-    public void setContinentName(String continentName) {
-        this.continentName = continentName;
+    public void setContinentName(String continent_name) {
+        this.continent_name = continent_name;
     }
 
     /**
      * getter method to get the list of the countries belong to that particular continent
      *
-     * @return memberCountriesList list of countries
+     * @return member_countries_list list of countries
      */
     public List<Country> getMemberCountriesList() {
-        return memberCountriesList;
+        return member_countries_list;
     }
 
     /**
      * setter method assigns countries list to the player
      *
-     * @param memberCountriesList individual player countries list
+     * @param member_countries_list individual player countries list
      */
-    public void setMemberCountriesList(List<Country> memberCountriesList) {
-        this.memberCountriesList = memberCountriesList;
+    public void setMemberCountriesList(List<Country> member_countries_list) {
+        this.member_countries_list = member_countries_list;
     }
 
    
@@ -102,16 +104,16 @@ public class Continent {
      * @return value of control value
      */
     public int getControlValue() {
-        return controlValue;
+        return control_value;
     }
 
     /**
      * setter method assigns control value
      *
-     * @param controlValue player object
+     * @param control_value player object
      */
-    public void setControlValue(int controlValue) {
-        this.controlValue = controlValue;
+    public void setControlValue(int control_value) {
+        this.control_value = control_value;
     }
 
 }

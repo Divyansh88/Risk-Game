@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Last Updated on : 18/10/2018, Thursday
+ * Player class that retrieves and assigns different properties for the Player object.
+ * 
  * @author Yash Sheth
+ * @version 1.0.0
  *
  */
 public class Player {
@@ -12,14 +16,14 @@ public class Player {
 	public int turn_value;
     
 	public Player player;
-    public Player currentPlayer;
+    public Player current_player;
 
-    public Country countryA;
-    public Country countryB;
+    public Country country_A;
+    public Country country_B;
 
     public ArrayList<String> list;
 
-    public List<Country> assignedCountries;
+    public List<Country> assigned_countries;
     
     public int initial_armies;
 	public int reinforce_armies;
@@ -31,12 +35,12 @@ public class Player {
     
     public int phase;
 	
-    public List<Player> playerList;
+    public List<Player> player_list;
 
 
     public Player(String name){
     	this.name=name;
-    	assignedCountries=new ArrayList<Country>();
+    	assigned_countries=new ArrayList<Country>();
     	can_reinforce=false;
     	can_attack=false;
     	can_fortify=false;
@@ -71,31 +75,31 @@ public class Player {
 	}
 	
 	/**
-	 * @return the assignedCountries
+	 * @return the assigned_countries
 	 */
 	public List<Country> getAssignedCountries() {
-		return assignedCountries;
+		return assigned_countries;
 	}
 
 	/**
-	 * @param assignedCountries the assignedCountries to set
+	 * @param assigned_countries the assignedCountries to set
 	 */
-	public void setAssignedCountries(List<Country> assignedCountries) {
-		this.assignedCountries = assignedCountries;
+	public void setAssignedCountries(List<Country> assigned_countries) {
+		this.assigned_countries = assigned_countries;
 	}
 
 	/**
-	 * @return the playerList
+	 * @return the player_list
 	 */
 	public List<Player> getPlayerList() {
-		return playerList;
+		return player_list;
 	}
 
 	/**
 	 * @param playerList the playerList to set
 	 */
-	public void setPlayerList(List<Player> playerList) {
-		this.playerList = playerList;
+	public void setPlayerList(List<Player> player_list) {
+		this.player_list = player_list;
 	}
 
     /**
@@ -123,13 +127,13 @@ public class Player {
 		this.reinforce_armies = reinforce_armies;
 	}
 	/**
-	 * @return the canReinforce
+	 * @return the can_reinforce
 	 */
 	public boolean isCanReinforce() {
 		return can_reinforce;
 	}
 	/**
-	 * @param canReinforce the canReinforce to set
+	 * @param can_reinforce the canReinforce to set
 	 */
 	public void setCanReinforce(boolean can_reinforce) {
 		this.can_reinforce = can_reinforce;
