@@ -32,6 +32,7 @@ public class MapPath {
 	String file_path = "C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
 	MapLoader map_loader = new MapLoader();
 	MapElements map_elements;
+	String short_name;
 	JComboBox maps = new JComboBox<>();
 	
 	Integer [] values = {2,3,4,5};//temp
@@ -103,10 +104,11 @@ public class MapPath {
 	    	public void actionPerformed(ActionEvent e) {
 	    		//SelectMapConitnueButton();
 
-	 	    	if ((txt_map_name.getText().equals("")) && (txt_author_name.getText().equals(""))){
+	 	    	if ((txt_map_name.getText().equals("")) || (txt_author_name.getText().equals(""))){
 	 	 	    	lbl_alert.setText("PLEASE ENTER TEXT");
 	 	 	    }
 	 	 	    else {
+	 	 	    	
 	 	 	    	selectMapConitnueButton();
 	 	 	    }
 	    	}
@@ -179,7 +181,7 @@ public class MapPath {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				lbl_state.setText("Adding continent");
+				
 				addContinent();
 
 			}
@@ -189,7 +191,7 @@ public class MapPath {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				lbl_state.setText("Adding Country");
+				
 				addCountry();				
 			}
 		});
@@ -198,7 +200,7 @@ public class MapPath {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				lbl_state.setText("Adding Neighbour");
+				
 				addNeighbour();
 			}
 		});
@@ -206,6 +208,15 @@ public class MapPath {
 		
 		save_btn_panel.add(btn_save);
 		
+		btn_save.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				lbl_state.setText("Adding Neighbour");
+				addNeighbour();
+			}
+		});
 		mr_panel.add(lbl_game_map,BorderLayout.NORTH);
 		mr_panel.add(scroll_panel_mr,BorderLayout.CENTER);
 		mr_panel.add(status_panel,BorderLayout.SOUTH);
@@ -261,8 +272,15 @@ public class MapPath {
 						map_elements.setContinentCountryMap(new_continent_country_map);
 						map_elements.setContinentList(new_list);
 						text_area_mr.setText(map_elements.updateMR());
+						lbl_state.setText("Continent Added Successfully");
 						addCountry();
 					}
+					else{
+						lbl_state.setText("Control Value must be greater than 0.");
+					}
+				}
+				else{
+					lbl_state.setText("Enter numerical value greater than 0.");
 				}
 			}
 		});
@@ -291,8 +309,6 @@ public class MapPath {
  		
  		DefaultListModel<String> listModel=getNeighboursModel();
  		combobox_neighbour=new JList(listModel);
- 		//combobox_neighbour=bindNeighbours(combobox_neighbour,map_elements);
- 		
  		combobox_neighbour.setFixedCellHeight(20);
 		combobox_neighbour.setFixedCellWidth(100);
 		combobox_neighbour.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -300,6 +316,11 @@ public class MapPath {
  		scroll_pane_neighbours=new JScrollPane(combobox_neighbour);
 		scroll_pane_neighbours.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
  		card_country_panel.add(scroll_pane_neighbours);
+	
+ 		
+// 		combobox_neighbours = new JComboBox();
+// 		combobox_neighbours = bindCountries(combobox_neighbours, map_elements);
+//		card_country_panel.add(combobox_neighbours);
  		
  		btn_add_country = new JButton("Add country");
  		card_country_panel.add(btn_add_country); 
@@ -329,10 +350,14 @@ public class MapPath {
 					
 					HashMap<Country, List<Country>> new_country_neighbour_map=map_elements.getCountryNeighboursMap();
 					List<Country> new_neighbour_list=new_country_neighbour_map.get(selected_neighbour);
+					
 					new_neighbour_list.add(new_country);
+					selected_neighbour.setNeighbourNodes(new_neighbour_list);
 					new_country_neighbour_map.put(selected_neighbour, new_neighbour_list);
+					
 					new_neighbour_list=new ArrayList<>();
 					new_neighbour_list.add(selected_neighbour);
+					new_country.setNeighbourNodes(new_neighbour_list);
 					new_country_neighbour_map.put(new_country, new_neighbour_list);
 					
 					HashMap<Continent, List<Country>> new_continent_country_map=map_elements.getContinentCountryMap();
@@ -344,6 +369,7 @@ public class MapPath {
 					map_elements.setContinentCountryMap(new_continent_country_map);
 					map_elements.setCountryNeighboursMap(new_country_neighbour_map);
 					text_area_mr.setText(map_elements.updateMR());
+					lbl_state.setText("Country Added Successfully");
 					addNeighbour(); 
 					
 				}
@@ -426,6 +452,7 @@ public class MapPath {
 							break;
 						}
 					}
+					System.out.println();
 					if(!selected_country.getNeighbourNodes().contains(selected_neighbour)){
 						HashMap<Country, List<Country>> new_country_neighbour_map=map_elements.getCountryNeighboursMap();
 						
@@ -459,7 +486,6 @@ public class MapPath {
  		card_neighbour_panel.revalidate();
  		card_neighbour_panel.repaint();
 	}
-
 	
 public void playButton(){
 		
@@ -492,7 +518,7 @@ public void playButton(){
 	  	        int bopen = fileChooser.showOpenDialog(null); //open the dialog box
 	  	        if (bopen == JFileChooser.APPROVE_OPTION) {
 	  	        	browse_file_path=fileChooser.getSelectedFile().toString();
-	  	        	String short_name=browse_file_path.substring(browse_file_path.lastIndexOf("\\") + 1);
+	  	        	short_name=browse_file_path.substring(browse_file_path.lastIndexOf("\\") + 1);
 	  	        	maps.addItem(short_name);
 	  	      	}
 			}
@@ -504,12 +530,17 @@ public void playButton(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String selected_map = maps.getSelectedItem().toString();
-				map_elements=map_loader.readMapFile(file_path+selected_map);
+				if(selected_map.equals(short_name))
+					map_elements=map_loader.readMapFile(browse_file_path);
+				else
+					map_elements=map_loader.readMapFile(file_path+selected_map);
+				
 				if(map_elements.is_correct_map()){
+					
 					selectMapConitnueButton();
 				}
 				else{
-					//Label dialog for incorrect map file
+					//lbl set incorrect map. Could not Load. 
 				}
 			}
 		});
