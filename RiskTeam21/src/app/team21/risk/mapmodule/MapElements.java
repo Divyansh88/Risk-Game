@@ -44,6 +44,11 @@ public class MapElements {
 		return map_elements;
 	}
 
+	 public static MapElements getNewMapInstance(HashMap<String, String> map_details){
+		 map_elements=new MapElements();
+		 map_elements.setMapDetail(map_details);
+		 return map_elements;
+	 }
 	/**
 	 * This method will assign Map Elements info to the MapElements class
 	 * 

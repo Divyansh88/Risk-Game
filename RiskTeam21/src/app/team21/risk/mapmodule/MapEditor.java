@@ -103,20 +103,25 @@ public class MapEditor {
      */
     
     public void writeMap(MapElements map_elements, String filename) {
-        StringBuilder maps = new StringBuilder("[Map]\n");
+        StringBuilder maps = new StringBuilder("[Map]");
+        		maps.append(System.getProperty("line.separator"));
         for (Map.Entry<String, String> entry : map_elements.getMapDetail().entrySet()) {
-            maps.append(entry.getKey()).append("=").append(entry.getValue()).append("\n");
+            maps.append(entry.getKey()).append("=").append(entry.getValue()).append(System.getProperty("line.separator"));
         }
-        maps.append("\n\n");
+        maps.append(System.getProperty("line.separator"));
+        
 
         StringBuilder continents = new StringBuilder("[Continents]\n");
+        continents.append(System.getProperty("line.separator"));
+
         System.out.println("Print Status: this is the size of continents:" + map_elements.getContinentList().size());
         for (Continent continent : map_elements.getContinentList()) {
-            continents.append(continent.continentName).append("=").append(continent.controlValue).append("\n");
+            continents.append(continent.continentName).append("=").append(continent.controlValue).append(System.getProperty("line.separator"));
         }
-        continents.append("\n");
+        continents.append(System.getProperty("line.separator"));
 
-        StringBuilder territories = new StringBuilder("[Territories]\n");
+        StringBuilder territories = new StringBuilder("[Territories]");
+        territories.append(System.getProperty("line.separator"));
 
         // loop of graphMap
         Iterator<Map.Entry<Country, List<Country>>> it = map_elements.getCountryNeighboursMap().entrySet().iterator();
@@ -140,7 +145,7 @@ public class MapEditor {
             for (Country c : neiCountryList) {
                 territories.append(",").append(c.countryName);
             }
-            territories.append("\n");
+            territories.append(System.getProperty("line.separator"));
         }
 
         String result = maps + continents.toString() + territories;
