@@ -68,9 +68,9 @@ public class MapEditor {
     /**
      * @param continent
      */
-    public boolean validateContinent(MapElements map_element){
+    public static boolean validateContinent(MapElements map_elements){
     	boolean result=true;
-    	for(Continent c:map_element.getContinentList())
+    	for(Continent c:map_elements.getContinentList())
     		if(!(c.getMemberCountriesList().size()>0)){
     			result=false;
     			break;
@@ -83,9 +83,9 @@ public class MapEditor {
     /**
      * @param continent
      */
-    public boolean validateCountry(MapElements map_element){
+    public static boolean validateCountry(MapElements map_elements){
     	boolean result=true;
-    	for(Country c:map_element.getCountries())
+    	for(Country c:map_elements.getCountries())
     		if(!(c.getNeighbourNodes().size()>0)){
     			result=false;
     			break;
