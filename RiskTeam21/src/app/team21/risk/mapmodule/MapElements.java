@@ -102,7 +102,7 @@ public class MapElements {
 	 *
 	 * @return true if the map is correct; otherwise return false
 	 */
-	public boolean is_correct_map() {
+	public boolean isCorrectMap() {
 		return is_correct_map;
 	}
 
