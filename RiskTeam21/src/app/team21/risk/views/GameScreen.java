@@ -83,7 +83,7 @@ public class GameScreen {
 		scroll_panel1 = new JScrollPane(text_area1);
 		lbl_game_history = new JLabel("Game Map");
 		scroll_panel1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		text_area1.setText(first_print + second_print+"\n-------------------------------\n");
+		text_area1.setText(first_print + second_print+"\n\n");
 
 		turn_panel = new JPanel();
 		turn_panel.add(turn_label);
@@ -144,31 +144,29 @@ public class GameScreen {
 
 		btn_reinforcement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// if can reinforce call method
 				if(current_player.isCanReinforce())
 					ReinforcementButton(reinforcement_army,current_player,map_elements);
 				else
-					text_area1.append("\nSorry. You cannot reinforce right now.");
+					
+					status_label.setText("\nSorry. You cannot reinforce right now.");
 			}
 		});
 
 		btn_attack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// if can attack call method
 				if(current_player.isCanAttack())
 					AttackButton();
 				else
-					text_area1.append("\nSorry. You cannot attack right now. Feature Coming Soon.");
+					status_label.setText("\nSorry. You cannot attack right now. Feature Coming Soon.");
 			}
 		});
 
 		btn_fortify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// if can fortify call method
 				if(current_player.isCanFortify())
 					FortifyButton(current_player,map_elements);
 				else
-					text_area1.append("\nSorry. You cannot fortify right now.");
+					status_label.setText("\nSorry. You cannot fortify right now.");
 			}
 		});
 		
@@ -178,7 +176,7 @@ public class GameScreen {
 				if(current_player.isCanEndTurn())
 					EndTurnButton();
 				else
-					text_area1.append("\nSorry. You cannot End Turn right now.");
+					status_label.setText("\nSorry. You cannot End Turn right now.");
 			}
 		});
 		
@@ -250,7 +248,7 @@ public class GameScreen {
 					}
 					else{
 						
-						// status print not enough armies
+						status_label.setText("Not Enough Armies");
 					}
 				}
 				
@@ -258,7 +256,7 @@ public class GameScreen {
 					ReinforcementButton(current_player.getReinforceArmies(),current_player,map_elements);
 				}
 				else{
-					text_area1.append("\nREINFORCEMENT PHASE COMPLETED.\nFORTIFICATION PHASE BEGINS...");
+					status_label.setText("Reinforcement Phase Completed");
 					current_player.setCanReinforce(false);
 					current_player.setCanFortify(true);
 					current_player.setCanEndTurn(true);
@@ -344,20 +342,17 @@ public class GameScreen {
 
 						if(fortify_successful){
 							current_player.setCanFortify(false);
-							text_area1.append("\nFortify Successful. You can End your Turn Now.");
+							status_label.setText("\nFortify Successful. You can End your Turn Now.");
 							EndTurnButton();
 						}
 						else{
-							text_area1.append("\nFortify Unsuccessful. Enter valid armies or Select Valid Country to Fortify.");
-							//panel same.
-							//error display
+							status_label.setText("\nFortify Unsuccessful. Enter valid armies or Select Valid Country to Fortify.");
 							FortifyButton(current_player, map_elements);
 						}
-							
-						
+								
 					}
 					else{
-						text_area1.append("\nPlease Enter a valid positive integer.");
+						status_label.setText("\nPlease Enter a valid positive integer.");
 					}
 				}
 				
@@ -367,7 +362,6 @@ public class GameScreen {
 	}
 	
 	public void EndTurnButton() {
-		System.out.println("INSIDE ENDTURN BUTTON");
 		endturn_panel.removeAll();
 		
 		cl_ps.show(phase_screen_panel, "ep");
