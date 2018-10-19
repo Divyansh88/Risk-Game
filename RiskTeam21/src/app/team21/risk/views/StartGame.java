@@ -76,7 +76,7 @@ public class StartGame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					
-					System.exit(0);
+					close();
 					
 				}
 			});
@@ -112,5 +112,9 @@ public class StartGame {
 			main_frame.repaint();
 			return main_frame;
 			
+		}
+		
+		public static void close(){
+			main_frame.dispose();
 		}
 }
