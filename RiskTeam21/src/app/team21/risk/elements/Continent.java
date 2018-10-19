@@ -34,7 +34,7 @@ public class Continent {
      */
     public Continent(String continent_name) {
         this.continent_name = continent_name;
-        this.control_value = control_value;
+        this.control_value = 0;
     }
 
     /**

@@ -101,21 +101,26 @@ public class MapEditor {
      * @param file_name Map file name that user wants to give
      */
     
-    public void writeMap(MapElements map_elements, String file_name) {
-        StringBuilder maps = new StringBuilder("[Map]\n");
+    public void writeMap(MapElements map_elements, String filename) {
+        StringBuilder maps = new StringBuilder("[Map]");
+        		maps.append(System.getProperty("line.separator"));
         for (Map.Entry<String, String> entry : map_elements.getMapDetail().entrySet()) {
-            maps.append(entry.getKey()).append("=").append(entry.getValue()).append("\n");
+            maps.append(entry.getKey()).append("=").append(entry.getValue()).append(System.getProperty("line.separator"));
         }
-        maps.append("\n\n");
+        maps.append(System.getProperty("line.separator"));
+        
 
-        StringBuilder continents = new StringBuilder("[Continents]\n");
+        StringBuilder continents = new StringBuilder("[Continents]");
+        continents.append(System.getProperty("line.separator"));
+
         System.out.println("Print Status: this is the size of continents:" + map_elements.getContinentList().size());
         for (Continent continent : map_elements.getContinentList()) {
-            continents.append(continent.continent_name).append("=").append(continent.control_value).append("\n");
+            continents.append(continent.continent_name).append("=").append(continent.control_value).append(System.getProperty("line.separator"));
         }
-        continents.append("\n");
+        continents.append(System.getProperty("line.separator"));
 
-        StringBuilder territories = new StringBuilder("[Territories]\n");
+        StringBuilder territories = new StringBuilder("[Territories]");
+        territories.append(System.getProperty("line.separator"));
 
         // loop of graphMap
         Iterator<Map.Entry<Country, List<Country>>> it = map_elements.getCountryNeighboursMap().entrySet().iterator();
@@ -124,32 +129,31 @@ public class MapEditor {
         while (it.hasNext()) {
             Map.Entry<Country, List<Country>> pair = it.next();
             // get country object
-            Country key_country = pair.getKey();
+            Country keyCountry = pair.getKey();
             // get list of the neighbours
-            List<Country> nei_country_list = pair.getValue();
+            List<Country> neiCountryList = pair.getValue();
 
             // index of the country from the all countries of all continents
             // list
             start_pixel += 10;
             end_pixel += 10;
             // get values of each country object
-            territories.append(key_country.country_name).append(",").append(start_pixel).append(",").append(end_pixel).append(",").append(key_country.getBelongsToContinent());
+            territories.append(keyCountry.country_name).append(",").append(start_pixel).append(",").append(end_pixel).append(",").append(keyCountry.getBelongsToContinent());
 
             // get the index value of the neighbour
-            for (Country c : nei_country_list) {
+            for (Country c : neiCountryList) {
                 territories.append(",").append(c.country_name);
             }
-            territories.append("\n");
+            territories.append(System.getProperty("line.separator"));
         }
 
         String result = maps + continents.toString() + territories;
 
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file_name)))) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filename)))) {
             out.print(result);
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

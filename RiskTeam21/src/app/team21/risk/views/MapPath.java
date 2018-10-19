@@ -256,12 +256,12 @@ public class MapPath {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MapEditor me=new MapEditor();
-				if(me.validateContinent(map_elements)&&me.validateCountry(map_elements)){
+				if(me.validateContinent(map_elements)&&me.validateCountry(map_elements)&&map_elements.getContinentList().size()>0&&map_elements.getCountries().size()>0){
 					me.writeMap(map_elements,file_path+file_name);
 					lbl_state.setText("Map Saved");
 				}
 				else{
-					lbl_state.setText("Create more elements in the map");
+					lbl_state.setText("Create more elements in the map to save.");
 				}
 			}
 		});
