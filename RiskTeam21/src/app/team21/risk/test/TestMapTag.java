@@ -12,7 +12,7 @@ import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
 
 /**
- * @author Mahy Salama & Yash Sheth
+ * @author Mahy Salama and Yash Sheth
  *
  */
 public class TestMapTag {

@@ -18,7 +18,7 @@ import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
 
 /**
- * @author Harsh Vahani & Yash Sheth
+ * @author Harsh Vahani and Yash Sheth
  *
  */
 public class TestValidateContinent {

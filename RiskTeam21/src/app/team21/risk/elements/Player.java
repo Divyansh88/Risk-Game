@@ -41,7 +41,7 @@ public class Player {
     /**
      * This constructor will assign name to player.
      * 
-     * @param name
+     * @param name name of player
      */
     public Player(String name){
     	this.name=name;
@@ -117,7 +117,7 @@ public class Player {
 	/**
 	 * setter method to assign player list.
 	 * 
-	 * @param playerList the playerList to set
+	 * @param player_list the playerList to set
 	 */
 	public void setPlayerList(List<Player> player_list) {
 		this.player_list = player_list;
@@ -238,7 +238,7 @@ public class Player {
 	/**
 	 * this method will subtract reinforce armies.
 	 * 
-	 * @param armies_selected
+	 * @param armies_selected subtract this amount
 	 */
 	public void subReinforceArmies(int armies_selected) {
 		reinforce_armies-=armies_selected;

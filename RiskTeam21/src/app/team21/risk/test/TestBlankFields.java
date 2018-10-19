@@ -12,7 +12,7 @@ import app.team21.risk.mapmodule.MapLoader;
 
 
 /**
- * @author Divyansh Thakar & Yash Sheth
+ * @author Divyansh Thakar and Yash Sheth
  *
  */
 public class TestBlankFields {

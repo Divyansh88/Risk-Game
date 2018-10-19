@@ -22,7 +22,7 @@ import java.util.List;
  * Last Updated on: 18-10-2018, Thursday 
  * This class file handles all map related screens.
  * 
- * @author Yash Sheth & Divyansh Thakar
+ * @author Yash Sheth and Divyansh Thakar
  * @version 1.0.0
  */
 public class MapPath {

@@ -19,7 +19,7 @@ import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
 
 /**
- * @author Harsh Vaghani & Yash Sheth
+ * @author Harsh Vaghani and Yash Sheth
  *
  */
 public class TestValidateCountry {

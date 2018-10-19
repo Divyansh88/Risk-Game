@@ -21,7 +21,7 @@ import javax.swing.JPanel;
  * Last Updated on: 18-10-2018, Thursday 
  * This class file handles start game screen i.e. home screen.
  * 
- * @author Yash Sheth & Divyansh Thakar
+ * @author Yash Sheth and Divyansh Thakar
  * @version 1.0.0
  */
 public class StartGame {
@@ -31,7 +31,7 @@ public class StartGame {
 		/**
 		 * This is main method.
 		 * 
-		 * @param args
+		 * @param args default arguments
 		 */
 		public static void main(String [] args){
 			

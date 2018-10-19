@@ -16,7 +16,7 @@ import java.util.List;
  * Last Updated on: 18-10-2018, Thursday 
  * This class file handles main game screen.
  * 
- * @author Yash Sheth & Divyansh Thakar & Samip Thakkar
+ * @author Yash Sheth and Divyansh Thakar and Samip Thakkar
  * @version 1.0.0
  */
 
@@ -47,9 +47,9 @@ public class GameScreen {
 	/**
 	 * This method will create view of main game screen and updates the value of different components.
 	 * 
-	 * @param map_elements
-	 * @param player_list
-	 * @param turn_value
+	 * @param map_elements elements of map
+	 * @param player_list list of players
+	 * @param turn_value turn value
 	 */
 	public void playerContinueButton(MapElements map_elements, List<Player> player_list, int turn_value) {
 

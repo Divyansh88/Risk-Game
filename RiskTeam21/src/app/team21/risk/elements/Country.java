@@ -9,7 +9,7 @@ import app.team21.risk.elements.Player;
  * Last Updated on : 18/10/2018, Thursday
  * Country Bean class to get and set properties related to country.
  *
- * @author Yash Sheth & Divyansh Thakar
+ * @author Yash Sheth and Divyansh Thakar
  * @version 1.0.0
  */
 public class Country{
@@ -25,10 +25,10 @@ public class Country{
     /**
      * This constructor will create country object based provided parameters.
      *
-     * @param countryName name of the country
+     * @param country_name name of the country
      * @param x_cordinate For UI purpose start pixel
      * @param y_cordinate For UI purpose end pixel
-     * @param continentName name of the continent
+     * @param continent_name name of the continent
      */
     public Country(String country_name, int x_cordinate, int y_cordinate, String continent_name) {
         this.country_name = country_name;
@@ -41,8 +41,8 @@ public class Country{
     /**
      * This constructor will create country object based on provided player object and current deployed armies.
      *
-     * @param belongsToPlayer player object
-     * @param currentArmiesDeployed number of armies deployed to the country
+     * @param belongs_to_player player object
+     * @param current_armies_deployed number of armies deployed to the country
      */
     public Country(Player belongs_to_player, int current_armies_deployed) {
         this.belongs_to_player = belongs_to_player;
@@ -52,7 +52,7 @@ public class Country{
     /**
      * This constructor will create country object based on provided country name.
      *
-     * @param countryName name of the country
+     * @param country_name name of the country
      */
     public Country(String country_name) {
         this.country_name = country_name;
@@ -61,8 +61,8 @@ public class Country{
     /**
      * This constructor will create country object based on country name and continent name , for non UI purpose.
      *
-     * @param countryName name of the country
-     * @param belongsToContinent name of the continent where country belongs to .
+     * @param country_name name of the country
+     * @param belongs_to_continent name of the continent where country belongs to .
      */
     public Country(String country_name, String belongs_to_continent) {
         this.country_name = country_name;
@@ -98,7 +98,7 @@ public class Country{
     /**
      * setter method to assign country to player.
      *
-     * @param belongsToPlayer player object
+     * @param belongs_to_player player object
      */
     public void setBelongsToPlayer(Player belongs_to_player) {
         this.belongs_to_player = belongs_to_player;
@@ -116,7 +116,7 @@ public class Country{
     /**
      * setter method to assign value of current armies deployed.
      * 
-     * @param currentArmiesDeployed numerator of how many current armies deployed
+     * @param current_armies_deployed numerator of how many current armies deployed
      */
     public void setCurrentArmiesDeployed(int current_armies_deployed) {
         this.current_armies_deployed = current_armies_deployed;
@@ -134,7 +134,7 @@ public class Country{
     /**
      * setter method assigns country name .
      * 
-     * @param countryName name of the country
+     * @param country_name name of the country
      */
     public void setCountryName(String country_name) {
         this.country_name = country_name;
@@ -188,7 +188,7 @@ public class Country{
     /**
      * setter method assigns details of country to continent it belongs to.
      * 
-     * @param belongsToContinent country object
+     * @param belongs_to_continent country object
      */
     public void setBelongsToContinent(String belongs_to_continent) {
         this.belongs_to_continent = belongs_to_continent;
@@ -206,7 +206,7 @@ public class Country{
     /**
      * setter method assigns details of neighbour countries.
      * 
-     * @param neighbourNodes list of neighbour countries
+     * @param neighbour_nodes list of neighbour countries
      */
     public void setNeighbourNodes(List<Country> neighbour_nodes) {
         this.neighbour_nodes = neighbour_nodes;
@@ -234,7 +234,7 @@ public class Country{
      * this method assigns player and number of armies to the player.
      * 
      * @param player name of the player
-     * @param noOfArmy value of the player
+     * @param no_of_army value of the player
      */
     public void setPlayer(Player player, int no_of_army) {
         this.belongs_to_player = player;

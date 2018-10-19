@@ -221,7 +221,7 @@ public class MapLoader {
 	 * @param reader BufferReader object that read the .map file for continent
 	 * @param map_elements elements of map
 	 * @return map elements
-	 * @throws IOException
+	 * @throws IOException to handle IOException
 	 */
 	public static MapElements readContinents(BufferedReader reader,MapElements map_elements) throws IOException{
 		String line;

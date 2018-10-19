@@ -63,7 +63,7 @@ public class MapElements {
 	/**
 	 * This method will assign Map Elements info to the MapElements class.
 	 * 
-	 * @param map_elementsToSet map elements object
+	 * @param map_elements_to_set map elements object
 	 */
 	public static void setInstance(MapElements map_elements_to_set) {
 		map_elements = map_elements_to_set;
@@ -118,7 +118,7 @@ public class MapElements {
 	/**
 	 * getter method for players who selected the map to play on.
 	 *
-	 * @return errorMessage message display on the console
+	 * @return error_message message display on the console
 	 */
 	public String getErrorMessage() {
 		return error_message;

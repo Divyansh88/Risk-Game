@@ -56,8 +56,8 @@ public class MapEditor {
     /**
      * This method will add continent.
      * 
-     * @param continent
-     * @param map_elements
+     * @param continent object of continent
+     * @param map_elements MapElements object
      */
     public void addContinent(Continent continent, MapElements map_elements) {
         if (continent != null && continent.getControlValue()>=0) {
