@@ -31,7 +31,7 @@ public class TestBlankFields {
     @Test
     public void testBlankField() throws Exception {
         elements = loader.readMapFile(filePath + "no_blank_name.map");
-        assertEquals(false, elements.is_correct_map());
+        assertEquals(false, elements.isCorrectMap());
     }
 
     
