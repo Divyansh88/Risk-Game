@@ -15,7 +15,7 @@ import java.util.List;
 public class GameScreen {
 	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn,btn_endturn_ep;
 	JLabel lbl_game_history, lbl_select_army, lbl_select_country, lbl_choose_player, lbl_select_from_country,
-			lbl_select_to_country, turn_label, lbl_game_map;
+			lbl_select_to_country, lbl_game_map;
 	JTextField txt_armies;
 	JPanel master_panel, game_history_panel, mr_panel, turn_panel, second_master_panel, phase_screen_panel,
 			action_panel;
@@ -24,7 +24,8 @@ public class GameScreen {
 	JScrollPane scroll_panel, scroll_panel1;
 	JComboBox combobox_armies, combobox_country,combobox_country2;
 	CardLayout cl_ps = new CardLayout();
-
+	JLabel turn_label = new JLabel();
+	JLabel status_label = new JLabel();
 	MapElements map_elements;
 	List<Player> player_list;
 	GamePlay game_play;
@@ -85,12 +86,14 @@ public class GameScreen {
 		text_area1.setText(first_print + second_print+"\n-------------------------------\n");
 
 		turn_panel = new JPanel();
+		turn_panel.add(turn_label);
 		turn_panel.setPreferredSize(new Dimension(600, 30));
 		turn_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		second_master_panel = new JPanel();
 		second_master_panel.setPreferredSize(new Dimension(600, 150));
 		second_master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		status_panel = new JPanel();
+		status_panel.add(status_label);
 		status_panel.setPreferredSize(new Dimension(600, 30));
 		status_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		mr_master_panel = new JPanel();
@@ -194,7 +197,8 @@ public class GameScreen {
 
 	public void ReinforcementButton(int reinforce_armies,Player current_player, MapElements map_elements) {
 		this.current_player=current_player;
-		//turn_label.setText("Its Player1 turn and Reinforcement phase");
+		System.out.println(current_player.getName().toString());
+		turn_label.setText("Its"+current_player.getName()+"'s turn and Reinforcement phase.");
 		
 		reinforcement_panel.removeAll();
 		cl_ps.show(phase_screen_panel, "rp");
@@ -269,7 +273,8 @@ public class GameScreen {
 
 	public void AttackButton() {
 		attack_panel.removeAll();
-
+		
+		
 		cl_ps.show(phase_screen_panel, "ap");
 		lbl_choose_player = new JLabel("Coming soon");
 		attack_panel.add(lbl_choose_player);
@@ -279,7 +284,8 @@ public class GameScreen {
 
 	public void FortifyButton(Player current_player, MapElements map_elements) {
 		fortify_panel.removeAll();
-
+		turn_label.setText("Its"+current_player.getName()+"'s turn and Fortification phase.");
+		
 		cl_ps.show(phase_screen_panel, "fp");
 		
 		lbl_select_from_country = new JLabel("Fortify from");

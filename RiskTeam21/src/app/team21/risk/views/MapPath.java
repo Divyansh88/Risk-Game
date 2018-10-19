@@ -33,6 +33,8 @@ public class MapPath {
 	String file_path = "C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
 	MapLoader map_loader = new MapLoader();
 	MapElements map_elements;
+	JButton btn_back = new JButton("Back"); 
+	JButton btn_home = new JButton("Home");
 	String short_name,file_name="DEFAULT";
 	JComboBox maps = new JComboBox<>();
 	
@@ -64,6 +66,24 @@ public class MapPath {
 	    JFrame jf = new JFrame();
 		jf=(JFrame) sg.getFrame();
 		jf.add(test);
+		jf.add(btn_back);
+		btn_back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sg.createStartScreen();
+				
+			}
+		});
+		jf.add(btn_home);
+		btn_home.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sg.createStartScreen();
+				
+			}
+		});
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
@@ -117,6 +137,25 @@ public class MapPath {
  	    JFrame jf = new JFrame();
 		jf=(JFrame) sg.getFrame();
 		jf.add(test);
+		jf.add(btn_back);
+		btn_back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				mapButton();
+				
+			}
+		});
+		jf.add(btn_home);
+		btn_home.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sg.createStartScreen();
+
+			}
+		});
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
@@ -241,6 +280,24 @@ public class MapPath {
 		JFrame jf = new JFrame();
 		jf=(JFrame) sg.getFrame();
 		jf.add(test);
+		jf.add(btn_back);
+		btn_back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				selectMap();
+				
+			}
+		});
+		jf.add(btn_home);
+		btn_home.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sg.createStartScreen();
+				
+			}
+		});
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
@@ -572,6 +629,24 @@ public void playButton(){
 		JFrame jf = new JFrame();
 		jf=(JFrame) sg.getFrame();
 		jf.add(main_panel);
+		jf.add(btn_back);
+		btn_back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mapButton();
+				
+			}
+		});
+		jf.add(btn_home);
+		btn_home.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sg.createStartScreen();
+				
+			}
+		});
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);

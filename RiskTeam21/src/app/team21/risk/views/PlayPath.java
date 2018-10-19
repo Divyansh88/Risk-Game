@@ -28,6 +28,8 @@ public class PlayPath extends StartGame{
 	String browse_file_path;
 	String file_path="C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
 	MapElements map_elements;
+	JButton btn_back = new JButton("Back"); 
+	JButton btn_home = new JButton("Home");
 	JComboBox players;
 	
 	public void playButton(){
@@ -102,6 +104,24 @@ public class PlayPath extends StartGame{
 		JFrame jf = new JFrame();
 		jf=(JFrame) sg.getFrame();
 		jf.add(main_panel);
+		jf.add(btn_back);
+		btn_back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sg.createStartScreen();
+				
+			}
+		});
+		jf.add(btn_home);
+		btn_home.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sg.createStartScreen();
+				
+			}
+		});
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
@@ -136,7 +156,10 @@ public class PlayPath extends StartGame{
 	}
 	
 	public void selectPlayers(){
+		JPanel test = new JPanel();
+		StartGame sg= new StartGame();
 		
+		test=sg.getPanel();
 		
 		JLabel choose_number_of_player = new JLabel("Choose number of players :");
 		JButton lets_go = new JButton("Let's go");
@@ -178,13 +201,38 @@ public class PlayPath extends StartGame{
 				
 			}
 		});
-		
-		
-		choose_player.add(choose_number_of_player);
-		choose_player.add(players);
-		choose_player.add(lets_go);
-	}
+//		choose_player.add(choose_number_of_player);
+//		choose_player.add(players);
+//		choose_player.add(lets_go);
+		test.add(choose_number_of_player);
+		test.add(players);
+		test.add(lets_go);
+		JFrame jf = new JFrame();
+		jf=(JFrame) sg.getFrame();
+		jf.add(test);
+		jf.add(btn_back);
+		btn_back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				playButton();
+				
+			}
+		});
+		jf.add(btn_home);
+		btn_home.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sg.createStartScreen();
+				
+			}
+		});
+		jf.setVisible(true);
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 
+	}
 }
 
 
