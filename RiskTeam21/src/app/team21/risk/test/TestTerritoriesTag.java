@@ -30,7 +30,7 @@ public class TestTerritoriesTag {
     @Test
     public void testTerritoriesTag() throws Exception {
         elements = loader.readMapFile(filePath + "no_territory_tag.map");
-        assertEquals(false, elements.is_correct_map());
+        assertEquals(false, elements.isCorrectMap());
     }
 
 }
