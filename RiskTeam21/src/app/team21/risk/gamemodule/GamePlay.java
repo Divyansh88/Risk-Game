@@ -100,8 +100,7 @@ public class GamePlay {
 		
 		for(Player p:player_list){
 			int deployed_armies=armies-p.getAssignedCountries().size();
-			p.setInitialArmies(deployed_armies);
-			
+			p.setInitialArmies(deployed_armies);			
 		}
 	}
 	
@@ -136,7 +135,7 @@ public class GamePlay {
 		sb.append("======|CAPTURE THEM ALL|======\n");
 		for (Continent c : map_elements.getContinentList()) {
 			sb.append("\n\n" + c.getContinentName() + "  " + c.getControlValue() + "\n");
-			for (Country c1 : c.getMemberCountriesList())
+			for (Country c1 : c.getMemberCountriesList())				
 				sb.append("\n"+c1.getCountryName() + " - " +c1.getCurrentArmiesDeployed()+ " - " + c1.getBelongsToPlayer().getName());
 		}
 		return	sb.toString();
@@ -193,11 +192,4 @@ public class GamePlay {
 		current_player.setReinforceArmies(armies);
 		view.ReinforcementButton(armies,current_player,map_elements);
 	}
-
-	
-	
-	
-	
-	
-	
 }

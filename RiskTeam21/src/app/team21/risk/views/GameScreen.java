@@ -309,14 +309,14 @@ public class GameScreen {
 		btn_ok_fp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				System.out.println("inside success");
+				
 				boolean fortify_successful=false;
 				if(current_player.isCanFortify()){
 					
 					String s=txt_armies.getText().toString().trim();
-					System.out.println("canreinforce success "+s);
-					if(s != null && s.matches("^[0-9]*$")){
-						System.out.println("INSIDE IF SUCEESSFULL");
+					
+					if(s != null && s.matches("^[0-9]*$")&&!s.equals("")){
+					
 						int armies=Integer.valueOf(s);
 						Country selected_from=null,selected_to=null;
 						
@@ -333,11 +333,8 @@ public class GameScreen {
 								break;
 							}
 						}
-						
-						System.out.println("details"+selected_from.getCountryName()+selected_to.getCountryName()+armies);
-
 						fortify_successful=GamePlay.tryFortify(current_player, selected_from, selected_to, armies);
-						System.out.println("fortify result"+fortify_successful);
+						
 
 						if(fortify_successful){
 							current_player.setCanFortify(false);

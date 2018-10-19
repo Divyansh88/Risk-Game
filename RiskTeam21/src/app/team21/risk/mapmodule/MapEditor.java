@@ -116,7 +116,7 @@ public class MapEditor {
 
         System.out.println("Print Status: this is the size of continents:" + map_elements.getContinentList().size());
         for (Continent continent : map_elements.getContinentList()) {
-            continents.append(continent.continentName).append("=").append(continent.controlValue).append(System.getProperty("line.separator"));
+            continents.append(continent.continent_name).append("=").append(continent.control_value).append(System.getProperty("line.separator"));
         }
         continents.append(System.getProperty("line.separator"));
 
@@ -139,11 +139,11 @@ public class MapEditor {
             startPixel += 10;
             endPixel += 10;
             // get values of each country object
-            territories.append(keyCountry.countryName).append(",").append(startPixel).append(",").append(endPixel).append(",").append(keyCountry.getBelongsToContinent());
+            territories.append(keyCountry.country_name).append(",").append(startPixel).append(",").append(endPixel).append(",").append(keyCountry.getBelongsToContinent());
 
             // get the index value of the neighbour
             for (Country c : neiCountryList) {
-                territories.append(",").append(c.countryName);
+                territories.append(",").append(c.country_name);
             }
             territories.append(System.getProperty("line.separator"));
         }

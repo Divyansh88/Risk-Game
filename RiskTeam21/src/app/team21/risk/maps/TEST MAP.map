@@ -1,0 +1,15 @@
+[Map]
+author=YASH
+name=TEST MAP
+
+[Continents]
+
+Gujarat=20
+Maharashtra=20
+
+[Territories]
+Ahmedabad,55,70,Gujarat,Vadodara
+Vadodara,65,80,Gujarat,Ahmedabad,Surat
+Pune,75,90,Maharashtra,Mumbai
+Surat,85,100,Gujarat,Vadodara
+Mumbai,95,110,Maharashtra,Pune
