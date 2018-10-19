@@ -14,11 +14,9 @@ import java.util.List;
 
 public class GameScreen {
 	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn,btn_endturn_ep;
-	JLabel lbl_game_history, lbl_select_army, lbl_select_country, lbl_choose_player, lbl_select_from_country,
-			lbl_select_to_country, lbl_game_map;
+	JLabel lbl_game_history, lbl_select_army, lbl_select_country, lbl_choose_player, lbl_select_from_country,lbl_select_to_country, lbl_game_map;
 	JTextField txt_armies;
-	JPanel master_panel, game_history_panel, mr_panel, turn_panel, second_master_panel, phase_screen_panel,
-			action_panel;
+	JPanel master_panel, game_history_panel, mr_panel, turn_panel, second_master_panel, phase_screen_panel,action_panel;
 	JPanel reinforcement_panel, attack_panel, fortify_panel, mr_master_panel, status_panel,endturn_panel;
 	JTextArea text_area, text_area1;
 	JScrollPane scroll_panel, scroll_panel1;
@@ -32,8 +30,8 @@ public class GameScreen {
 	Player current_player;
 	int turn_value;
 	GameScreen view;
-	
 	int reinforcement_army;
+	
 	/**
 	 * It is the main game screen
 	 */
@@ -230,7 +228,6 @@ public class GameScreen {
 					System.out.println("Armies Selected "+armies_selected);
 					
 					Country selected_country=null;
-						// selected items -> tryreinforce
 					for(Country c:map_elements.getCountries()){
 						if(c.getCountryName().equals(combobox_country.getSelectedItem().toString())){
 							selected_country=c;

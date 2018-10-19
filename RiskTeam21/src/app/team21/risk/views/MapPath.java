@@ -112,13 +112,8 @@ public class MapPath {
 	    lbl_alert = new JLabel("");
 	    test.add(lbl_alert);
  	    btn_selectmap_conitnue.addActionListener(new ActionListener() {
-	    	/* (non-Javadoc)
-	    	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	    	 * It is a click event which will redirect to add continent, country and neighbour and shows map representation
-	    	 */
- 	    	
+	    	
 	    	public void actionPerformed(ActionEvent e) {
-	    		//SelectMapConitnueButton();
 
 	 	    	if ((txt_map_name.getText().equals("")) || (txt_author_name.getText().equals(""))){
 	 	 	    	lbl_alert.setText("PLEASE ENTER TEXT");
@@ -256,12 +251,12 @@ public class MapPath {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MapEditor me=new MapEditor();
-				if(me.validateContinent(map_elements)&&me.validateCountry(map_elements)&&map_elements.getContinentList().size()>0&&map_elements.getCountries().size()>0){
+				if(me.validateContinent(map_elements)&&me.validateCountry(map_elements)){
 					me.writeMap(map_elements,file_path+file_name);
 					lbl_state.setText("Map Saved");
 				}
 				else{
-					lbl_state.setText("Create more elements in the map to save.");
+					lbl_state.setText("Create more elements in the map");
 				}
 			}
 		});
@@ -516,7 +511,7 @@ public class MapPath {
 							break;
 						}
 					}
-					System.out.println();
+
 					if(!selected_country.getNeighbourNodes().contains(selected_neighbour)){
 						HashMap<Country, List<Country>> new_country_neighbour_map=map_elements.getCountryNeighboursMap();
 						
