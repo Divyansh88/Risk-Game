@@ -6,11 +6,12 @@ import java.util.List;
 import app.team21.risk.elements.Player;
 
 /**
- * Country Bean class to get and set properties related to country
+ * Last Updated on : 18/10/2018, Thursday
+ * Country Bean class to get and set properties related to country.
  *
  * @author Yash Sheth
+ * @version 1.0.0
  */
-
 public class Country{
     public String country_name;
     public int x_cordinate;
@@ -22,11 +23,11 @@ public class Country{
 
 
     /**
-     * This constructor will create country object based provided parameters
+     * This constructor will create country object based provided parameters.
      *
-     * @param countryName   name of the country
-     * @param x_cordinate    For UI purpose start pixel
-     * @param y_cordinate      For UI purpose end pixel
+     * @param countryName name of the country
+     * @param x_cordinate For UI purpose start pixel
+     * @param y_cordinate For UI purpose end pixel
      * @param continentName name of the continent
      */
     public Country(String country_name, int x_cordinate, int y_cordinate, String continent_name) {
@@ -38,9 +39,9 @@ public class Country{
     }
 
     /**
-     * This constructor will create country object based on provided player object and current deployed armies
+     * This constructor will create country object based on provided player object and current deployed armies.
      *
-     * @param belongsToPlayer       player object
+     * @param belongsToPlayer player object
      * @param currentArmiesDeployed number of armies deployed to the country
      */
     public Country(Player belongs_to_player, int current_armies_deployed) {
@@ -49,7 +50,7 @@ public class Country{
     }
 
     /**
-     * This constructor will create country object based on provided country name
+     * This constructor will create country object based on provided country name.
      *
      * @param countryName name of the country
      */
@@ -58,10 +59,10 @@ public class Country{
     }
 
     /**
-     * This constructor will create country object based on country name and continent name , for non UI purpose
+     * This constructor will create country object based on country name and continent name , for non UI purpose.
      *
-     * @param countryName        Name of the country
-     * @param belongsToContinent Name of the continent where country belongs to .
+     * @param countryName name of the country
+     * @param belongsToContinent name of the continent where country belongs to .
      */
     public Country(String country_name, String belongs_to_continent) {
         this.country_name = country_name;
@@ -69,7 +70,7 @@ public class Country{
     }
 
     /**
-     * Over ride equals method in order to compare compare objects based on country name not country objects
+     * Over ride equals method in order to compare compare objects based on country name not country objects.
      */
     @Override
     public boolean equals(Object o) {
@@ -86,7 +87,7 @@ public class Country{
     }
 
     /**
-     * getter method for player who own the country
+     * getter method for player who own the country.
      *
      * @return belongsToPlayer owner of the country (player object)
      */
@@ -95,7 +96,7 @@ public class Country{
     }
 
     /**
-     * setter method to assign country to player
+     * setter method to assign country to player.
      *
      * @param belongsToPlayer player object
      */
@@ -104,7 +105,8 @@ public class Country{
     }
 
     /**
-     * getter method give number of current armies deployed
+     * getter method give number of current armies deployed.
+     * 
      * @return numerator of how many current armies deployed
      */
     public int getCurrentArmiesDeployed() {
@@ -112,7 +114,8 @@ public class Country{
     }
 
     /**
-     * setter method to assign value of current armies deployed
+     * setter method to assign value of current armies deployed.
+     * 
      * @param currentArmiesDeployed numerator of how many current armies deployed
      */
     public void setCurrentArmiesDeployed(int current_armies_deployed) {
@@ -120,7 +123,8 @@ public class Country{
     }
 
     /**
-     * getter method gives the name of the country
+     * getter method gives the name of the country.
+     * 
      * @return string country object
      */
     public String getCountryName() {
@@ -128,7 +132,8 @@ public class Country{
     }
 
     /**
-     * setter method assigns country name 
+     * setter method assigns country name .
+     * 
      * @param countryName name of the country
      */
     public void setCountryName(String country_name) {
@@ -136,7 +141,8 @@ public class Country{
     }
 
     /**
-     * getter method gives the starting pixel of the country
+     * getter method gives the starting pixel of the country.
+     * 
      * @return value of starting pixel
      */
     public int getx_cordinate() {
@@ -144,7 +150,8 @@ public class Country{
     }
 
     /**
-     * setter method assigns starting pixel to the country
+     * setter method assigns starting pixel to the country.
+     * 
      * @param x_cordinate value of pixel
      */
     public void setx_cordinate(int x_cordinate) {
@@ -152,7 +159,8 @@ public class Country{
     }
 
     /**
-     * getter method gives the ending pixel of the country
+     * getter method gives the ending pixel of the country.
+     * 
      * @return value of ending pixel
      */
     public int gety_cordinate() {
@@ -160,7 +168,8 @@ public class Country{
     }
 
     /**
-     * setter method assigns ending pixel to the country
+     * setter method assigns ending pixel to the country.
+     * 
      * @param y_cordinate value of pixel
      */
     public void sety_cordinate(int y_cordinate) {
@@ -168,7 +177,8 @@ public class Country{
     }
 
     /**
-     * getter method gives details of country to continent it belongs to
+     * getter method gives details of country to continent it belongs to.
+     * 
      * @return name of the continent the country belongs to
      */
     public String getBelongsToContinent() {
@@ -176,7 +186,8 @@ public class Country{
     }
 
     /**
-     * setter method assigns details of country to continent it belongs to
+     * setter method assigns details of country to continent it belongs to.
+     * 
      * @param belongsToContinent country object
      */
     public void setBelongsToContinent(String belongs_to_continent) {
@@ -184,7 +195,8 @@ public class Country{
     }
 
     /**
-     * getter method gives details of neighbour countries 
+     * getter method gives details of neighbour countries.
+     * 
      * @return list of neighbour countries
      */
     public List<Country> getNeighbourNodes() {
@@ -192,7 +204,8 @@ public class Country{
     }
 
     /**
-     * setter method assigns details of neighbour countries
+     * setter method assigns details of neighbour countries.
+     * 
      * @param neighbourNodes list of neighbour countries
      */
     public void setNeighbourNodes(List<Country> neighbour_nodes) {
@@ -200,7 +213,8 @@ public class Country{
     }
 
     /**
-     * this method assigns number of armies to the country
+     * this method assigns number of armies to the country.
+     * 
      * @param n value of armies to be added
      */
     public void addArmy(int n) {
@@ -208,7 +222,8 @@ public class Country{
     }
 
     /**
-     * this method assigns number of armies to be removed from the country
+     * this method assigns number of armies to be removed from the country.
+     * 
      * @param n value of the armies to be removed
      */
     public void subtractArmy(int n) {
@@ -216,7 +231,8 @@ public class Country{
     }
 
     /**
-     * this method assigns player and number of armies to the player
+     * this method assigns player and number of armies to the player.
+     * 
      * @param player name of the player
      * @param noOfArmy value of the player
      */

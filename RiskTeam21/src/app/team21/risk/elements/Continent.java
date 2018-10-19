@@ -19,33 +19,34 @@ public class Continent {
     public int control_value;
 
     /**
-     * This constructor will create continent object based provided continent name
+     * This constructor will create continent object based provided continent name and control value.
      *
      * @param continent_name name of the continent
+     * @param control_value control value
      */
     public Continent(String continent_name,int control_value) {
         this.continent_name = continent_name;
         this.control_value = control_value;
     }
     /**
-     * This constructor will create continent object based provided continent name
+     * This constructor will create continent object based provided continent name.
      *
      * @param continent_name name of the continent
      */
     public Continent(String continent_name) {
         this.continent_name = continent_name;
-        this.control_value = 0;
+        this.control_value = control_value;
     }
 
     /**
-     * default constructor
+     * default constructor.
      */
     public Continent() {
 
     }
 
     /**
-     * Over ride equals method in order to compare compare objects based on continent name not continent objects
+     * Over ride equals method in order to compare compare objects based on continent name not continent objects.
      */
     @Override
     public boolean equals(Object continent_object) {
@@ -62,7 +63,7 @@ public class Continent {
     }
 
     /**
-     * This method will return continent name
+     * This method will return continent name.
      *
      * @return name of the continent (String format)
      */
@@ -71,7 +72,7 @@ public class Continent {
     }
 
     /**
-     * setter method assigns the continent name
+     * setter method assigns the continent name.
      *
      * @param continent_name continent object
      */
@@ -80,7 +81,7 @@ public class Continent {
     }
 
     /**
-     * getter method to get the list of the countries belong to that particular continent
+     * getter method to get the list of the countries belong to that particular continent.
      *
      * @return member_countries_list list of countries
      */
@@ -89,7 +90,7 @@ public class Continent {
     }
 
     /**
-     * setter method assigns countries list to the player
+     * setter method assigns countries list to the player.
      *
      * @param member_countries_list individual player countries list
      */
@@ -99,7 +100,7 @@ public class Continent {
 
    
     /**
-     * getter method gives the control value
+     * getter method gives the control value.
      *
      * @return value of control value
      */
@@ -108,7 +109,7 @@ public class Continent {
     }
 
     /**
-     * setter method assigns control value
+     * setter method assigns control value.
      *
      * @param control_value player object
      */
