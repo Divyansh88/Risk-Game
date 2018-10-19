@@ -30,7 +30,7 @@ public class TestMapTag {
     @Test
     public void testMapTag() throws Exception {
         elements = loader.readMapFile(filePath + "no_map_tag.map");
-        assertEquals(false, elements.is_correct_map());
+        assertEquals(false, elements.isCorrectMap());
     }
 
 }
