@@ -196,7 +196,7 @@ public class GameScreen {
 	public void ReinforcementButton(int reinforce_armies,Player current_player, MapElements map_elements) {
 		this.current_player=current_player;
 		System.out.println(current_player.getName().toString());
-		turn_label.setText("Its"+current_player.getName()+"'s turn and Reinforcement phase.");
+		turn_label.setText("It is "+current_player.getName()+"'s turn and Reinforcement phase.");
 		
 		reinforcement_panel.removeAll();
 		cl_ps.show(phase_screen_panel, "rp");
