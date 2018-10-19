@@ -340,6 +340,7 @@ public class GameScreen {
 						if(fortify_successful){
 							current_player.setCanFortify(false);
 							status_label.setText("\nFortify Successful. You can End your Turn Now.");
+							text_area.setText(game_play.updateMR(map_elements));
 							EndTurnButton();
 						}
 						else{

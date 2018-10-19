@@ -28,7 +28,6 @@ public class TestValidMap {
 	}
 
 	@Test
-
 	public void testValidMap() throws Exception {
 		elements = loader.readMapFile(filePath + "valid_file.map");
 		assertEquals(true, elements.isCorrectMap());
