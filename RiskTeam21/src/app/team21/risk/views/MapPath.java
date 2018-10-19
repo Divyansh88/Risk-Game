@@ -638,7 +638,7 @@ public class MapPath {
 				else
 					map_elements=map_loader.readMapFile(file_path+selected_map);
 				
-				if(map_elements.is_correct_map()){
+				if(map_elements.isCorrectMap()){
 					
 					selectMapConitnueButton();
 				}
