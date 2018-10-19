@@ -128,6 +128,12 @@ public class MapLoader {
 					}
 				}
 			}
+			if(!(map_elements.getContinentList().size()>0)||!(map_elements.getCountries().size()>0)){
+				System.out.println("Invalid Map File.\nInvalid number of components.");
+				map_elements.setCorrectMap(false);
+				map_elements.setErrorMessage("Invalid number of components.");
+				return map_elements;
+			}
 
 			if (is_map_present && is_continent_present && is_territory_present && map_elements.isCorrectMap()) {
 				System.out.println("Valid File.\nMap Continents and Territories tags are present");

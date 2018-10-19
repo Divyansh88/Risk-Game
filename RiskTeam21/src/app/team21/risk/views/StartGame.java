@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.BoxLayout;
@@ -77,7 +78,8 @@ public class StartGame {
 				public void actionPerformed(ActionEvent e) {
 					
 					try {
-						Desktop.getDesktop().open(new java.io.File("Rules.pdf"));
+						File myFile = new File("Risk.pdf");
+				        Desktop.getDesktop().open(myFile);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
