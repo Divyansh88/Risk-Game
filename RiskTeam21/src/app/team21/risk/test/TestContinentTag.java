@@ -30,7 +30,7 @@ public class TestContinentTag {
     @Test
     public void testContinentTag() throws Exception {
         elements = loader.readMapFile(filePath + "no_continent_tag.map");
-        assertEquals(false, elements.is_correct_map());
+        assertEquals(false, elements.isCorrectMap());
     }
 
 }
