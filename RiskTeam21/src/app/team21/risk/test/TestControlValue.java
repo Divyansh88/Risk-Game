@@ -30,6 +30,6 @@ public class TestControlValue{
     @Test
     public void testControlValue() throws Exception {
        elements = loader.readMapFile(filePath + "test_control_values.map");
-        assertEquals(false, elements.is_correct_map());
+        assertEquals(false, elements.isCorrectMap());
     }
 }
