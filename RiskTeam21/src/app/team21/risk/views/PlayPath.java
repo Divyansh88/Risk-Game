@@ -21,6 +21,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * Last Updated on: 18-10-2018, Thursday 
+ * This class file handles play path screen.
+ * 
+ * @author Divyansh
+ * @version 1.0.0
+ */
 public class PlayPath extends StartGame{
 	JPanel choose_player = new JPanel();
 	JComboBox maps = new JComboBox();
@@ -32,6 +39,9 @@ public class PlayPath extends StartGame{
 	JButton btn_home = new JButton("Home");
 	JComboBox players;
 	
+	/**
+	 * This will ask for select from existing maps or browse other maps to play the game.
+	 */
 	public void playButton(){
 		
 		
@@ -53,16 +63,16 @@ public class PlayPath extends StartGame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser file_chooser = new JFileChooser();
+				JFileChooser fileChooser = new JFileChooser();
 			  	 
-	  	        file_chooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
+	  	        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
 	  	        FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP file", "map");
-	  	        file_chooser.setFileFilter(filter);
-	  	        file_chooser.setAcceptAllFileFilterUsed(false);
+	  	        fileChooser.setFileFilter(filter);
+	  	        fileChooser.setAcceptAllFileFilterUsed(false);
 	  	 
-	  	        int bopen = file_chooser.showOpenDialog(null); //open the dialog box
+	  	        int bopen = fileChooser.showOpenDialog(null); //open the dialog box
 	  	        if (bopen == JFileChooser.APPROVE_OPTION) {
-	  	        	browse_file_path=file_chooser.getSelectedFile().toString();
+	  	        	browse_file_path=fileChooser.getSelectedFile().toString();
 	  	        	String short_name=browse_file_path.substring(browse_file_path.lastIndexOf("\\") + 1);
 	  	        	maps.addItem(short_name);
 	  	      		}
@@ -76,12 +86,12 @@ public class PlayPath extends StartGame{
 			public void actionPerformed(ActionEvent e) {
 				String selected_map = maps.getSelectedItem().toString();
 				map_elements=map_loader.readMapFile(file_path+selected_map);
-				if(map_elements.isCorrectMap()){
+				if(map_elements.is_correct_map()){
 					selectPlayers();
 					cl.show(main_panel, "choose_player");
 				}
 				else{
-					System.out.println("Could not load. Invalid Map File.");
+					//Label dialog for incorrect map file
 				}
 			}
 		});
@@ -129,6 +139,9 @@ public class PlayPath extends StartGame{
 		
 	}
 	
+	/**
+	 * This method will fill comboboxes.
+	 */
 	public void fillCombobox(){
 		
 		File dir = new File("C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/");
@@ -155,6 +168,9 @@ public class PlayPath extends StartGame{
         }
 	}
 	
+	/**
+	 * This will ask for number of players.
+	 */
 	public void selectPlayers(){
 		JPanel test = new JPanel();
 		StartGame sg= new StartGame();
@@ -201,7 +217,9 @@ public class PlayPath extends StartGame{
 				
 			}
 		});
-		
+//		choose_player.add(choose_number_of_player);
+//		choose_player.add(players);
+//		choose_player.add(lets_go);
 		test.add(choose_number_of_player);
 		test.add(players);
 		test.add(lets_go);

@@ -16,16 +16,31 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/**
+ * Last Updated on: 18-10-2018, Thursday 
+ * This class file handles start game screen i.e. home screen.
+ * 
+ * @author Divyansh
+ * @version 1.0.0
+ */
 public class StartGame {
 	private static JFrame main_frame;
 	private static JPanel plain_panel;
 	
+		/**
+		 * This is main method.
+		 * 
+		 * @param args
+		 */
 		public static void main(String [] args){
 			
 			createStartScreen();
 			
 		}
 		
+		/**
+		 * It is main home screen where it ask for play or map or rules or quit.
+		 */
 		public static void createStartScreen(){
 			
 			main_frame = new JFrame("Risk");
@@ -76,7 +91,7 @@ public class StartGame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					
-					System.exit(0);
+					close();
 					
 				}
 			});
@@ -97,16 +112,26 @@ public class StartGame {
 			main_frame.setVisible(true);
 			main_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			main_frame.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-			
-			
-			
+		
 		}
+		
+		/**
+		 * This method will return a new panel.
+		 * 
+		 * @return panel new panel
+		 */
 		public  JPanel getPanel(){
 			
 			plain_panel = new JPanel();
 			return plain_panel;
 			
 		}
+		
+		/**
+		 * This method will return a return a same frame.
+		 * 
+		 * @return frame existing frame
+		 */
 		public  Frame getFrame(){
 			main_frame.getContentPane().removeAll();
 			main_frame.repaint();

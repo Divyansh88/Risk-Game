@@ -18,6 +18,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Last Updated on: 18-10-2018, Thursday 
+ * This class file handles all map related screens.
+ * 
+ * @author Divyansh
+ * @version 1.0.0
+ */
 public class MapPath {
 	
 	JButton edit_map,create_map,btn_selectmap_conitnue,btn_add_continent,btn_add_country,btn_add_neighbour,btn_save,btn_create_continent,btn_ok;
@@ -38,6 +45,9 @@ public class MapPath {
 	String short_name,file_name="DEFAULT";
 	JComboBox maps = new JComboBox<>();
 	
+	/**
+	 * This method will ask for create a new map or edit an existing map.
+	 */
 	public void mapButton(){
 		
 		JPanel test = new JPanel();
@@ -91,6 +101,9 @@ public class MapPath {
 	}
 	
 	
+	/**
+	 * This method asks for map name and author name of a new map.
+	 */
 	public void selectMap() {
 		
 		JPanel test = new JPanel();
@@ -112,8 +125,13 @@ public class MapPath {
 	    lbl_alert = new JLabel("");
 	    test.add(lbl_alert);
  	    btn_selectmap_conitnue.addActionListener(new ActionListener() {
-	    	
+	    	/* (non-Javadoc)
+	    	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	    	 * It is a click event which will redirect to add continent, country and neighbour and shows map representation
+	    	 */
+ 	    	
 	    	public void actionPerformed(ActionEvent e) {
+	    		//SelectMapConitnueButton();
 
 	 	    	if ((txt_map_name.getText().equals("")) || (txt_author_name.getText().equals(""))){
 	 	 	    	lbl_alert.setText("PLEASE ENTER TEXT");
@@ -157,8 +175,7 @@ public class MapPath {
 	}
 	
 	/**
-	 * It will show map representation and user can also edit the map
-	 * @param map_elements 
+	 * It will show map representation and user can also edit the map.
 	 */
 	public void selectMapConitnueButton(){
 		JPanel test = new JPanel();
@@ -251,7 +268,7 @@ public class MapPath {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MapEditor me=new MapEditor();
-				if(me.validateContinent(map_elements)&&me.validateCountry(map_elements)){
+				if(map_elements.getContinentList().size()>0&&map_elements.getCountries().size()>0){
 					me.writeMap(map_elements,file_path+file_name);
 					lbl_state.setText("Map Saved");
 				}
@@ -298,6 +315,9 @@ public class MapPath {
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 	}
 	
+	/**
+	 * This method adds continents into map.
+	 */
 	void addContinent() {
 		
 		card_continent_panel.removeAll();
@@ -349,6 +369,9 @@ public class MapPath {
  		card_continent_panel.repaint();
 	}
 	
+	/**
+	 * This will add countries into map.
+	 */
 	void addCountry() {
 		
 		card_country_panel.removeAll();
@@ -446,8 +469,11 @@ public class MapPath {
 	}
 	
 	/**
-	 * @param combobox_neighbour
-	 * @return
+	 * This method will bind country combobox.
+	 * 
+	 * @param combobox_countries combobox of country
+	 * @param map_elements elements of map
+	 * @return combobox combobox of country
 	 */
 	private JComboBox bindCountries(JComboBox combobox_countries,MapElements map_elements) {
 		for(Country c:map_elements.getCountries()){
@@ -456,6 +482,11 @@ public class MapPath {
 		return combobox_countries;
 	}
 	
+	/**
+	 * This method will get neighbours attached to the particular country.
+	 * 
+	 * @return list of neighbours
+	 */
 	private DefaultListModel<String> getNeighboursModel() {
 		DefaultListModel<String> listModel = new DefaultListModel<>();
 		for(Country c:map_elements.getCountries()){
@@ -464,6 +495,13 @@ public class MapPath {
 		return listModel;
 	}
 	
+	/**
+	 * This method will bind continent combobox.
+	 * 
+	 * @param combobox_continent combobox of continent
+	 * @param map_elements elements of map
+	 * @return combobox combobox of continent
+	 */
 	public JComboBox bindContinentCombobox(JComboBox combobox_continent,MapElements map_elements) {
 		for (Continent c : map_elements.getContinentList()) {
 			combobox_continent.addItem(c.getContinentName().toString().trim());
@@ -471,8 +509,9 @@ public class MapPath {
 		return combobox_continent;
 	}
 
-
-
+	/**
+	 * This method will add neighbours to a particular country.
+	 */
 	void addNeighbour() {
 		
 		card_neighbour_panel.removeAll();
@@ -511,7 +550,7 @@ public class MapPath {
 							break;
 						}
 					}
-
+					System.out.println();
 					if(!selected_country.getNeighbourNodes().contains(selected_neighbour)){
 						HashMap<Country, List<Country>> new_country_neighbour_map=map_elements.getCountryNeighboursMap();
 						
@@ -546,7 +585,10 @@ public class MapPath {
  		card_neighbour_panel.repaint();
 	}
 	
-public void playButton(){
+	/**
+	 * This will ask for select from existing maps or browse other maps to play the game.
+	 */
+	public void playButton(){
 		
 		
 		JButton map_selected, browse_map;
@@ -596,12 +638,11 @@ public void playButton(){
 				else
 					map_elements=map_loader.readMapFile(file_path+selected_map);
 				
-				if(map_elements.isCorrectMap()){
+				if(map_elements.is_correct_map()){
 					
 					selectMapConitnueButton();
 				}
 				else{
-					System.out.println("Could not load. Invalid Map File.");
 					//lbl set incorrect map. Could not Load. 
 				}
 			}
@@ -649,30 +690,34 @@ public void playButton(){
 		
 		
 	}
-public void fillCombobox(){
 	
-	File dir = new File("C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/");
-    FilenameFilter filter = new FilenameFilter()
-    {
-    	public boolean accept(File dir, String name)
-        {
-            return name.endsWith(".map");
-        }
-    };
-    String[] var = dir.list(filter);
-    
-    if (var == null)
-    {
-   		System.out.println("JCOMBO BOX Directory is INCORRECT or does not exist!");
-    }
-    else
-    {
-        for (int i=0; i<var.length; i++) //adding to combobox
-        {
-            String filename = var[i];
-            maps.addItem(filename);
-        }
-    }
-}
+	/**
+	 * This method will fill comboboxes.
+	 */
+	public void fillCombobox(){
+	
+		File dir = new File("C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/");
+	    FilenameFilter filter = new FilenameFilter()
+	    {
+	    	public boolean accept(File dir, String name)
+	        {
+	            return name.endsWith(".map");
+	        }
+	    };
+	    String[] var = dir.list(filter);
+	    
+	    if (var == null)
+	    {
+	   		System.out.println("JCOMBO BOX Directory is INCORRECT or does not exist!");
+	    }
+	    else
+	    {
+	        for (int i=0; i<var.length; i++) //adding to combobox
+	        {
+	            String filename = var[i];
+	            maps.addItem(filename);
+	        }
+	    }
+	}
 
 }

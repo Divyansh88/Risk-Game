@@ -12,6 +12,14 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Last Updated on: 18-10-2018, Thursday 
+ * This class file handles main game screen.
+ * 
+ * @author Divyansh
+ * @version 1.0.0
+ */
+
 public class GameScreen {
 	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn,btn_endturn_ep;
 	JLabel lbl_game_history, lbl_select_army, lbl_select_country, lbl_choose_player, lbl_select_from_country,lbl_select_to_country, lbl_game_map;
@@ -36,6 +44,13 @@ public class GameScreen {
 	 * It is the main game screen
 	 */
 
+	/**
+	 * This method will create view of main game screen and updates the value of different components.
+	 * 
+	 * @param map_elements
+	 * @param player_list
+	 * @param turn_value
+	 */
 	public void playerContinueButton(MapElements map_elements, List<Player> player_list, int turn_value) {
 
 		this.map_elements = map_elements;
@@ -191,6 +206,13 @@ public class GameScreen {
 
 	}
 
+	/**
+	 * This method view reinforcement screen in game screen.
+	 * 
+	 * @param reinforce_armies total reinforce armies
+	 * @param current_player current player
+	 * @param map_elements elements of map
+	 */
 	public void ReinforcementButton(int reinforce_armies,Player current_player, MapElements map_elements) {
 		this.current_player=current_player;
 		System.out.println(current_player.getName().toString());
@@ -266,6 +288,9 @@ public class GameScreen {
 	}
 	
 
+	/**
+	 * This method view attack screen in game screen. (Coming soon)
+	 */
 	public void AttackButton() {
 		attack_panel.removeAll();
 		
@@ -277,6 +302,12 @@ public class GameScreen {
 		attack_panel.repaint();
 	}
 
+	/**
+	 * This method view fortify screen in game screen.
+	 * 
+	 * @param current_player current player
+	 * @param map_elements elements
+	 */
 	public void FortifyButton(Player current_player, MapElements map_elements) {
 		fortify_panel.removeAll();
 		turn_label.setText("Its"+current_player.getName()+"'s turn and Fortification phase.");
@@ -340,7 +371,6 @@ public class GameScreen {
 						if(fortify_successful){
 							current_player.setCanFortify(false);
 							status_label.setText("\nFortify Successful. You can End your Turn Now.");
-							text_area.setText(game_play.updateMR(map_elements));
 							EndTurnButton();
 						}
 						else{
@@ -359,6 +389,9 @@ public class GameScreen {
 
 	}
 	
+	/**
+	 * This method will end the turn of a player.
+	 */
 	public void EndTurnButton() {
 		endturn_panel.removeAll();
 		
@@ -384,6 +417,13 @@ public class GameScreen {
 	}
 
 
+	/**
+	 * This method will bind country combobox.
+	 * 
+	 * @param combobox_country combobox of country
+	 * @param current_player current player
+	 * @return combobox combobox of country
+	 */
 	public JComboBox bindCountryCombobox(JComboBox combobox_country, Player current_player) {
 
 		for (Country c : current_player.getAssignedCountries()) {
