@@ -81,6 +81,7 @@ public class MapPath {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sg.close();
 				sg.createStartScreen();
 				
 			}
@@ -90,6 +91,7 @@ public class MapPath {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sg.close();
 				sg.createStartScreen();
 				
 			}
@@ -148,7 +150,7 @@ public class MapPath {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				sg.close();
 				mapButton();
 				
 			}
@@ -158,8 +160,8 @@ public class MapPath {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sg.close();
 				sg.createStartScreen();
-
 			}
 		});
 		jf.setVisible(true);
@@ -261,12 +263,12 @@ public class MapPath {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MapEditor me=new MapEditor();
-				if(map_elements.getContinentList().size()>0&&map_elements.getCountries().size()>0){
+				if(map_elements.getContinentList().size()>0&&map_elements.getCountries().size()>0&&me.validateContinent(map_elements)&&me.validateCountry(map_elements)){
 					me.writeMap(map_elements,file_path+file_name);
 					lbl_state.setText("Map Saved");
 				}
 				else{
-					lbl_state.setText("Create more elements in the map");
+					lbl_state.setText("Create more elements in the map or check connection");
 				}
 			}
 		});
@@ -290,6 +292,7 @@ public class MapPath {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sg.close();
 				selectMap();
 				
 			}
@@ -299,6 +302,7 @@ public class MapPath {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sg.close();
 				sg.createStartScreen();
 				
 			}
@@ -639,8 +643,9 @@ public class MapPath {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sg.close();
 				mapButton();
-				
+		
 			}
 		});
 		jf.add(btn_home);
@@ -648,15 +653,14 @@ public class MapPath {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sg.close();
 				sg.createStartScreen();
-				
 			}
 		});
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-		
-		
+
 	}
 	
 	/**

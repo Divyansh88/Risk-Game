@@ -125,6 +125,7 @@ public class PlayPath extends StartGame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sg.close();
 				sg.createStartScreen();
 				
 			}
@@ -134,6 +135,7 @@ public class PlayPath extends StartGame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sg.close();
 				sg.createStartScreen();
 				
 			}
@@ -237,6 +239,7 @@ public class PlayPath extends StartGame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sg.close();
 				playButton();
 				
 			}
@@ -246,6 +249,7 @@ public class PlayPath extends StartGame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				sg.close();
 				sg.createStartScreen();
 				
 			}
