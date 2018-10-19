@@ -31,9 +31,10 @@ public class MapLoader {
 
 
 	/**
-	 * this map helps you to read th map file
-	 * @param file_path 
-	 * @return map_elements      
+	 * this map helps you to read the map file.
+	 * 
+	 * @param file_path  path of the map file
+	 * @return map_elements elements of map
 	 */
 	public static MapElements readMapFile(String file_path) {
 
@@ -86,12 +87,12 @@ public class MapLoader {
 					}
 
 					// Parsing the [Continents] portion of the map file
-					if (id.equalsIgnoreCase("Continents")&&map_elements.isCorrectMap()) {
+					if (id.equalsIgnoreCase("Continents")&&map_elements.is_correct_map()) {
 						System.out.println("Continents Tag Present");
 						is_continent_present = true;
 						if (is_map_present) {
 							map_elements=readContinents(reader,map_elements);
-							if(map_elements.isCorrectMap()){
+							if(map_elements.is_correct_map()){
 								map_elements.setContinentList(continent_list);
 								System.out.println("Reading of Continents Completed");
 							}
@@ -127,14 +128,8 @@ public class MapLoader {
 					}
 				}
 			}
-			if(!(map_elements.getContinentList().size()>0)||!(map_elements.getCountries().size()>0)){
-				System.out.println("Invalid Map. Map Components missing");
-				map_elements.setCorrectMap(false);
-				map_elements.setErrorMessage("Invalid Map. Map Components missing");
-			}
-			
 
-			if (is_map_present && is_continent_present && is_territory_present && map_elements.isCorrectMap()) {
+			if (is_map_present && is_continent_present && is_territory_present && map_elements.is_correct_map()) {
 				System.out.println("Valid File.\nMap Continents and Territories tags are present");
 
 			} else {
@@ -155,9 +150,7 @@ public class MapLoader {
 	/**
 	 * This method will perform validation of provided input file
 	 *
-	 * @param file
-	 *            File class object is passed where input file is selected by
-	 *            user and is check for validation
+	 * @param file File class object is passed where input file is selected by user and is check for validation
 	 * @return error/success Message
 	 */
 	public static String validateFile(File file) {
@@ -181,10 +174,9 @@ public class MapLoader {
 	}
 
 	/**
-	 * This method will read [Territories] part of map file
+	 * This method will read the territories part of map file.
 	 *
-	 * @param reader
-	 *            BufferedReader class object as param
+	 * @param reader BufferedReader class object 
 	 */
 	public static void readTerritories(BufferedReader reader) {
 		String Territories;
@@ -221,8 +213,10 @@ public class MapLoader {
 	/**
 	 * This method will read the continent part of map file
 	 *
-	 * @param reader
-	 *            BufferReader object that read the .map file for continent
+	 * @param reader BufferReader object that read the .map file for continent
+	 * @param map_elements elements of map
+	 * @return map elements
+	 * @throws IOException
 	 */
 	public static MapElements readContinents(BufferedReader reader,MapElements map_elements) throws IOException{
 		String line;
@@ -255,10 +249,8 @@ public class MapLoader {
 	/**
 	 * This method will prepare HashMap for continent and country objects
 	 *
-	 * @param country
-	 *            list of country that we have got while parsing the map file
-	 * @param continent_list
-	 *            continent_list that we have got while parsing the map file
+	 * @param country list of country that we have got while parsing the map file
+	 * @param continent_list continent_list that we have got while parsing the map file
 	 * 
 	 */
 	private static void getContinentCountryMap(List<Country> country, List<Continent> continent_list) {
@@ -278,6 +270,11 @@ public class MapLoader {
 		}
 	}
 	
+	/**
+	 * This method checks control values.
+	 * 
+	 * @param map_elements elements of map
+	 */
 	public static void checkControlValue(MapElements map_elements){
 		for(Continent continent: map_elements.getContinentList()) {
         	if(continent.getControlValue()<=0) {

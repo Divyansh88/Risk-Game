@@ -54,6 +54,8 @@ public class MapEditor {
     
 	
     /**
+     * This method will add continent.
+     * 
      * @param continent
      * @param map_elements
      */
@@ -65,7 +67,10 @@ public class MapEditor {
     }
     
     /**
-     * @param continent
+     * This method will validate continent.
+     * 
+     * @param map_element map element
+     * @return boolean value
      */
     public boolean validateContinent(MapElements map_element){
     	boolean result=true;
@@ -80,7 +85,10 @@ public class MapEditor {
     }
     
     /**
-     * @param continent
+     * This method will validate country.
+     * 
+     * @param map_element map element
+     * @return boolean value
      */
     public boolean validateCountry(MapElements map_element){
     	boolean result=true;
@@ -98,9 +106,8 @@ public class MapEditor {
      * This method will create .map file based on input provided from user
      *
      * @param map_elements Details provided from the user
-     * @param file_name Map file name that user wants to give
+     * @param filename Map file name that user wants to give
      */
-    
     public void writeMap(MapElements map_elements, String filename) {
         StringBuilder maps = new StringBuilder("[Map]");
         		maps.append(System.getProperty("line.separator"));

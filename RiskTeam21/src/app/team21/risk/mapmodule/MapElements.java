@@ -26,14 +26,15 @@ public class MapElements {
 	public String phase_details;
 
 	/**
-	     * Default Constructor
-	     */
-	    private MapElements() {
-	        //To Prevent Other classes from creating object.
-	    }
+    * Default Constructor
+    */
+	private MapElements() {
+		//To Prevent Other classes from creating object.
+	}
 
 	/**
-	 * This method will return singleton instance for the MapElements class
+	 * This method will return singleton instance for the MapElements class.
+	 * 
 	 * @param instance creates an instance of MapElements class
 	 * @return single map_elements instance
 	 */
@@ -47,9 +48,11 @@ public class MapElements {
 		return map_elements;
 	}
 	
-	 /**
-	 * @param map_details
-	 * @return
+	/**
+	 * This method will return new singleton instance for the MapElements class.
+	 * 
+	 * @param map_details details of the map
+	 * @return single map_elements instance
 	 */
 	public static MapElements getNewMapInstance(HashMap<String, String> map_details){
 		 map_elements=new MapElements();
@@ -58,10 +61,9 @@ public class MapElements {
 	 }
 
 	/**
-	 * This method will assign Map Elements info to the MapElements class
+	 * This method will assign Map Elements info to the MapElements class.
 	 * 
-	 * @param map_elementsToSet
-	 *            map_elements object
+	 * @param map_elementsToSet map elements object
 	 */
 	public static void setInstance(MapElements map_elements_to_set) {
 		map_elements = map_elements_to_set;
@@ -88,8 +90,7 @@ public class MapElements {
 	/**
 	 * To set the phase details
 	 * 
-	 * @param phase_details
-	 *            info about phase
+	 * @param phase_details info about phase
 	 */
 	public void setPhaseDetails(String phase_details) {
 		this.phase_details = phase_details;
@@ -97,27 +98,25 @@ public class MapElements {
 
 
 	/**
-	 * this method verify weather the selected map validate the rules of
-	 * CorrectMap constraints
+	 * This method verify weather the selected map validate the rules of CorrectMap constraints.
 	 *
 	 * @return true if the map is correct; otherwise return false
 	 */
-	public boolean isCorrectMap() {
+	public boolean is_correct_map() {
 		return is_correct_map;
 	}
 
 	/**
-	 * setter method checks is the map is correct and then assigns map
+	 * setter method checks is the map is correct and then assigns map.
 	 *
-	 * @param is_correct_map
-	 *            boolean value
+	 * @param is_correct_map boolean value
 	 */
 	public void setCorrectMap(boolean is_correct_map) {
 		this.is_correct_map = is_correct_map;
 	}
 
 	/**
-	 * getter method for players who selected the map to play on
+	 * getter method for players who selected the map to play on.
 	 *
 	 * @return errorMessage message display on the console
 	 */
@@ -126,11 +125,9 @@ public class MapElements {
 	}
 
 	/**
-	 * setter method to assign the message when we select a map which doesn't
-	 * agree to the rules
+	 * setter method to assign the message when we select a map which doesn't agree to the rules.
 	 *
-	 * @param error_message
-	 *            generates a error message
+	 * @param error_message generates a error message
 	 */
 	public void setErrorMessage(String error_message) {
 		this.error_message += "\n"+error_message;
@@ -138,7 +135,7 @@ public class MapElements {
 	}
 
 	/**
-	 * getter method to get the selected map details
+	 * getter method to get the selected map details.
 	 *
 	 * @return map_details Complete details of selected map
 	 */
@@ -147,10 +144,9 @@ public class MapElements {
 	}
 
 	/**
-	 * setter method to assign mapDetails
+	 * setter method to assign mapDetails.
 	 *
-	 * @param map_details
-	 *            map object
+	 * @param map_details map object
 	 */
 	public void setMapDetail(HashMap<String, String> map_details) {
 		this.map_details= map_details;
@@ -158,7 +154,7 @@ public class MapElements {
 	}
 
 	/**
-	 * getter method to get the informations of neighboring countries
+	 * getter method to get the informations of neighboring countries.
 	 *
 	 * @return country_neighbour_map list of neighboring countries details
 	 */
@@ -167,17 +163,16 @@ public class MapElements {
 	}
 
 	/**
-	 * setter method to assign countries and its neighbors in the map
+	 * setter method to assign countries and its neighbors in the map.
 	 *
-	 * @param country_neighbour_map
-	 *            map object
+	 * @param country_neighbour_map map object
 	 */
 	public void setCountryNeighboursMap(HashMap<Country, List<Country>> country_neighbour_map) {
 		this.country_neighbour_map = country_neighbour_map;
 	}
 
 	/**
-	 * getter method to get list of continents in the selected map
+	 * getter method to get list of continents in the selected map.
 	 *
 	 * @return continent_list list of continents in the map
 	 */
@@ -186,17 +181,16 @@ public class MapElements {
 	}
 
 	/**
-	 * setter method to assign continents to the map
+	 * setter method to assign continents to the map.
 	 *
-	 * @param continents_list
-	 *            map object
+	 * @param continents_list map object
 	 */
 	public void setContinentList(List<Continent> continents_list) {
 		this.continent_list = continents_list;
 	}
 
 	/**
-	 * getter method to get list of countries belong to the continent
+	 * getter method to get list of countries belong to the continent.
 	 *
 	 * @return continent_country_map map object
 	 */
@@ -205,38 +199,37 @@ public class MapElements {
 	}
 
 	/**
-	 * setter method to assign countries to the continent
+	 * setter method to assign countries to the continent.
 	 *
-	 * @param continent_country_map
-	 *            map object
+	 * @param continent_country_map map object
 	 */
 	public void setContinentCountryMap(HashMap<Continent, List<Country>> continent_country_map) {
 		this.continent_country_map = continent_country_map;
 	}
 
 	/**
-	 * getter method to get the list of the players
+	 * getter method to get the list of the players.
 	 *
 	 * @return player_list player details
 	 */
-	public List<Player> getPlayerList() {
+	public List<Player> getplayer_list() {
 		return player_list;
 	}
 
 	/**
-	 * setter method to assign players list
+	 * setter method to assign players list.
 	 *
-	 * @param player_list
-	 *            details of players
+	 * @param player_list details of players
 	 */
-	public void setPlayerList(List<Player> player_list) {
+	public void setplayer_list(List<Player> player_list) {
 		this.player_list = player_list;
 	}
 
 	/**
-	 * @param continent_name
-	 *            Name of the continent.
-	 * @return continent_country_list
+	 * getter method to get countries by continent
+	 * 
+	 * @param continent_name Name of the continent. 
+	 * @return continent_country_list list of continent and country
 	 */
 	public List<Country> getCountriesByContinent(String continent_name) {
 		List<Country> continent_country_list = new ArrayList<>();
@@ -249,7 +242,7 @@ public class MapElements {
 	}
 
 	/**
-	 * Gets the list of countries in the map
+	 * Gets the list of countries in the map.
 	 *
 	 * @return countries in the map
 	 */
@@ -262,7 +255,7 @@ public class MapElements {
 	
 
 	/**
-	 * To get the currentPlayer Playing in map
+	 * To get the currentPlayer Playing in map.
 	 * 
 	 * @return current_player
 	 */
@@ -271,7 +264,7 @@ public class MapElements {
 	}
 
 	/**
-	 * To set the current player in map
+	 * To set the current player in map.
 	 * 
 	 * @param current_player
 	 *            name of the current player
@@ -280,6 +273,11 @@ public class MapElements {
 		this.current_player = current_player;
 	}
 	
+	/**
+	 * This method will update the the map representation.
+	 * 
+	 * @return string value
+	 */
 	public String updateMR(){
 		StringBuilder sb=new StringBuilder();
 		sb.append("======|HOW THE MAP LOOKS LIKE|======\n");
