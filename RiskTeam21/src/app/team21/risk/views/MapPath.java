@@ -617,11 +617,17 @@ public class MapPath {
 	  	        fileChooser.setAcceptAllFileFilterUsed(false);
 	  	 
 	  	        int bopen = fileChooser.showOpenDialog(null); //open the dialog box
-	  	        if (bopen == JFileChooser.APPROVE_OPTION) {
+	  	        
+	  	      if (bopen == JFileChooser.APPROVE_OPTION) {
 	  	        	browse_file_path=fileChooser.getSelectedFile().toString();
-	  	        	short_name=browse_file_path.substring(browse_file_path.lastIndexOf("\\") + 1);
-	  	        	file_name=short_name;
-	  	        	maps.addItem(short_name);
+	  	        	map_elements=map_loader.readMapFile(browse_file_path);
+	  	        	if(map_elements.isCorrectMap()){
+	  	        		selectMapConitnueButton();
+						cl.show(main_panel, "choose_player");
+					}
+					else{
+						//Label dialog for incorrect map file
+					}
 	  	      	}
 			}
 		});

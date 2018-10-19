@@ -40,7 +40,7 @@ public class PlayPath extends StartGame{
 	JComboBox players;
 	
 	/**
-	 * This will ask for select from existing maps or browse other maps to play the game.
+	 * This method will ask for select from existing maps or browse other maps to play the game.
 	 */
 	public void playButton(){
 		
@@ -73,9 +73,15 @@ public class PlayPath extends StartGame{
 	  	        int bopen = fileChooser.showOpenDialog(null); //open the dialog box
 	  	        if (bopen == JFileChooser.APPROVE_OPTION) {
 	  	        	browse_file_path=fileChooser.getSelectedFile().toString();
-	  	        	String short_name=browse_file_path.substring(browse_file_path.lastIndexOf("\\") + 1);
-	  	        	maps.addItem(short_name);
-	  	      		}
+	  	        	map_elements=map_loader.readMapFile(browse_file_path);
+	  	        	if(map_elements.isCorrectMap()){
+						selectPlayers();
+						cl.show(main_panel, "choose_player");
+					}
+					else{
+						//Label dialog for incorrect map file
+					}
+	  	      	}
 			}
 		});
 		
@@ -169,7 +175,7 @@ public class PlayPath extends StartGame{
 	}
 	
 	/**
-	 * This will ask for number of players.
+	 * This method will ask for number of players.
 	 */
 	public void selectPlayers(){
 		JPanel test = new JPanel();

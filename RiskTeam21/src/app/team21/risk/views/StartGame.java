@@ -139,6 +139,9 @@ public class StartGame {
 			
 		}
 		
+		/**
+		 * closes and disposes main_frame 
+		 */
 		public static void close(){
 			main_frame.dispose();
 		}
