@@ -19,7 +19,7 @@ import app.team21.risk.views.GameScreen;
 
 /**
  * Last Updated on : 18/10/2018, Thursday
- * This class file handles all the different game play modes of player
+ * GamePlay class that contains all the game play logic.
  * 
  * @author Yash Sheth
  * @version 1.0.0
@@ -27,13 +27,20 @@ import app.team21.risk.views.GameScreen;
 public class GamePlay {
 	
 	static Player current_player;
-	static int player_count;
+	static int playerCount;
 	static StringBuilder tb=new StringBuilder();
 	
 	
+	/**
+	 * this method will distribute countries to players.
+	 * 
+	 * @param players list of players
+	 * @param countries list of countries
+	 * @return string value
+	 */
 	public static String distributeCountries(List<Player> players,List<Country> countries){
 		tb.append("-----USER STARTS PUTTING ARMIES-----\n\n");
-		player_count=players.size();
+		playerCount=players.size();
 		Collections.shuffle(countries);
 		StringBuilder sb=new StringBuilder();
 		
@@ -64,6 +71,13 @@ public class GamePlay {
 
 	}
 	
+	/**
+	 * this method will get current player.
+	 * 
+	 * @param player_list list of players 
+	 * @param turn_value turn value
+	 * @return current player
+	 */
 	public Player getCurrentPlayer(List<Player> player_list,int turn_value){
 		for(Player p:player_list){
 			if(turn_value==p.getTurnValue()){
@@ -74,6 +88,13 @@ public class GamePlay {
 		return current_player;
 	}
 	
+	/**
+	 * this method will set end turn.
+	 * 
+	 * @param player  current player
+	 * @param player_list list of players
+	 * @return new turn
+	 */
 	public static int endTurn(Player player,List<Player> player_list){
 		int new_turn=player.getTurnValue()+1;
 		if(new_turn>player_list.size())
@@ -81,6 +102,11 @@ public class GamePlay {
 		return new_turn;
 	}
 	
+	/**
+	 * this method will set initial armies.
+	 * 
+	 * @param player_list list of player
+	 */
 	public static void setInitialArmies(List<Player> player_list){
 		int armies=0;
 		int num_of_players=player_list.size();
@@ -107,25 +133,27 @@ public class GamePlay {
 		}
 	}
 	
-	
-	 /**
-     * This method will add initial armies to the country of the player in round robin fashion
+    /**
+     * This method will add initial armies to the country of the player in round robin fashion.
+     * 
+     * @param player_list list of players
+     * @return string value
      */
     public String placeInitialArmiesInRR(List<Player> player_list) {
         int j = 0;
-        int players_left_for_assign = player_list.size();
-        while (players_left_for_assign > 0) {
+        int playersLeftForAssign = player_list.size();
+        while (playersLeftForAssign > 0) {
         	
-            if (player_list.get(j % player_count).getInitialArmies() > 0) {
+            if (player_list.get(j % playerCount).getInitialArmies() > 0) {
             	
-                List<Country> player_country_list = player_list.get(j % player_count).getAssignedCountries();
-                Country random_country = player_country_list.get(new Random().nextInt(player_country_list.size()));
+                List<Country> playerCountryList = player_list.get(j % playerCount).getAssignedCountries();
+                Country randomCountry = playerCountryList.get(new Random().nextInt(playerCountryList.size()));
                 
-                random_country.addArmy(1);
-                player_list.get(j % player_count).setInitialArmies(player_list.get(j % player_count).getInitialArmies()- 1);
-                tb.append(player_list.get(j % player_count).getName() + " put 1 army on "+ random_country.getCountryName()+".\n");
+                randomCountry.addArmy(1);
+                player_list.get(j % playerCount).setInitialArmies(player_list.get(j % playerCount).getInitialArmies()- 1);
+                tb.append(player_list.get(j % playerCount).getName() + " put 1 army on "+ randomCountry.getCountryName()+".\n");
             } else {
-                players_left_for_assign--;
+                playersLeftForAssign--;
             }
             j++;
         }
@@ -133,6 +161,12 @@ public class GamePlay {
         return tb.toString();
     }
 
+	/**
+	 * this method will update map representation.
+	 * 
+	 * @param map_elements map elements
+	 * @return string value
+	 */
 	public static String updateMR(MapElements map_elements){
 		StringBuilder sb=new StringBuilder();
 		sb.append("======|CAPTURE THEM ALL|======\n");
@@ -145,6 +179,13 @@ public class GamePlay {
 	}
 	
 	
+	/**
+	 * this method used to get reinforcement armies.
+	 * 
+	 * @param player player
+	 * @param map map 
+	 * @return integer armies
+	 */
 	public static int getReinforcementArmies(Player player,MapElements map){
 		int armies=0;
 		int player_countries=player.getAssignedCountries().size();
@@ -172,6 +213,15 @@ public class GamePlay {
 		return armies;
 	}
 	
+	/**
+	 * this method will check for fortify armies.
+	 * 
+	 * @param player player
+	 * @param country_from from country
+	 * @param country_to to country
+	 * @param armies number of armies
+	 * @return boolean 
+	 */
 	public static boolean tryFortify(Player player, Country country_from, Country country_to, int armies){
 		if(country_from.getNeighbourNodes().contains(country_to)&&country_to.getNeighbourNodes().contains(country_from)&&(country_from.getCurrentArmiesDeployed())-1>=armies){
 			country_from.subtractArmy(armies);
@@ -184,9 +234,12 @@ public class GamePlay {
 	}
 
 	/**
-	 * @param current_player2
-	 * @param player_list
-	 * @param map_elements
+	 * this method will start the turn of player.
+	 * 
+	 * @param current_player present player
+	 * @param player_list list of players 
+	 * @param map_elements map elements
+	 * @param view gamescreen 
 	 */
 	public void startTurn(Player current_player, List<Player> player_list, MapElements map_elements, GameScreen view) {
 		current_player.setCanReinforce(true);
