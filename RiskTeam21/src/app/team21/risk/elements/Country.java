@@ -9,7 +9,7 @@ import app.team21.risk.elements.Player;
  * Last Updated on : 18/10/2018, Thursday
  * Country Bean class to get and set properties related to country.
  *
- * @author Yash Sheth
+ * @author Yash Sheth & Divyansh Thakar
  * @version 1.0.0
  */
 public class Country{

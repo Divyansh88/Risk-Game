@@ -136,7 +136,6 @@ public class MapLoader {
 				System.out.println("Invalid Map File.\nMap or Continents or Territories tags not present");
 				map_elements.setCorrectMap(false);
 				map_elements.setErrorMessage("Map or Continents or Territories tags not present");
-				//System.out.println(map_elements.getErrorMessage());
 				return map_elements;
 			}
 
@@ -155,17 +154,17 @@ public class MapLoader {
 	 */
 	public static String validateFile(File file) {
 
-		// check if file is present or not
+		
 		if (!file.exists()) {
 			return "File does not exist.";
 		}
 		String name = file.getName();
 		String extension = name.substring(name.lastIndexOf(".") + 1);
-		// check if user has selected file with .map extension
+		
 		if (!extension.equalsIgnoreCase("map")) {
 			return "Invalid extension of File. Please provide the correct file.";
 		}
-		// check if file selected by user is empty or not
+		
 		if (file.length() == 0) {
 			return "File is empty please select correct file.";
 		}
@@ -261,9 +260,7 @@ public class MapLoader {
 					continent_country_map.get(new Continent(c.getBelongsToContinent())).add(c);
 				} else {
 					int index_continent = continent_list.indexOf(new Continent(c.getBelongsToContinent()));
-					country_list.add(c); // Avoid using Array.asList here as it
-											// gives fixed size list and will
-											// not allow to modify the list
+					country_list.add(c); 
 					continent_country_map.put(continent_list.get(index_continent), country_list);
 				}
 			}

@@ -22,7 +22,7 @@ import java.util.List;
  * Last Updated on: 18-10-2018, Thursday 
  * This class file handles all map related screens.
  * 
- * @author Divyansh
+ * @author Yash Sheth & Divyansh Thakar
  * @version 1.0.0
  */
 public class MapPath {
@@ -125,14 +125,7 @@ public class MapPath {
 	    lbl_alert = new JLabel("");
 	    test.add(lbl_alert);
  	    btn_selectmap_conitnue.addActionListener(new ActionListener() {
-	    	/* (non-Javadoc)
-	    	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	    	 * It is a click event which will redirect to add continent, country and neighbour and shows map representation
-	    	 */
- 	    	
 	    	public void actionPerformed(ActionEvent e) {
-	    		//SelectMapConitnueButton();
-
 	 	    	if ((txt_map_name.getText().equals("")) || (txt_author_name.getText().equals(""))){
 	 	 	    	lbl_alert.setText("PLEASE ENTER TEXT");
 	 	 	    }
@@ -387,25 +380,7 @@ public class MapPath {
  		combobox_continents= new JComboBox();
 		combobox_continents = bindContinentCombobox(combobox_continents,map_elements);
  		card_country_panel.add(combobox_continents);
- 		
-// 		lbl_select_neighbour = new JLabel("Select neighbour to add to this country");
-// 		card_country_panel.add(lbl_select_neighbour);
- 		
-// 		DefaultListModel<String> listModel=getNeighboursModel();
-// 		combobox_neighbour=new JList(listModel);
-// 		combobox_neighbour.setFixedCellHeight(20);
-//		combobox_neighbour.setFixedCellWidth(100);
-//		combobox_neighbour.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-//		combobox_neighbour.setVisibleRowCount(7);
-// 		scroll_pane_neighbours=new JScrollPane(combobox_neighbour);
-//		scroll_pane_neighbours.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-// 		card_country_panel.add(scroll_pane_neighbours);
-	
- 		
-// 		combobox_neighbours = new JComboBox();
-// 		combobox_neighbours = bindCountries(combobox_neighbours, map_elements);
-//		card_country_panel.add(combobox_neighbours);
- 		
+ 		 		
  		btn_add_country = new JButton("Add country");
  		card_country_panel.add(btn_add_country); 
  		
@@ -416,31 +391,18 @@ public class MapPath {
 				String country_name=txt_country_name.getText().toString().trim();
 				if(country_name!=null && country_name.length()>0){
 					Continent selected_continent=null;
-//					Country selected_neighbour=null;//
 					for(Continent c:map_elements.getContinentList()){
 						if(c.getContinentName().equals(combobox_continents.getSelectedItem().toString())){
 							selected_continent=c;
 							break;
 						}
 					}
-//					for(Country c:map_elements.getCountries()){//
-//						if(c.getCountryName().equals(combobox_neighbours.getSelectedItem().toString())){//
-//							selected_neighbour=c;//
-//							break;//
-//						}//
-//					}//
-					Country new_country=new Country(country_name,selected_continent.getContinentName());
-					
+					Country new_country=new Country(country_name,selected_continent.getContinentName());					
 					
 					HashMap<Country, List<Country>> new_country_neighbour_map=map_elements.getCountryNeighboursMap();
-//					List<Country> new_neighbour_list=new_country_neighbour_map.get(selected_neighbour);//
-					
-//					new_neighbour_list.add(new_country);//
-//					selected_neighbour.setNeighbourNodes(new_neighbour_list);//
-//					new_country_neighbour_map.put(selected_neighbour, new_neighbour_list);//
 					
 					List<Country> new_neighbour_list=new ArrayList<>();
-//					new_neighbour_list.add(selected_neighbour);//
+
 					new_country.setNeighbourNodes(new_neighbour_list);
 					new_country_neighbour_map.put(new_country, new_neighbour_list);
 					
@@ -667,7 +629,6 @@ public class MapPath {
 		
 		
 		main_panel.add(choose_map,"choose_map");
-		//main_panel.add(choose_player, "choose_player");
 		cl.show(main_panel, "choose_map");
 		JFrame jf = new JFrame();
 		jf=(JFrame) sg.getFrame();

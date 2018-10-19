@@ -25,7 +25,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * Last Updated on: 18-10-2018, Thursday 
  * This class file handles play path screen.
  * 
- * @author Divyansh
+ * @author Yash Sheth & Samip Thakkar
  * @version 1.0.0
  */
 public class PlayPath extends StartGame{

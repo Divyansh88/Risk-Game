@@ -16,7 +16,7 @@ import java.util.List;
  * Last Updated on: 18-10-2018, Thursday 
  * This class file handles main game screen.
  * 
- * @author Divyansh
+ * @author Yash Sheth & Divyansh Thakar & Samip Thakkar
  * @version 1.0.0
  */
 
