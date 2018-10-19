@@ -215,7 +215,6 @@ public class GameScreen {
 	 */
 	public void ReinforcementButton(int reinforce_armies,Player current_player, MapElements map_elements) {
 		this.current_player=current_player;
-		System.out.println(current_player.getName().toString());
 		turn_label.setText("It is "+current_player.getName()+"'s turn and Reinforcement phase.");
 		
 		reinforcement_panel.removeAll();
@@ -247,8 +246,7 @@ public class GameScreen {
 				boolean reinforce_successful=false;
 				if(current_player.isCanReinforce()){
 					int armies_selected=Integer.valueOf(combobox_armies.getSelectedItem().toString());
-					System.out.println("Armies Selected "+armies_selected);
-					
+
 					Country selected_country=null;
 					for(Country c:map_elements.getCountries()){
 						if(c.getCountryName().equals(combobox_country.getSelectedItem().toString())){
@@ -256,7 +254,6 @@ public class GameScreen {
 							break;
 						}
 					}
-					System.out.println("Country Selected "+selected_country.getCountryName());
 				
 					if(armies_selected<=current_player.getReinforceArmies()){
 						selected_country.addArmy(armies_selected);

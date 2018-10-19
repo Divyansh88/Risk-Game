@@ -334,8 +334,9 @@ public class MapPath {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String continent_name=txt_continent_name.getText().toString().trim();
+
 				String s=txt_control_value.getText().toString().trim();
-				if(s != null && s.matches("^[0-9]*$")&&continent_name.length()>0){
+				if(s != null && s.matches("^[0-9]*$")&&continent_name.length()>0&&!s.equals("")){
 					int control_value=Integer.valueOf(s);
 					if(control_value>0){
 						Continent new_continent=new Continent(continent_name,control_value);
@@ -354,7 +355,7 @@ public class MapPath {
 					}
 				}
 				else{
-					lbl_state.setText("Enter numerical value greater than 0.");
+					lbl_state.setText("Enter proper name or control value.");
 				}
 			}
 		});
