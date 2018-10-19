@@ -6,8 +6,11 @@ import java.util.List;
 
 import app.team21.risk.elements.*;
 /**
+ * Last Updated on: 18-10-2018, Thursday
+ * This class contains methods for validation and updation of map representation
+ * 
  * @author Yash Sheth
- *
+ * @version 1.0.0
  */
 public class MapElements {
 
@@ -44,11 +47,6 @@ public class MapElements {
 		return map_elements;
 	}
 
-	 public static MapElements getNewMapInstance(HashMap<String, String> map_details){
-		 map_elements=new MapElements();
-		 map_elements.setMapDetail(map_details);
-		 return map_elements;
-	 }
 	/**
 	 * This method will assign Map Elements info to the MapElements class
 	 * 
@@ -80,7 +78,7 @@ public class MapElements {
 	/**
 	 * To set the phase details
 	 * 
-	 * @param phaseDetails
+	 * @param phase_details
 	 *            info about phase
 	 */
 	public void setPhaseDetails(String phase_details) {
@@ -121,7 +119,7 @@ public class MapElements {
 	 * setter method to assign the message when we select a map which doesn't
 	 * agree to the rules
 	 *
-	 * @param errorMessage
+	 * @param error_message
 	 *            generates a error message
 	 */
 	public void setErrorMessage(String error_message) {
@@ -132,7 +130,7 @@ public class MapElements {
 	/**
 	 * getter method to get the selected map details
 	 *
-	 * @return mapDetails Complete details of selected map
+	 * @return map_details Complete details of selected map
 	 */
 	public HashMap<String, String> getMapDetail() {
 		return map_details;
@@ -141,7 +139,7 @@ public class MapElements {
 	/**
 	 * setter method to assign mapDetails
 	 *
-	 * @param mapDetail
+	 * @param map_details
 	 *            map object
 	 */
 	public void setMapDetail(HashMap<String, String> map_details) {
@@ -152,7 +150,7 @@ public class MapElements {
 	/**
 	 * getter method to get the informations of neighboring countries
 	 *
-	 * @return countryAndNeighborsMap list of neighboring countries details
+	 * @return country_neighbour_map list of neighboring countries details
 	 */
 	public HashMap<Country, List<Country>> getCountryNeighboursMap() {
 		return country_neighbour_map;
@@ -161,7 +159,7 @@ public class MapElements {
 	/**
 	 * setter method to assign countries and its neighbors in the map
 	 *
-	 * @param countryAndNeighborsMap
+	 * @param country_neighbour_map
 	 *            map object
 	 */
 	public void setCountryNeighboursMap(HashMap<Country, List<Country>> country_neighbour_map) {
@@ -171,7 +169,7 @@ public class MapElements {
 	/**
 	 * getter method to get list of continents in the selected map
 	 *
-	 * @return continentList list of continents in the map
+	 * @return continent_list list of continents in the map
 	 */
 	public List<Continent> getContinentList() {
 		return continent_list;
@@ -180,7 +178,7 @@ public class MapElements {
 	/**
 	 * setter method to assign continents to the map
 	 *
-	 * @param continentList
+	 * @param continents_list
 	 *            map object
 	 */
 	public void setContinentList(List<Continent> continents_list) {
@@ -190,7 +188,7 @@ public class MapElements {
 	/**
 	 * getter method to get list of countries belong to the continent
 	 *
-	 * @return continentCountryMap map object
+	 * @return continent_country_map map object
 	 */
 	public HashMap<Continent, List<Country>> getContinentCountryMap() {
 		return continent_country_map;
@@ -199,7 +197,7 @@ public class MapElements {
 	/**
 	 * setter method to assign countries to the continent
 	 *
-	 * @param continentCountryMap
+	 * @param continent_country_map
 	 *            map object
 	 */
 	public void setContinentCountryMap(HashMap<Continent, List<Country>> continent_country_map) {
@@ -226,9 +224,9 @@ public class MapElements {
 	}
 
 	/**
-	 * @param continentName
+	 * @param continent_name
 	 *            Name of the continent.
-	 * @return Countries in the continent
+	 * @return continent_country_list
 	 */
 	public List<Country> getCountriesByContinent(String continent_name) {
 		List<Country> continent_country_list = new ArrayList<>();
@@ -243,7 +241,7 @@ public class MapElements {
 	/**
 	 * Gets the list of countries in the map
 	 *
-	 * @return Countries in the map
+	 * @return countries in the map
 	 */
 	public List<Country> getCountries() {
 		List<Country> countries = new ArrayList<>();
@@ -256,7 +254,7 @@ public class MapElements {
 	/**
 	 * To get the currentPlayer Playing in map
 	 * 
-	 * @return current player name
+	 * @return current_player
 	 */
 	public Player getCurrentPlayer() {
 		return current_player;
@@ -265,7 +263,7 @@ public class MapElements {
 	/**
 	 * To set the current player in map
 	 * 
-	 * @param currentPlayer
+	 * @param current_player
 	 *            name of the current player
 	 */
 	public void setCurrentPlayer(Player current_player) {

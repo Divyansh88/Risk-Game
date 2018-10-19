@@ -12,11 +12,11 @@ import app.team21.risk.elements.Continent;
 import app.team21.risk.elements.Country;
 
 /**
- * Date Created: 28-09-2018, Friday Last Updated on: 29-09-2018, Saturday This
- * class file handles .txt map file and creates a GUI of connected graph.
+ * Last Updated on: 18-10-2018, Thursday 
+ * This class file handles .map  file and loads the map for the game
  * 
  * @author Yash Sheth
- * @version 1
+ * @version 1.0.0
  *
  */
 
@@ -33,7 +33,7 @@ public class MapLoader {
 	/**
 	 * this map helps you to read th map file
 	 * @param file_path 
-	 * @return MapElements      
+	 * @return map_elements      
 	 */
 	public static MapElements readMapFile(String file_path) {
 
@@ -47,11 +47,11 @@ public class MapLoader {
 
 		try {
 			File file = new File(file_path);
-			String validationMessage = validateFile(file);
-			if (!validationMessage.equalsIgnoreCase("Valid File")) {
+			String validation_message = validateFile(file);
+			if (!validation_message.equalsIgnoreCase("Valid File")) {
 				System.out.println("Invalid File");
 				map_elements.setCorrectMap(false);
-				map_elements.setErrorMessage(validationMessage);
+				map_elements.setErrorMessage(validation_message);
 				return map_elements;
 
 			}
@@ -76,8 +76,8 @@ public class MapLoader {
 						is_map_present = true;
 						while ((maps = reader.readLine()) != null && !maps.startsWith("[")) {
 							if (!maps.isEmpty() && maps != null && !maps.equals("")) {
-								String[] mapsEntry = maps.split("=");
-								map_details.put(mapsEntry[0], mapsEntry[1]);
+								String[] maps_entry = maps.split("=");
+								map_details.put(maps_entry[0], maps_entry[1]);
 								reader.mark(0);
 							}
 						}
@@ -128,7 +128,7 @@ public class MapLoader {
 				}
 			}
 
-			if (is_map_present && is_continent_present && is_territory_present&&map_elements.is_correct_map()) {
+			if (is_map_present && is_continent_present && is_territory_present && map_elements.is_correct_map()) {
 				System.out.println("Valid File.\nMap Continents and Territories tags are present");
 
 			} else {
@@ -189,14 +189,14 @@ public class MapLoader {
 					String country_name, continent_name = null;
 					int x_cordinate, y_cordinate = 0;
 					List<Country> neighbour_nodes = new ArrayList<>();
-					String[] terrProperties = Territories.split(",");
-					country_name = terrProperties[0];
-					continent_name = terrProperties[3];
-					x_cordinate = Integer.parseInt(terrProperties[1].trim());
-					y_cordinate = Integer.parseInt(terrProperties[2].trim());
+					String[] terr_properties = Territories.split(",");
+					country_name = terr_properties[0];
+					continent_name = terr_properties[3];
+					x_cordinate = Integer.parseInt(terr_properties[1].trim());
+					y_cordinate = Integer.parseInt(terr_properties[2].trim());
 					Country country = new Country(country_name, x_cordinate, y_cordinate, continent_name);
-					for (int i = 4; i <= terrProperties.length - 1; i++) {
-						String neighbour_country_name = terrProperties[i];
+					for (int i = 4; i <= terr_properties.length - 1; i++) {
+						String neighbour_country_name = terr_properties[i];
 						Country neighbour = new Country(neighbour_country_name);
 						neighbour_nodes.add(neighbour);
 					}
@@ -224,11 +224,11 @@ public class MapLoader {
 			while ((line = reader.readLine()) != null && !line.startsWith("[")) {
 				if (!line.isEmpty() && line != null && !line.equals("")&&line.contains("=")) {
 					Continent continents = new Continent();
-					String[] ConProperties = line.split("=");
-					if(!ConProperties[0].equals("")&&!ConProperties[1].equals("")&&!ConProperties[0].isEmpty()&&!ConProperties[1].isEmpty()){
+					String[] con_properties = line.split("=");
+					if(!con_properties[0].equals("")&&!con_properties[1].equals("")&&!con_properties[0].isEmpty()&&!con_properties[1].isEmpty()){
 		
-						continents.setContinentName(ConProperties[0].trim());
-						continents.setControlValue(Integer.parseInt(ConProperties[1].trim()));
+						continents.setContinentName(con_properties[0].trim());
+						continents.setControlValue(Integer.parseInt(con_properties[1].trim()));
 						continent_list.add(continents);	
 					}
 					else{
@@ -253,7 +253,7 @@ public class MapLoader {
 	 *            list of country that we have got while parsing the map file
 	 * @param continent_list
 	 *            continent_list that we have got while parsing the map file
-	 * @return HashMap of continent to countries objects
+	 * 
 	 */
 	private static void getContinentCountryMap(List<Country> country, List<Continent> continent_list) {
 		for (Country c : country) {
