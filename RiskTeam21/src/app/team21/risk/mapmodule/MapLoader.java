@@ -86,12 +86,12 @@ public class MapLoader {
 					}
 
 					// Parsing the [Continents] portion of the map file
-					if (id.equalsIgnoreCase("Continents")&&map_elements.is_correct_map()) {
+					if (id.equalsIgnoreCase("Continents")&&map_elements.isCorrectMap()) {
 						System.out.println("Continents Tag Present");
 						is_continent_present = true;
 						if (is_map_present) {
 							map_elements=readContinents(reader,map_elements);
-							if(map_elements.is_correct_map()){
+							if(map_elements.isCorrectMap()){
 								map_elements.setContinentList(continent_list);
 								System.out.println("Reading of Continents Completed");
 							}
@@ -127,8 +127,14 @@ public class MapLoader {
 					}
 				}
 			}
+			if(!(map_elements.getContinentList().size()>0)||!(map_elements.getCountries().size()>0)){
+				System.out.println("Invalid Map. Map Components missing");
+				map_elements.setCorrectMap(false);
+				map_elements.setErrorMessage("Invalid Map. Map Components missing");
+			}
+			
 
-			if (is_map_present && is_continent_present && is_territory_present && map_elements.is_correct_map()) {
+			if (is_map_present && is_continent_present && is_territory_present && map_elements.isCorrectMap()) {
 				System.out.println("Valid File.\nMap Continents and Territories tags are present");
 
 			} else {

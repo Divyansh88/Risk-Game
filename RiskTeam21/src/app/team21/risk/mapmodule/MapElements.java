@@ -102,7 +102,7 @@ public class MapElements {
 	 *
 	 * @return true if the map is correct; otherwise return false
 	 */
-	public boolean is_correct_map() {
+	public boolean isCorrectMap() {
 		return is_correct_map;
 	}
 
@@ -219,7 +219,7 @@ public class MapElements {
 	 *
 	 * @return player_list player details
 	 */
-	public List<Player> getplayer_list() {
+	public List<Player> getPlayerList() {
 		return player_list;
 	}
 
@@ -229,7 +229,7 @@ public class MapElements {
 	 * @param player_list
 	 *            details of players
 	 */
-	public void setplayer_list(List<Player> player_list) {
+	public void setPlayerList(List<Player> player_list) {
 		this.player_list = player_list;
 	}
 

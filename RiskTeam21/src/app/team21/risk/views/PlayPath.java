@@ -76,12 +76,12 @@ public class PlayPath extends StartGame{
 			public void actionPerformed(ActionEvent e) {
 				String selected_map = maps.getSelectedItem().toString();
 				map_elements=map_loader.readMapFile(file_path+selected_map);
-				if(map_elements.is_correct_map()){
+				if(map_elements.isCorrectMap()){
 					selectPlayers();
 					cl.show(main_panel, "choose_player");
 				}
 				else{
-					//Label dialog for incorrect map file
+					System.out.println("Could not load. Invalid Map File.");
 				}
 			}
 		});
