@@ -76,7 +76,7 @@ public class StartGame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					
-					close();
+					System.exit(0);
 					
 				}
 			});

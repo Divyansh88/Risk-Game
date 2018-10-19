@@ -256,7 +256,7 @@ public class MapPath {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MapEditor me=new MapEditor();
-				if(map_elements.getContinentList().size()>0&&map_elements.getCountries().size()>0){
+				if(me.validateContinent(map_elements)&&me.validateCountry(map_elements)){
 					me.writeMap(map_elements,file_path+file_name);
 					lbl_state.setText("Map Saved");
 				}
