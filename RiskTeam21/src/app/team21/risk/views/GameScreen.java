@@ -22,12 +22,12 @@ import java.util.List;
 
 public class GameScreen {
 	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn,btn_endturn_ep;
-	JLabel lbl_game_history, lbl_select_army, lbl_select_country, lbl_choose_player, lbl_select_from_country,lbl_select_to_country, lbl_game_map;
+	JLabel lbl_game_history, lbl_select_army, lbl_select_country, lbl_choose_player, lbl_select_from_country,lbl_select_to_country, lbl_game_map,lbl_domination_panel,lbl_map_finder;
 	JTextField txt_armies;
 	JPanel master_panel, game_history_panel, mr_panel, turn_panel, second_master_panel, phase_screen_panel,action_panel;
-	JPanel reinforcement_panel, attack_panel, fortify_panel, mr_master_panel, status_panel,endturn_panel;
-	JTextArea text_area, text_area1;
-	JScrollPane scroll_panel, scroll_panel1;
+	JPanel reinforcement_panel, attack_panel, fortify_panel, mr_master_panel, status_panel,endturn_panel,domination_master_panel,domination_panel,map_finder_panel,select_country_panel,result_panel;
+	JTextArea text_area_game_map, text_area_game_history,text_area_domination,text_area_result,text_area_select_country;
+	JScrollPane scroll_panel, scroll_panel1, scroll_panel2;
 	JComboBox combobox_armies, combobox_country,combobox_country2;
 	CardLayout cl_ps = new CardLayout();
 	JLabel turn_label = new JLabel();
@@ -83,20 +83,62 @@ public class GameScreen {
 		game_history_panel = new JPanel();
 		game_history_panel.setPreferredSize(new Dimension(400, 600));
 		game_history_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		domination_master_panel = new JPanel();
+		domination_master_panel.setPreferredSize(new Dimension(300, 600));
+		domination_master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		domination_panel = new JPanel();
+		domination_panel.setPreferredSize(new Dimension(300, 210));
+		domination_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		map_finder_panel = new JPanel();
+		map_finder_panel.setPreferredSize(new Dimension(300, 380));
+		map_finder_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		lbl_map_finder = new JLabel("Map Finder");
+		select_country_panel = new JPanel();
+		select_country_panel.setPreferredSize(new Dimension(300, 190));
+		select_country_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		result_panel = new JPanel();
+		result_panel.setPreferredSize(new Dimension(300, 190));
+		result_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		lbl_select_country = new JLabel("Select Country");
+		text_area_select_country = new JTextArea(10, 26);
+		//text_area_select_country.setEditable(false);
+		text_area_result = new JTextArea(10, 26);
+		//text_area_result.setEditable(false);
+		select_country_panel.add(lbl_select_country);
+		select_country_panel.add(text_area_select_country);
+		result_panel.add(text_area_result);
+		
+		map_finder_panel.add(lbl_map_finder, BorderLayout.NORTH);
+		map_finder_panel.add(select_country_panel, BorderLayout.CENTER);
+		map_finder_panel.add(result_panel, BorderLayout.SOUTH);
+		
+		text_area_domination = new JTextArea(11, 25);
+		text_area_domination.setEditable(false);
+		scroll_panel2 = new JScrollPane(text_area_domination);
+		lbl_domination_panel = new JLabel("Domination");
+		scroll_panel2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		domination_panel.add(lbl_domination_panel, BorderLayout.NORTH);
+		domination_panel.add(scroll_panel2, BorderLayout.SOUTH);
+		
+		domination_master_panel.add(domination_panel, BorderLayout.NORTH);
+		domination_master_panel.add(map_finder_panel, BorderLayout.SOUTH);
 
-		text_area = new JTextArea(35, 34);
-		scroll_panel = new JScrollPane(text_area);
+		text_area_game_map = new JTextArea(35, 34);
+		text_area_game_map.setEditable(false);
+		scroll_panel = new JScrollPane(text_area_game_map);
 		lbl_game_map = new JLabel("Game Map");
 		scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll_panel.setLocation(0, 0);
-		text_area.setText(mr);
+		text_area_game_map.setText(mr);
 
-		text_area1 = new JTextArea(20, 50);
-		text_area1.setEditable(false);
-		scroll_panel1 = new JScrollPane(text_area1);
-		lbl_game_history = new JLabel("Game Map");
+		text_area_game_history = new JTextArea(20, 50);
+		text_area_game_history.setEditable(false);
+		scroll_panel1 = new JScrollPane(text_area_game_history);
+		lbl_game_history = new JLabel("Game History");
 		scroll_panel1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		text_area1.setText(first_print + second_print+"\n\n");
+		text_area_game_history.setText(first_print + second_print+"\n\n");
 
 		turn_panel = new JPanel();
 		turn_panel.add(turn_label);
@@ -196,6 +238,7 @@ public class GameScreen {
 		JFrame jf = new JFrame();
 		jf = (JFrame) sg.getFrame();
 		jf.add(test);
+		jf.add(domination_master_panel);
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
@@ -259,8 +302,8 @@ public class GameScreen {
 						selected_country.addArmy(armies_selected);
 						current_player.subReinforceArmies(armies_selected);
 						reinforce_successful=true;
-						text_area1.append("\n"+current_player.getName()+" reinforces "+ selected_country.getCountryName()+" with "+armies_selected+" armies.");
-						text_area.setText(game_play.updateMR(map_elements));
+						text_area_game_history.append("\n"+current_player.getName()+" reinforces "+ selected_country.getCountryName()+" with "+armies_selected+" armies.");
+						text_area_game_map.setText(game_play.updateMR(map_elements));
 					}
 					else{
 						
