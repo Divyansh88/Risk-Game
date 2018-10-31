@@ -18,6 +18,8 @@ import app.team21.risk.views.GameScreen;
  */
 public class Player extends Observable{
 	public String name; 
+	public String history_text;
+	public String status_text;
 	public int turn_value;
 
 	public Player player;
@@ -264,13 +266,13 @@ public class Player extends Observable{
 		this.setPhaseDetails("Its"+name+"'s turn and Reinforcement phase.");
 		setChanged();
 		notifyObservers();
+		history_text=name+" ended the turn.";
+		game_view.updateView(history_text);
+		game_view.updateStatus("");
 		game_view.ReinforcementButton(armies,this,map_elements);
-		
 	}
 	public void playerReinforces(int armies_selected,MapElements map_elements,String country_name,GameScreen game_view){
 		boolean reinforce_successful=false;
-
-		String status_text="";
 
 		Country selected_country=null;
 		for(Country c:map_elements.getCountries()){
@@ -284,7 +286,7 @@ public class Player extends Observable{
 			selected_country.addArmy(armies_selected);
 			this.subReinforceArmies(armies_selected);
 			reinforce_successful=true;
-			String history_text="\n"+name+" reinforces "+ selected_country.getCountryName()+" with "+armies_selected+" armies.";
+			history_text="\n"+name+" reinforces "+ selected_country.getCountryName()+" with "+armies_selected+" armies.";
 			game_view.updateView(history_text);
 		}
 		else{
@@ -310,8 +312,7 @@ public class Player extends Observable{
 
 	public void playerFortifies(int armies,MapElements map_elements,Country country_from,Country country_to,GameScreen game_view){
 		boolean fortify_successful=false;
-		String status_text;
-
+		
 		if(country_from.getNeighbourNodes().contains(country_to)&&country_to.getNeighbourNodes().contains(country_from)&&(country_from.getCurrentArmiesDeployed())-1>=armies){
 			country_from.subtractArmy(armies);
 			country_to.addArmy(armies);
@@ -323,8 +324,8 @@ public class Player extends Observable{
 
 		if(fortify_successful){
 			this.setCanFortify(false);
-			status_text=" Reinforcement Phase Completed";
-			String history_text="\n"+name+" fortified "+ country_to.getCountryName()+" with "+armies+" armies from "+country_from.getCountryName();
+			status_text=" Fortification Phase Completed";
+			history_text="\n"+name+" fortified "+ country_to.getCountryName()+" with "+armies+" armies from "+country_from.getCountryName();
 			setPhaseDetails(name+" can End the turn now.");
 			setChanged();
 			notifyObservers(this);
