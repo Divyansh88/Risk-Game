@@ -12,5 +12,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/yashe/Downloads/de.loskutov.eclipse.jdepend_1.2.4.201406241900.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
