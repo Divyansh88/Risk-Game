@@ -266,8 +266,6 @@ public class Player extends Observable{
 		this.setPhaseDetails("Its"+name+"'s turn and Reinforcement phase.");
 		setChanged();
 		notifyObservers();
-		history_text=name+" ended the turn.";
-		game_view.updateView(history_text);
 		game_view.updateStatus("");
 		game_view.ReinforcementButton(armies,this,map_elements);
 	}

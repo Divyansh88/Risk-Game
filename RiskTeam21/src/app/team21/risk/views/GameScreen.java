@@ -410,7 +410,7 @@ public class GameScreen implements Observer{
 
 		btn_endturn_ep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateView(current_player.getName()+" ended the turn.\n*************************");
+				updateView(current_player.getName()+" ended the turn./n*************************");
 				turn_value = GamePlay.endTurn(current_player, player_list);
 				current_player = game_play.getCurrentPlayer(player_list, turn_value);
 				current_player.addObserver(view);
@@ -448,10 +448,6 @@ public class GameScreen implements Observer{
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		//asdasdasd
-		//asdasdasd
-		//asdasdasdasd
-		// TODO Auto-generated method stub
 		Player player=(Player) arg0;
 		turn_label.setText(player.getPhaseDetails());	
 	}
