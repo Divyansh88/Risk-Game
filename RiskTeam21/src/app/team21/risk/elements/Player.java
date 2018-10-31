@@ -21,7 +21,6 @@ public class Player extends Observable{
 	public int turn_value;
 
 	public Player player;
-	public Player current_player;
 
 	public Country country_A;
 	public Country country_B;
@@ -58,7 +57,7 @@ public class Player extends Observable{
 		can_end_turn=false;
 	}
 	/**
-	 * getter method for turn value of player.
+	 * getter method for turn value of a.
 	 * 
 	 * @return the turn_value
 	 */
@@ -250,12 +249,27 @@ public class Player extends Observable{
 		reinforce_armies-=armies_selected;
 	}
 
-
+	/**
+	 * this method will start the turn of player.
+	 * 
+	 * @param current_player present player
+	 * @param player_list list of players 
+	 * @param map_elements map elements
+	 * @param view gamescreen 
+	 */
+	public void startTurn(List<Player> player_list, MapElements map_elements, GameScreen game_view) {
+		this.setCanReinforce(true);
+		int armies=GamePlay.getReinforcementArmies(this, map_elements);
+		this.setReinforceArmies(armies);
+		this.setPhaseDetails("Its"+name+"'s turn and Reinforcement phase.");
+		setChanged();
+		notifyObservers();
+		game_view.ReinforcementButton(armies,this,map_elements);
+		
+	}
 	public void playerReinforces(int armies_selected,MapElements map_elements,String country_name,GameScreen game_view){
 		boolean reinforce_successful=false;
-//		setPhaseDetails("Its"+name+"'s turn and Reinforcement phase.");
-//		setChanged();
-//		notifyObservers(this);
+
 		String status_text="";
 
 		Country selected_country=null;
@@ -266,11 +280,11 @@ public class Player extends Observable{
 			}
 		}
 
-		if(armies_selected<=current_player.getReinforceArmies()){
+		if(armies_selected<=this.getReinforceArmies()){
 			selected_country.addArmy(armies_selected);
-			current_player.subReinforceArmies(armies_selected);
+			this.subReinforceArmies(armies_selected);
 			reinforce_successful=true;
-			String history_text="\n"+current_player.getName()+" reinforces "+ selected_country.getCountryName()+" with "+armies_selected+" armies.";
+			String history_text="\n"+name+" reinforces "+ selected_country.getCountryName()+" with "+armies_selected+" armies.";
 			game_view.updateView(history_text);
 		}
 		else{
@@ -278,25 +292,24 @@ public class Player extends Observable{
 			game_view.updateStatus(status_text);
 		}
 
-		if(current_player.getReinforceArmies()>0&&reinforce_successful){
-			game_view.ReinforcementButton(current_player.getReinforceArmies(),current_player,map_elements);
+		if(this.getReinforceArmies()>0&&reinforce_successful){
+			game_view.ReinforcementButton(this.getReinforceArmies(),this,map_elements);
 		}
 		else{
 			status_text=" Reinforcement Phase Completed";
-			current_player.setCanReinforce(false);
-			current_player.setCanFortify(true);
-			current_player.setCanEndTurn(true);
-			
+			this.setCanReinforce(false);
+			this.setCanFortify(true);
+			this.setCanEndTurn(true);
+			setPhaseDetails("Its"+name+"'s turn and Fortification phase.");
+			setChanged();
+			notifyObservers(this);
 			game_view.updateStatus(status_text);
-			game_view.FortifyButton(current_player,map_elements);
+			game_view.FortifyButton(this,map_elements);
 		}
 	}
 
 	public void playerFortifies(int armies,MapElements map_elements,Country country_from,Country country_to,GameScreen game_view){
 		boolean fortify_successful=false;
-		setPhaseDetails("Its"+name+"'s turn and Fortification phase.");
-		setChanged();
-		notifyObservers(this);
 		String status_text;
 
 		if(country_from.getNeighbourNodes().contains(country_to)&&country_to.getNeighbourNodes().contains(country_from)&&(country_from.getCurrentArmiesDeployed())-1>=armies){
@@ -309,9 +322,12 @@ public class Player extends Observable{
 		}
 
 		if(fortify_successful){
-			current_player.setCanFortify(false);
+			this.setCanFortify(false);
 			status_text=" Reinforcement Phase Completed";
-			String history_text="\n"+current_player.getName()+" fortified "+ country_to.getCountryName()+" with "+armies+" armies from "+country_from.getCountryName();
+			String history_text="\n"+name+" fortified "+ country_to.getCountryName()+" with "+armies+" armies from "+country_from.getCountryName();
+			setPhaseDetails(name+" can End the turn now.");
+			setChanged();
+			notifyObservers(this);
 			game_view.updateView(history_text);
 			game_view.updateStatus(status_text);
 			game_view.EndTurnButton();
@@ -319,7 +335,7 @@ public class Player extends Observable{
 		else{
 			status_text="\nFortify Unsuccessful. Enter valid armies or Select Valid Country to Fortify.";
 			game_view.updateStatus(status_text);
-			game_view.FortifyButton(current_player, map_elements);
+			game_view.FortifyButton(this, map_elements);
 		}
 
 	}

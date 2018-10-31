@@ -214,22 +214,5 @@ public class GamePlay extends Observable{
 		return armies;
 	}
 	
-		/**
-	 * this method will start the turn of player.
-	 * 
-	 * @param current_player present player
-	 * @param player_list list of players 
-	 * @param map_elements map elements
-	 * @param view gamescreen 
-	 */
-	public void startTurn(Player current_player, List<Player> player_list, MapElements map_elements, GameScreen game_view) {
-		current_player.setCanReinforce(true);
-		int armies=getReinforcementArmies(current_player, map_elements);
-		current_player.setReinforceArmies(armies);
-		current_player.setPhaseDetails("Its"+current_player.getName()+"'s turn and Reinforcement phase.");
-		setChanged();
-		notifyObservers();
-		game_view.ReinforcementButton(armies,current_player,map_elements);
-		
-	}
+	
 }

@@ -67,7 +67,7 @@ public class GameScreen implements Observer{
 		this.player_list = player_list;
 		this.turn_value = turn_value;
 		game_play = new GamePlay();
-		game_play.addObserver(this);
+		
 		String first_print = game_play.distributeCountries(player_list, map_elements.getCountries());
 		game_play.setInitialArmies(player_list);
 		String second_print = game_play.placeInitialArmiesInRR(player_list);
@@ -255,8 +255,9 @@ public class GameScreen implements Observer{
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 
 		current_player = game_play.getCurrentPlayer(player_list, turn_value);
+		current_player.addObserver(this);
 		view = this;
-		game_play.startTurn(current_player, player_list, map_elements, view);
+		current_player.startTurn(player_list, map_elements, view);
 	}
 
 	/**
@@ -299,7 +300,7 @@ public class GameScreen implements Observer{
 			public void actionPerformed(ActionEvent e) {
 				int armies_selected = Integer.valueOf(combobox_armies.getSelectedItem().toString());
 				String country_name = combobox_country.getSelectedItem().toString();
-				current_player.current_player = current_player;
+				//current_player.current_player = current_player;
 				current_player.playerReinforces(armies_selected, map_elements, country_name, game_view);
 			}
 		});
@@ -378,7 +379,7 @@ public class GameScreen implements Observer{
 							break;
 						}
 					}
-					current_player.current_player = current_player;
+					
 					current_player.playerFortifies(armies, map_elements, selected_from,selected_to, game_view);
 				}
 				else{
@@ -412,7 +413,8 @@ public class GameScreen implements Observer{
 				updateView(current_player.getName()+" ended the turn.\n*************************");
 				turn_value = GamePlay.endTurn(current_player, player_list);
 				current_player = game_play.getCurrentPlayer(player_list, turn_value);
-				game_play.startTurn(current_player, player_list, map_elements, view);
+				current_player.addObserver(view);
+				current_player.startTurn(player_list, map_elements, view);
 			}
 		});
 
