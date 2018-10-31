@@ -21,8 +21,8 @@ public class Player extends Observable{
 	public String history_text;
 	public String status_text;
 	public int turn_value;
-
-	public Player player;
+	public double domination;
+		public Player player;
 
 	public Country country_A;
 	public Country country_B;
@@ -40,11 +40,9 @@ public class Player extends Observable{
 	public boolean can_end_turn;
 
 	public String phase_details;
+	public String update_message;
 
-
-	public List<Player> player_list;
-
-
+	
 	/**
 	 * This constructor will assign name to player.
 	 * 
@@ -111,24 +109,6 @@ public class Player extends Observable{
 	public void setAssignedCountries(List<Country> assigned_countries) {
 		this.assigned_countries = assigned_countries;
 	} 
-
-	/**
-	 * getter method for player list.
-	 * 
-	 * @return the player_list
-	 */
-	public List<Player> getPlayerList() {
-		return player_list;
-	}
-
-	/**
-	 * setter method to assign player list.
-	 * 
-	 * @param player_list the playerList to set
-	 */
-	public void setPlayerList(List<Player> player_list) {
-		this.player_list = player_list;
-	}
 
 	/**
 	 * getter method for initial armies.
@@ -240,6 +220,31 @@ public class Player extends Observable{
 		this.phase_details = phase_details;
 	}
 
+	/**
+	 * @return the update_message
+	 */
+	public String getUpdateMessage() {
+		return update_message;
+	}
+	/**
+	 * @param update_message the update_message to set
+	 */
+	public void setUpdateMessage(String update_message) {
+		this.update_message = update_message;
+	}
+
+	/**
+	 * @return the domination
+	 */
+	public double getDomination() {
+		return domination;
+	}
+	/**
+	 * @param domination the domination to set
+	 */
+	public void setDomination(double domination) {
+		this.domination = domination;
+	}
 
 
 	/**
@@ -261,14 +266,20 @@ public class Player extends Observable{
 	 */
 	public void startTurn(List<Player> player_list, MapElements map_elements, GameScreen game_view) {
 		this.setCanReinforce(true);
+		
 		int armies=GamePlay.getReinforcementArmies(this, map_elements);
 		this.setReinforceArmies(armies);
-		this.setPhaseDetails("Its"+name+"'s turn and Reinforcement phase.");
+		this.setPhaseDetails("Its "+name+"'s turn and Reinforcement phase.");
+		this.setUpdateMessage("phase");
+		setChanged();
+		notifyObservers();
+		this.setUpdateMessage("domination");
 		setChanged();
 		notifyObservers();
 		game_view.updateStatus("");
 		game_view.ReinforcementButton(armies,this,map_elements);
 	}
+	
 	public void playerReinforces(int armies_selected,MapElements map_elements,String country_name,GameScreen game_view){
 		boolean reinforce_successful=false;
 
@@ -300,7 +311,8 @@ public class Player extends Observable{
 			this.setCanReinforce(false);
 			this.setCanFortify(true);
 			this.setCanEndTurn(true);
-			setPhaseDetails("Its"+name+"'s turn and Fortification phase.");
+			this.setPhaseDetails("Its "+name+"'s turn and Fortification phase.");
+			this.setUpdateMessage("phase");
 			setChanged();
 			notifyObservers(this);
 			game_view.updateStatus(status_text);
@@ -324,7 +336,8 @@ public class Player extends Observable{
 			this.setCanFortify(false);
 			status_text=" Fortification Phase Completed";
 			history_text="\n"+name+" fortified "+ country_to.getCountryName()+" with "+armies+" armies from "+country_from.getCountryName();
-			setPhaseDetails(name+" can End the turn now.");
+			this.setPhaseDetails(name+" can End the turn now.");
+			this.setUpdateMessage("phase");
 			setChanged();
 			notifyObservers(this);
 			game_view.updateView(history_text);

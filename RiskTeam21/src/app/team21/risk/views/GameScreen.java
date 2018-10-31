@@ -9,6 +9,7 @@ import app.team21.risk.views.StartGame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -101,29 +102,29 @@ public class GameScreen implements Observer{
 		domination_panel = new JPanel();
 		domination_panel.setPreferredSize(new Dimension(300, 210));
 		domination_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		map_finder_panel = new JPanel();
-		map_finder_panel.setPreferredSize(new Dimension(300, 380));
-		map_finder_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+//		map_finder_panel = new JPanel();
+//		map_finder_panel.setPreferredSize(new Dimension(300, 380));
+//		map_finder_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+//
+//		lbl_map_finder = new JLabel("Map Finder");
+//		select_country_panel = new JPanel();
+//		select_country_panel.setPreferredSize(new Dimension(300, 190));
+//		select_country_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+//		result_panel = new JPanel();
+//		result_panel.setPreferredSize(new Dimension(300, 190));
+//		result_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+//		lbl_select_country = new JLabel("Select Country");
+//		text_area_select_country = new JTextArea(10, 26);
+//		text_area_select_country.setEditable(false);
+//		text_area_result = new JTextArea(10, 26);
+//		text_area_result.setEditable(false);
+//		select_country_panel.add(lbl_select_country);
+//		select_country_panel.add(text_area_select_country);
+//		result_panel.add(text_area_result);
 
-		lbl_map_finder = new JLabel("Map Finder");
-		select_country_panel = new JPanel();
-		select_country_panel.setPreferredSize(new Dimension(300, 190));
-		select_country_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		result_panel = new JPanel();
-		result_panel.setPreferredSize(new Dimension(300, 190));
-		result_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		lbl_select_country = new JLabel("Select Country");
-		text_area_select_country = new JTextArea(10, 26);
-		// text_area_select_country.setEditable(false);
-		text_area_result = new JTextArea(10, 26);
-		// text_area_result.setEditable(false);
-		select_country_panel.add(lbl_select_country);
-		select_country_panel.add(text_area_select_country);
-		result_panel.add(text_area_result);
-
-		map_finder_panel.add(lbl_map_finder, BorderLayout.NORTH);
-		map_finder_panel.add(select_country_panel, BorderLayout.CENTER);
-		map_finder_panel.add(result_panel, BorderLayout.SOUTH);
+//		map_finder_panel.add(lbl_map_finder, BorderLayout.NORTH);
+//		map_finder_panel.add(select_country_panel, BorderLayout.CENTER);
+//		map_finder_panel.add(result_panel, BorderLayout.SOUTH);
 
 		text_area_domination = new JTextArea(11, 25);
 		text_area_domination.setEditable(false);
@@ -134,7 +135,7 @@ public class GameScreen implements Observer{
 		domination_panel.add(scroll_panel2, BorderLayout.SOUTH);
 
 		domination_master_panel.add(domination_panel, BorderLayout.NORTH);
-		domination_master_panel.add(map_finder_panel, BorderLayout.SOUTH);
+		//domination_master_panel.add(map_finder_panel, BorderLayout.SOUTH);
 
 		text_area_game_map = new JTextArea(35, 34);
 		text_area_game_map.setEditable(false);
@@ -410,7 +411,7 @@ public class GameScreen implements Observer{
 
 		btn_endturn_ep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateView(current_player.getName()+" ended the turn./n*************************");
+				updateView("\n"+current_player.getName()+" ended the turn.\n*************************");
 				turn_value = GamePlay.endTurn(current_player, player_list);
 				current_player = game_play.getCurrentPlayer(player_list, turn_value);
 				current_player.addObserver(view);
@@ -449,6 +450,46 @@ public class GameScreen implements Observer{
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		Player player=(Player) arg0;
-		turn_label.setText(player.getPhaseDetails());	
+		if(player.getUpdateMessage().equals("phase")){
+			turn_label.setText(player.getPhaseDetails());
+		}
+		else if(player.getUpdateMessage().equals("domination")){
+			StringBuilder domination_details = new StringBuilder();
+            double totalNumberOfCountries = map_elements.getCountryNeighboursMap().keySet().size();
+            DecimalFormat df = new DecimalFormat("#.##");
+            
+            for (Player p:player_list) {
+            	double domination_of_player = p.getAssignedCountries().size() / totalNumberOfCountries;
+            	int total_armies=0;
+            	int continents_captured=0;
+            	domination_of_player *= 100;
+                p.setDomination(Double.valueOf(df.format(domination_of_player)));
+                domination_details.append(p.getName()).append(" ").append("\n");
+                for(Country c:p.getAssignedCountries()){
+                	total_armies+=c.getCurrentArmiesDeployed();
+                }
+                for(Continent c:map_elements.getContinentList()){	
+        			List<Country> co=c.getMemberCountriesList();
+        			boolean continent_control=true;
+        			for(Country check:co){
+        				if(check.getBelongsToPlayer()==p){
+        					continue;
+        				}
+        				else{
+        					continent_control=false;
+        					break;
+        				}
+        			}
+        			if(continent_control)
+        				continents_captured+=1;
+        		}
+                domination_details.append(Double.valueOf(df.format(domination_of_player))).append("% -- "+total_armies+" -- "+continents_captured+" continents").append("\n");
+            }
+            text_area_domination.setText(domination_details.toString());
+		}
+		else{
+			System.out.println("FALSE UPDATE CALL");
+		}
+			
 	}
 }
