@@ -448,6 +448,9 @@ public class GameScreen implements Observer{
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		//asdasdasd
+		//asdasdasd
+		//asdasdasdasd
 		// TODO Auto-generated method stub
 		Player player=(Player) arg0;
 		turn_label.setText(player.getPhaseDetails());	
