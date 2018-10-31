@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 import java.util.PriorityQueue;
 import java.util.Random;
 
@@ -24,7 +25,7 @@ import app.team21.risk.views.GameScreen;
  * @author Yash Sheth
  * @version 1.0.0
  */
-public class GamePlay {
+public class GamePlay extends Observable{
 	
 	static Player current_player;
 	static int playerCount;
@@ -213,27 +214,7 @@ public class GamePlay {
 		return armies;
 	}
 	
-	/**
-	 * this method will check for fortify armies.
-	 * 
-	 * @param player player
-	 * @param country_from from country
-	 * @param country_to to country
-	 * @param armies number of armies
-	 * @return boolean 
-	 */
-	public static boolean tryFortify(Player player, Country country_from, Country country_to, int armies){
-		if(country_from.getNeighbourNodes().contains(country_to)&&country_to.getNeighbourNodes().contains(country_from)&&(country_from.getCurrentArmiesDeployed())-1>=armies){
-			country_from.subtractArmy(armies);
-			country_to.addArmy(armies);
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
-	/**
+		/**
 	 * this method will start the turn of player.
 	 * 
 	 * @param current_player present player
@@ -241,11 +222,14 @@ public class GamePlay {
 	 * @param map_elements map elements
 	 * @param view gamescreen 
 	 */
-	public void startTurn(Player current_player, List<Player> player_list, MapElements map_elements, GameScreen view) {
+	public void startTurn(Player current_player, List<Player> player_list, MapElements map_elements, GameScreen game_view) {
 		current_player.setCanReinforce(true);
 		int armies=getReinforcementArmies(current_player, map_elements);
-		System.out.println(armies);
 		current_player.setReinforceArmies(armies);
-		view.ReinforcementButton(armies,current_player,map_elements);
+		current_player.setPhaseDetails("Its"+current_player.getName()+"'s turn and Reinforcement phase.");
+		setChanged();
+		notifyObservers();
+		game_view.ReinforcementButton(armies,current_player,map_elements);
+		
 	}
 }
