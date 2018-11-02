@@ -28,7 +28,7 @@ import java.util.List;
 public class MapPath {
 	
 	JButton edit_map,create_map,btn_selectmap_conitnue,btn_add_continent,btn_add_country,btn_add_neighbour,btn_save,btn_create_continent,btn_ok;
-	JLabel lbl_or,lbl_map_name,lbl_author_name,lbl_alert,lbl_continent_name,lbl_control_value,lbl_state,lbl_country_name,lbl_select_neighbour,lbl_select_continent,lbl_select_country,lbl_game_map;
+	JLabel lbl_or,lbl_map_name,lbl_author_name,lbl_alert,lbl_continent_name,lbl_control_value,lbl_state,lbl_country_name,lbl_select_neighbour,lbl_select_continent,lbl_select_country,lbl_game_map,lbl_map_status;
 	JTextField txt_map_name,txt_author_name,txt_control_value,txt_continent_name,txt_country_name;
 	JPanel mr_panel,master_panel,buttons_panel,cards_panel,save_btn_panel,card_continent_panel,card_country_panel,card_neighbour_panel,status_panel;
 	CardLayout cl = new CardLayout();
@@ -624,12 +624,14 @@ public class MapPath {
 		
 		StartGame sg =new StartGame();
 		choose_map=sg.getPanel();
+		lbl_map_status = new JLabel("Enter valid map.");
 		
 		choose_map.add(select_map);
 		fillCombobox();
 		choose_map.add(maps);
 		choose_map.add(lbl_or);
 		choose_map.add(browse_map);
+		choose_map.add(lbl_map_status);
 		choose_map.add(map_selected);
 		
 		

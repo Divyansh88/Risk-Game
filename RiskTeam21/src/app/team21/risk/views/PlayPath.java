@@ -37,6 +37,7 @@ public class PlayPath extends StartGame{
 	MapElements map_elements;
 	JButton btn_back = new JButton("Back"); 
 	JButton btn_home = new JButton("Home");
+	JLabel lbl_map_status;
 	JComboBox players;
 	
 	/**
@@ -105,12 +106,14 @@ public class PlayPath extends StartGame{
 		
 		StartGame sg =new StartGame();
 		choose_map=sg.getPanel();
+		lbl_map_status = new JLabel("Enter valid map.");
 		
 		choose_map.add(select_map);
 		fillCombobox();
 		choose_map.add(maps);
 		choose_map.add(lbl_or);
 		choose_map.add(browse_map);
+		choose_map.add(lbl_map_status);
 		choose_map.add(map_selected);
 		
 		
