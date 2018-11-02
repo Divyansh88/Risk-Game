@@ -34,8 +34,10 @@ public class GameScreen implements Observer{
 	domination_master_panel, domination_panel, map_finder_panel, select_country_panel, result_panel;
 	JTextArea text_area_game_map, text_area_game_history, text_area_domination, text_area_result,
 	text_area_select_country;
-	JScrollPane scroll_panel, scroll_panel1, scroll_panel2;
+	JScrollPane scroll_panel, scroll_panel1, scroll_panel2, scroll_panel3, scroll_panel4;
 	JComboBox combobox_armies, combobox_country, combobox_country2;
+	DefaultListModel<String> country_display1, country_display2;
+	JList<String> country_list1, country_list2;
 	CardLayout cl_ps = new CardLayout();
 	JLabel turn_label = new JLabel();
 	JLabel status_label = new JLabel();
@@ -95,47 +97,106 @@ public class GameScreen implements Observer{
 		game_history_panel = new JPanel();
 		game_history_panel.setPreferredSize(new Dimension(400, 600));
 		game_history_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+	
 		domination_master_panel = new JPanel();
 		domination_master_panel.setPreferredSize(new Dimension(300, 600));
 		domination_master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-
+		
 		domination_panel = new JPanel();
 		domination_panel.setPreferredSize(new Dimension(300, 210));
 		domination_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-//		map_finder_panel = new JPanel();
-//		map_finder_panel.setPreferredSize(new Dimension(300, 380));
-//		map_finder_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-//
-//		lbl_map_finder = new JLabel("Map Finder");
-//		select_country_panel = new JPanel();
-//		select_country_panel.setPreferredSize(new Dimension(300, 190));
-//		select_country_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-//		result_panel = new JPanel();
-//		result_panel.setPreferredSize(new Dimension(300, 190));
-//		result_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-//		lbl_select_country = new JLabel("Select Country");
-//		text_area_select_country = new JTextArea(10, 26);
+		map_finder_panel = new JPanel();
+		map_finder_panel.setPreferredSize(new Dimension(300, 380));
+		map_finder_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		lbl_map_finder = new JLabel("Map Finder");
+		select_country_panel = new JPanel();
+		select_country_panel.setPreferredSize(new Dimension(300, 190));
+		select_country_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		result_panel = new JPanel();
+		result_panel.setPreferredSize(new Dimension(300, 190));
+		result_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		lbl_select_country = new JLabel("Select Country");
+		lbl_domination_panel = new JLabel("Domination");
+		
+		country_display1 = new DefaultListModel<>();
+        country_list1 = new JList<>(country_display1);
+        country_list1.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        country_list1.setLayoutOrientation(JList.VERTICAL_WRAP);
+        scroll_panel3 = new JScrollPane(country_list1);
+        country_list1.setVisible(true);
+        
+        
+        
+        country_display2 = new DefaultListModel<>();
+        
+        
+        
+        
+        country_list2 = new JList<>(country_display2);
+        country_list2.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        country_list2.setLayoutOrientation(JList.VERTICAL_WRAP);
+        scroll_panel4 = new JScrollPane(country_list2);
+        country_list2.setVisible(true);
+
+        String[] number = { "1", "2" };
+		String[] items = { "A", "B", "C", "D" };
+		String[] item = { "a", "b", "c", "d" };
+		
+        for (int i = 0; i < number.length; i++) {
+        	country_display1.add(i, number[i]);
+        	country_list1.addMouseListener(new MouseAdapter() {
+        		public void mouseClicked(MouseEvent evt) {
+        			country_display2.removeAllElements();
+        			if(country_list1.getSelectedValue().trim()=="1") {
+        				System.out.println("Inside 1");
+        				for (int i = 0; i < items.length; i++) {
+        					System.out.println("inside for 1");
+        		        	country_display2.add(i, items[i]);
+        		        }
+        			}
+        			else if(country_list1.getSelectedValue().trim()=="2") {
+        				System.out.println("Inside 2");
+        				for (int i = 0; i < item.length; i++) {
+        					System.out.println("inside for 2");
+        		        	country_display2.add(i, item[i]);
+        		        }
+        			}
+        		}
+			});
+        }
+		
+//		for (int i = 0; i < item.length; i++) {
+//        	country_display2.add(i, item[i]);
+//        }
+		
+//		text_area_select_country = new JTextArea(10, 25);
 //		text_area_select_country.setEditable(false);
-//		text_area_result = new JTextArea(10, 26);
+//		scroll_panel3 = new JScrollPane(text_area_select_country);
+//		text_area_result = new JTextArea(10, 25);
 //		text_area_result.setEditable(false);
-//		select_country_panel.add(lbl_select_country);
-//		select_country_panel.add(text_area_select_country);
-//		result_panel.add(text_area_result);
-
-//		map_finder_panel.add(lbl_map_finder, BorderLayout.NORTH);
-//		map_finder_panel.add(select_country_panel, BorderLayout.CENTER);
-//		map_finder_panel.add(result_panel, BorderLayout.SOUTH);
-
-		text_area_domination = new JTextArea(11, 25);
+//		scroll_panel4 = new JScrollPane(text_area_result);
+        
+        text_area_domination = new JTextArea(11, 25);
 		text_area_domination.setEditable(false);
 		scroll_panel2 = new JScrollPane(text_area_domination);
-		lbl_domination_panel = new JLabel("Domination");
 		scroll_panel2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		select_country_panel.add(lbl_select_country);
+		select_country_panel.add(scroll_panel3);
+		result_panel.add(scroll_panel4);
+		
+		map_finder_panel.add(lbl_map_finder, BorderLayout.NORTH);
+		map_finder_panel.add(select_country_panel, BorderLayout.CENTER);
+		map_finder_panel.add(result_panel, BorderLayout.SOUTH);
+		
 		domination_panel.add(lbl_domination_panel, BorderLayout.NORTH);
 		domination_panel.add(scroll_panel2, BorderLayout.SOUTH);
-
+		
 		domination_master_panel.add(domination_panel, BorderLayout.NORTH);
-		//domination_master_panel.add(map_finder_panel, BorderLayout.SOUTH);
+		domination_master_panel.add(map_finder_panel, BorderLayout.SOUTH);
 
 		text_area_game_map = new JTextArea(35, 34);
 		text_area_game_map.setEditable(false);
