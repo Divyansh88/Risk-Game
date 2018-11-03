@@ -104,93 +104,58 @@ public class GameScreen implements Observer{
 		domination_master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		domination_panel = new JPanel();
-		domination_panel.setPreferredSize(new Dimension(300, 210));
+		domination_panel.setPreferredSize(new Dimension(300, 200));
 		domination_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		map_finder_panel = new JPanel();
 		map_finder_panel.setPreferredSize(new Dimension(300, 380));
 		map_finder_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		lbl_map_finder = new JLabel("Map Finder");
+		lbl_map_finder = new JLabel("Map Finder - Select Country");
 		select_country_panel = new JPanel();
-		select_country_panel.setPreferredSize(new Dimension(300, 190));
+		select_country_panel.setPreferredSize(new Dimension(300, 160));
 		select_country_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		result_panel = new JPanel();
 		result_panel.setPreferredSize(new Dimension(300, 190));
 		result_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		lbl_select_country = new JLabel("Select Country");
+		
 		lbl_domination_panel = new JLabel("Domination");
 		
 		country_display1 = new DefaultListModel<>();
         country_list1 = new JList<>(country_display1);
         country_list1.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        country_list1.setLayoutOrientation(JList.VERTICAL_WRAP);
+        country_list1.setLayoutOrientation(JList.VERTICAL);
+        country_list1.setVisibleRowCount(8);
+        country_list1.setFixedCellWidth(150);
         scroll_panel3 = new JScrollPane(country_list1);
+        scroll_panel3.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         country_list1.setVisible(true);
         
-        
-        
-        country_display2 = new DefaultListModel<>();
-        
-        
-        
-        
-        country_list2 = new JList<>(country_display2);
-        country_list2.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        country_list2.setLayoutOrientation(JList.VERTICAL_WRAP);
-        scroll_panel4 = new JScrollPane(country_list2);
-        country_list2.setVisible(true);
-
         String[] number = { "1", "2" };
-		String[] items = { "A", "B", "C", "D" };
-		String[] item = { "a", "b", "c", "d" };
+		String[] items = { "A", "B", "C", "D","A", "B", "C", "D","A", "B", "C", "D" };
+		String[] item = { "a", "b", "c", "d","a", "b", "c", "d","a", "b", "c", "d" };
 		
         for (int i = 0; i < number.length; i++) {
         	country_display1.add(i, number[i]);
-        	country_list1.addMouseListener(new MouseAdapter() {
-        		public void mouseClicked(MouseEvent evt) {
-        			country_display2.removeAllElements();
-        			if(country_list1.getSelectedValue().trim()=="1") {
-        				System.out.println("Inside 1");
-        				for (int i = 0; i < items.length; i++) {
-        					System.out.println("inside for 1");
-        		        	country_display2.add(i, items[i]);
-        		        }
-        			}
-        			else if(country_list1.getSelectedValue().trim()=="2") {
-        				System.out.println("Inside 2");
-        				for (int i = 0; i < item.length; i++) {
-        					System.out.println("inside for 2");
-        		        	country_display2.add(i, item[i]);
-        		        }
-        			}
-        		}
-			});
         }
-		
-//		for (int i = 0; i < item.length; i++) {
-//        	country_display2.add(i, item[i]);
-//        }
-		
-//		text_area_select_country = new JTextArea(10, 25);
-//		text_area_select_country.setEditable(false);
-//		scroll_panel3 = new JScrollPane(text_area_select_country);
-//		text_area_result = new JTextArea(10, 25);
-//		text_area_result.setEditable(false);
-//		scroll_panel4 = new JScrollPane(text_area_result);
+
+		text_area_result = new JTextArea(11, 25);
+		text_area_result.setEditable(false);
+		scroll_panel4 = new JScrollPane(text_area_result);
+		scroll_panel4.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
         text_area_domination = new JTextArea(11, 25);
 		text_area_domination.setEditable(false);
 		scroll_panel2 = new JScrollPane(text_area_domination);
 		scroll_panel2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
-		select_country_panel.add(lbl_select_country);
 		select_country_panel.add(scroll_panel3);
+		select_country_panel.setLayout(new BoxLayout(select_country_panel, BoxLayout.Y_AXIS));
 		result_panel.add(scroll_panel4);
-		
+				
 		map_finder_panel.add(lbl_map_finder, BorderLayout.NORTH);
-		map_finder_panel.add(select_country_panel, BorderLayout.CENTER);
-		map_finder_panel.add(result_panel, BorderLayout.SOUTH);
+		map_finder_panel.add(select_country_panel, BorderLayout.NORTH);
+		map_finder_panel.add(result_panel, BorderLayout.NORTH);
 		
 		domination_panel.add(lbl_domination_panel, BorderLayout.NORTH);
 		domination_panel.add(scroll_panel2, BorderLayout.SOUTH);
@@ -263,7 +228,7 @@ public class GameScreen implements Observer{
 
 		second_master_panel.add(phase_screen_panel, BorderLayout.WEST);
 		second_master_panel.add(action_panel, BorderLayout.EAST);
-		game_history_panel.add(lbl_game_history, BorderLayout.NORTH);
+		game_history_panel.add(lbl_game_map, BorderLayout.NORTH);
 		game_history_panel.add(scroll_panel, BorderLayout.SOUTH);
 		action_panel.add(btn_reinforcement);
 		action_panel.add(btn_attack);
@@ -275,7 +240,6 @@ public class GameScreen implements Observer{
 				if (current_player.isCanReinforce())
 					ReinforcementButton(reinforcement_army, current_player, map_elements);
 				else
-
 					status_label.setText("\nSorry. You cannot reinforce right now.");
 			}
 		});
@@ -306,6 +270,21 @@ public class GameScreen implements Observer{
 				else
 					status_label.setText("\nSorry. You cannot End Turn right now.");
 			}
+		});
+		
+		country_list1.addMouseListener(new MouseAdapter() {
+    		public void mouseClicked(MouseEvent evt) {
+    	
+    			text_area_result.setText("");
+    			if(country_list1.getSelectedValue().trim()=="1") {
+    				for (int i = 0; i < items.length; i++) 
+    					text_area_result.append(items[i]+"   HEHEHE \n");
+    			}
+    			else if(country_list1.getSelectedValue().trim()=="2") {
+    				for (int i = 0; i < item.length; i++) 
+    					text_area_result.append(item[i]+"   HAHAHA \n");
+    			}
+    		}
 		});
 
 		JFrame jf = new JFrame();
@@ -362,7 +341,6 @@ public class GameScreen implements Observer{
 			public void actionPerformed(ActionEvent e) {
 				int armies_selected = Integer.valueOf(combobox_armies.getSelectedItem().toString());
 				String country_name = combobox_country.getSelectedItem().toString();
-				//current_player.current_player = current_player;
 				current_player.playerReinforces(armies_selected, map_elements, country_name, game_view);
 			}
 		});
