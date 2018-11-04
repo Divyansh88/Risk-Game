@@ -24,10 +24,10 @@ import java.util.Observer;
  */
 
 public class GameScreen implements Observer{
-	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn, btn_endturn_ep;
+	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn, btn_endturn_ep,btn_attack_ap;
 	JLabel lbl_game_history, lbl_select_army, lbl_select_country, lbl_choose_player, lbl_select_from_country,
-	lbl_select_to_country, lbl_game_map, lbl_domination_panel, lbl_map_finder;
-	JTextField txt_armies;
+	lbl_select_to_country, lbl_game_map, lbl_domination_panel, lbl_map_finder,lbl_select_dice;
+	JTextField txt_armies,txt_dice;
 	JPanel master_panel, game_history_panel, mr_panel, turn_panel, second_master_panel, phase_screen_panel,
 	action_panel;
 	JPanel reinforcement_panel, attack_panel, fortify_panel, mr_master_panel, status_panel, endturn_panel,
@@ -41,8 +41,8 @@ public class GameScreen implements Observer{
 	CardLayout cl_ps = new CardLayout();
 	JLabel turn_label = new JLabel();
 	JLabel status_label = new JLabel();
-	MapElements map_elements;
-	List<Player> player_list;
+	public MapElements map_elements;
+	public List<Player> player_list;
 	GamePlay game_play;
 	Player current_player;
 	int turn_value;
@@ -135,10 +135,14 @@ public class GameScreen implements Observer{
 		String[] items = { "A", "B", "C", "D","A", "B", "C", "D","A", "B", "C", "D" };
 		String[] item = { "a", "b", "c", "d","a", "b", "c", "d","a", "b", "c", "d" };
 		
-        for (int i = 0; i < number.length; i++) {
-        	country_display1.add(i, number[i]);
-        }
+//        for (int i = 0; i < number.length; i++) {
+//        	country_display1.add(i, number[i]);
+//        }
 
+        for(Country c:map_elements.getCountries()){
+        	country_display1.addElement(c.getCountryName());
+        }
+        
 		text_area_result = new JTextArea(11, 25);
 		text_area_result.setEditable(false);
 		scroll_panel4 = new JScrollPane(text_area_result);
@@ -247,7 +251,7 @@ public class GameScreen implements Observer{
 		btn_attack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (current_player.isCanAttack())
-					AttackButton();
+					AttackButton(current_player, map_elements);
 				else
 					status_label.setText("\nSorry. You cannot attack right now. Feature Coming Soon.");
 			}
@@ -275,15 +279,22 @@ public class GameScreen implements Observer{
 		country_list1.addMouseListener(new MouseAdapter() {
     		public void mouseClicked(MouseEvent evt) {
     	
+    			Country selected_from=null;
+    			String selected_country=country_list1.getSelectedValue().toString();
     			text_area_result.setText("");
-    			if(country_list1.getSelectedValue().trim()=="1") {
-    				for (int i = 0; i < items.length; i++) 
-    					text_area_result.append(items[i]+"   HEHEHE \n");
+    			for(Country c:map_elements.getCountries()){
+    				if(c.getCountryName().equals(selected_country)){
+    					selected_from=c;
+    					break;
+    				}
     			}
-    			else if(country_list1.getSelectedValue().trim()=="2") {
-    				for (int i = 0; i < item.length; i++) 
-    					text_area_result.append(item[i]+"   HAHAHA \n");
+
+    			if(selected_from!=null){
+    				for (Country c : selected_from.getNeighbourNodes()) {
+    					text_area_result.append("\n"+c.getCountryName());
+    				}
     			}
+
     		}
 		});
 
@@ -349,14 +360,62 @@ public class GameScreen implements Observer{
 	/**
 	 * This method view attack screen in game screen. (Coming soon)
 	 */
-	public void AttackButton() {
+	public void AttackButton(Player current_player, MapElements map_elements) {
 		attack_panel.removeAll();
-
 		cl_ps.show(phase_screen_panel, "ap");
-		lbl_choose_player = new JLabel("Coming soon");
-		attack_panel.add(lbl_choose_player);
+		
+		lbl_select_from_country = new JLabel("Attack from");
+		attack_panel.add(lbl_select_from_country);
+		combobox_country = new JComboBox();
+		combobox_country=bindCountryCombobox(combobox_country,current_player);
+		attack_panel.add(combobox_country);
+
+		lbl_select_to_country = new JLabel("Attack on");
+		attack_panel.add(lbl_select_to_country);
+		combobox_country2= new JComboBox();
+		combobox_country2=bindNeighbourCombobox(combobox_country2,combobox_country.getSelectedItem().toString());
+		attack_panel.add(combobox_country2);
+
+		btn_attack_ap = new JButton("Try Attack");
+		attack_panel.add(btn_attack_ap);
+
 		attack_panel.revalidate();
 		attack_panel.repaint();
+		
+		combobox_country.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){    			
+    			combobox_country2.removeAllItems();
+    			combobox_country2=bindNeighbourCombobox(combobox_country2, combobox_country.getSelectedItem().toString());
+    		}
+		});
+
+		
+		GameScreen game_view=this;
+		btn_attack_ap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+
+					Country selected_from=null,selected_to=null;
+
+					for(Country c:map_elements.getCountries()){
+						if(c.getCountryName().equals(combobox_country.getSelectedItem().toString())){
+							selected_from=c;
+							break;
+						}
+					}
+
+					for(Country c:map_elements.getCountries()){
+						if(c.getCountryName().equals(combobox_country2.getSelectedItem().toString())){
+							selected_to=c;
+							break;
+						}
+					}
+					
+					current_player.playerAttacks(map_elements, selected_from, selected_to, game_view);
+			}
+
+		});
+
 	}
 
 	/**
@@ -477,8 +536,26 @@ public class GameScreen implements Observer{
 		return combobox_country;
 	}
 
+	public JComboBox<Object> bindNeighbourCombobox(JComboBox<Object> combobox_country, String selected_country) {
+
+		Country selected_from=null;
+
+		for(Country c:map_elements.getCountries()){
+			if(c.getCountryName().equals(selected_country)){
+				selected_from=c;
+				break;
+			}
+		}
+
+		if(selected_from!=null){
+			for (Country c : selected_from.getNeighbourNodes()) {
+				combobox_country.addItem(c.getCountryName());
+			}
+		}
+		return combobox_country;
+	}
 	public void updateView(String history_text) {
-		text_area_game_history.append(history_text);
+		text_area_game_history.append("\n"+history_text);
 		text_area_game_map.setText(GamePlay.updateMR(map_elements));
 	}
 

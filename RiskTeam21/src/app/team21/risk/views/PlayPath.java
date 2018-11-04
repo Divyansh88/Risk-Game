@@ -106,7 +106,7 @@ public class PlayPath extends StartGame{
 		
 		StartGame sg =new StartGame();
 		choose_map=sg.getPanel();
-		lbl_map_status = new JLabel("Enter valid map.");
+		lbl_map_status = new JLabel("");
 		
 		choose_map.add(select_map);
 		fillCombobox();
