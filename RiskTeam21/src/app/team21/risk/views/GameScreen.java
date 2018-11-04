@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -26,8 +25,8 @@ import java.util.Observer;
 public class GameScreen implements Observer{
 	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn, btn_endturn_ep,btn_attack_ap;
 	JLabel lbl_game_history, lbl_select_army, lbl_select_country, lbl_choose_player, lbl_select_from_country,
-	lbl_select_to_country, lbl_game_map, lbl_domination_panel, lbl_map_finder,lbl_select_dice;
-	JTextField txt_armies,txt_dice;
+	lbl_select_to_country, lbl_game_map, lbl_domination_panel, lbl_map_finder,lbl_select_mode;
+	JTextField txt_armies;
 	JPanel master_panel, game_history_panel, mr_panel, turn_panel, second_master_panel, phase_screen_panel,
 	action_panel;
 	JPanel reinforcement_panel, attack_panel, fortify_panel, mr_master_panel, status_panel, endturn_panel,
@@ -35,7 +34,7 @@ public class GameScreen implements Observer{
 	JTextArea text_area_game_map, text_area_game_history, text_area_domination, text_area_result,
 	text_area_select_country;
 	JScrollPane scroll_panel, scroll_panel1, scroll_panel2, scroll_panel3, scroll_panel4;
-	JComboBox combobox_armies, combobox_country, combobox_country2;
+	JComboBox combobox_armies, combobox_country, combobox_country2, combobox_mode;
 	DefaultListModel<String> country_display1, country_display2;
 	JList<String> country_list1, country_list2;
 	CardLayout cl_ps = new CardLayout();
@@ -71,10 +70,10 @@ public class GameScreen implements Observer{
 		this.turn_value = turn_value;
 		game_play = new GamePlay();
 		
-		String first_print = game_play.distributeCountries(player_list, map_elements.getCountries());
-		game_play.setInitialArmies(player_list);
+		String first_print = GamePlay.distributeCountries(player_list, map_elements.getCountries());
+		GamePlay.setInitialArmies(player_list);
 		String second_print = game_play.placeInitialArmiesInRR(player_list);
-		String mr = game_play.updateMR(map_elements);
+		String mr = GamePlay.updateMR(map_elements);
 
 		JPanel test = new JPanel();
 		StartGame sg = new StartGame();
@@ -131,13 +130,6 @@ public class GameScreen implements Observer{
         scroll_panel3.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         country_list1.setVisible(true);
         
-        String[] number = { "1", "2" };
-		String[] items = { "A", "B", "C", "D","A", "B", "C", "D","A", "B", "C", "D" };
-		String[] item = { "a", "b", "c", "d","a", "b", "c", "d","a", "b", "c", "d" };
-		
-//        for (int i = 0; i < number.length; i++) {
-//        	country_display1.add(i, number[i]);
-//        }
 
         for(Country c:map_elements.getCountries()){
         	country_display1.addElement(c.getCountryName());
@@ -175,7 +167,7 @@ public class GameScreen implements Observer{
 		scroll_panel.setLocation(0, 0);
 		text_area_game_map.setText(mr);
 
-		text_area_game_history = new JTextArea(20, 50);
+		text_area_game_history = new JTextArea(19, 50);
 		text_area_game_history.setEditable(false);
 		scroll_panel1 = new JScrollPane(text_area_game_history);
 		lbl_game_history = new JLabel("Game History");
@@ -376,9 +368,16 @@ public class GameScreen implements Observer{
 		combobox_country2=bindNeighbourCombobox(combobox_country2,combobox_country.getSelectedItem().toString());
 		attack_panel.add(combobox_country2);
 
+		lbl_select_mode = new JLabel("Attack Mode");
+		attack_panel.add(lbl_select_mode);
+		combobox_mode= new JComboBox();
+		combobox_mode.addItem("NORMAL ATTACK");
+		combobox_mode.addItem("ALL OUT ATTACK");
+		attack_panel.add(combobox_mode);
+		
 		btn_attack_ap = new JButton("Try Attack");
 		attack_panel.add(btn_attack_ap);
-
+		
 		attack_panel.revalidate();
 		attack_panel.repaint();
 		
@@ -410,8 +409,7 @@ public class GameScreen implements Observer{
 							break;
 						}
 					}
-					
-					current_player.playerAttacks(map_elements, selected_from, selected_to, game_view);
+					current_player.playerAttacks(map_elements, selected_from, selected_to, game_view, combobox_mode.getSelectedItem().toString());
 			}
 
 		});
@@ -510,9 +508,13 @@ public class GameScreen implements Observer{
 		btn_endturn_ep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				updateView("\n"+current_player.getName()+" ended the turn.\n*************************");
+				for(Player p:player_list){
+					System.out.println(p.getName()+"  "+p.getTurnValue());
+				}
 				turn_value = GamePlay.endTurn(current_player, player_list);
 				current_player = game_play.getCurrentPlayer(player_list, turn_value);
 				current_player.addObserver(view);
+				System.out.println("LIST "+player_list);
 				current_player.startTurn(player_list, map_elements, view);
 			}
 		});

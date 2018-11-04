@@ -11,8 +11,7 @@ import javax.swing.plaf.basic.BasicIconFactory;
 import app.team21.risk.gamemodule.GamePlay;
 import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.views.GameScreen;
-
-
+import app.team21.risk.views.StartGame;
 
 /**
  * Last Updated on : 18/10/2018, Thursday
@@ -347,62 +346,93 @@ public class Player extends Observable{
 		}
 	}
 
-	public void playerAttacks(MapElements map_elements,Country country_from,Country country_to,GameScreen game_view){
+	public void playerAttacks(MapElements map_elements,Country country_from,Country country_to,GameScreen game_view, String mode_string){
 
-		if(!country_to.belongs_to_player.equals(this)){
-			if(country_from.getCurrentArmiesDeployed()>1){
+		int mode;
+		if(mode_string.equalsIgnoreCase("ALL OUT ATTACK"))
+			mode=1;
+		else
+			mode=0;
+		if(can_attack){
+			if(!country_to.belongs_to_player.equals(this)){
+				if(country_from.getCurrentArmiesDeployed()>1){
 
+					attacker_losses = 0;
+					defender_losses = 0;
 
-				// Set default values
-				attacker_losses = 0;
-				defender_losses = 0;
+					if(mode==1){
+						attacker_dice=getMaxDiceAttacker(country_from);
+						defender_dice=getMaxDiceDefender(country_to);
+					}
+					else{
+						attacker_dice=showAttackDiceDialog(country_from);
+						defender_dice=showDefenceDiceDialog(country_to);
+					}
+					
+					attacker_rolls=Dice.rollDice(attacker_dice).getDiceResult();
+					defender_rolls=Dice.rollDice(defender_dice).getDiceResult();
 
-				attacker_dice=showAttackDiceDialog(country_from);
-				defender_dice=showDefenceDiceDialog(country_to);
-
-				attacker_rolls=Dice.rollDice(attacker_dice).getDiceResult();
-				defender_rolls=Dice.rollDice(defender_dice).getDiceResult();
-
-				StringBuilder sb=new StringBuilder();
-				sb.append(country_from.getBelongsToPlayer().getName()+" - Mr.Attacker Rolled ");
-				sb.append(System.getProperty("line.separator"));
-				for(int a:attacker_rolls){
-					sb.append(a);
+					StringBuilder sb=new StringBuilder();
+					sb.append(country_from.getBelongsToPlayer().getName()+" - Mr.Attacker Rolled ");
 					sb.append(System.getProperty("line.separator"));
-				}
-				sb.append(System.getProperty("line.separator"));
-				sb.append(country_to.getBelongsToPlayer().getName()+" - Mr.Defender Rolled ");
-				sb.append(System.getProperty("line.separator"));
-				for(int a:defender_rolls){
-					sb.append(a);
+					for(int a:attacker_rolls){
+						sb.append(a);
+						sb.append(System.getProperty("line.separator"));
+					}
 					sb.append(System.getProperty("line.separator"));
+					sb.append(country_to.getBelongsToPlayer().getName()+" - Mr.Defender Rolled ");
+					sb.append(System.getProperty("line.separator"));
+					for(int a:defender_rolls){
+						sb.append(a);
+						sb.append(System.getProperty("line.separator"));
+					}
+
+					game_view.updateView(sb.toString());
+
+					calculateLosses();
+
+					country_from.subtractArmy(attacker_losses);
+					country_to.subtractArmy(defender_losses);
+					game_view.updateView(country_from.getCountryName()+" lost "+attacker_losses+" armies.");
+					game_view.updateView(country_to.getCountryName()+" lost "+defender_losses+" armies.");
+
+					
+					if (country_to.getCurrentArmiesDeployed() < 1) {
+						game_view.updateView(country_from.getBelongsToPlayer().getName() + " has defeated all of " + country_to.getBelongsToPlayer().getName() + "'s armies in " + country_to.getCountryName() + " and has occupied the country!");
+						defenderLostCountry(country_from, country_to, game_view);
+						game_view.AttackButton(this, map_elements);
+					}
+					if(this.getAssignedCountries().size() == game_view.map_elements.getCountries().size()){
+						game_view.updateView(""+this.getName()+" has won the game ! Congratulations ! ");
+						game_view.EndTurnButton();
+						JOptionPane.showMessageDialog(null, "Congratulations! "+this.getName()+" won the game.");   
+						StartGame.createStartScreen();
+					}
+					else{
+						checkCanContinue(game_view);
+					}
+					
+					if(mode==1 && !country_to.getBelongsToPlayer().equals(this) && country_from.getCurrentArmiesDeployed()>1){
+						playerAttacks(map_elements, country_from, country_to, game_view, mode_string);
+					}
 				}
-				
-				game_view.updateView(sb.toString());
-
-				calculateLosses();
-
-				country_from.subtractArmy(attacker_losses);
-				country_to.subtractArmy(defender_losses);
-				game_view.updateView(country_from.getCountryName()+" lost "+attacker_losses+" armies.");
-				game_view.updateView(country_to.getCountryName()+" lost "+defender_losses+" armies.");
-
-				if (country_to.getCurrentArmiesDeployed() < 1) {
-
-	                game_view.updateView(country_from.getBelongsToPlayer().getName() + " has defeated all of " + country_to.getBelongsToPlayer().getName() + "'s armies in " + country_to.getCountryName() + " and has occupied the country!");
-	                defenderLostCountry(country_from, country_to, game_view);
-	            }
-				if(this.getAssignedCountries().size() == game_view.map_elements.getCountries().size()){
-	                game_view.updateView(""+this.getName()+" has won the game ! Congratulations ! ");
-	                JOptionPane.showMessageDialog(null, "Congratulations! "+this.getName()+" won the game.");   
-	            }
+				else{
+					game_view.updateStatus("Attacking Country must have at least 2 armies deployed.");
+				}
 			}
 			else{
-				game_view.updateStatus("Attacking Country must have at least 2 armies deployed.");
+				game_view.updateStatus("Cannot attack your own country.");
 			}
 		}
 		else{
-			game_view.updateStatus("Cannot attack your own country.");
+			game_view.updateStatus("You cannot attack anymore.");
+			status_text=" Attack Phase Completed";
+			this.setPhaseDetails(name+" can End the turn now.");
+			this.setUpdateMessage("phase");
+			setChanged();
+			notifyObservers(this);
+			game_view.updateStatus(status_text);
+			game_view.EndTurnButton();
 		}
 	}
 
@@ -464,7 +494,7 @@ public class Player extends Observable{
 
 
 		if (country_to.getBelongsToPlayer().getAssignedCountries().size() == 0) {
-			//playerLostRule(country_from, country_to);
+			playerEliminated(country_from, country_to,game_view);
 		}
 
 		country_to.setBelongsToPlayer(country_from.getBelongsToPlayer());
@@ -484,28 +514,40 @@ public class Player extends Observable{
 		setChanged();
 		notifyObservers();        
 	}
-	
-    public void playerLostRule(Country country_from, Country country_to, GameScreen game_view){
-        game_view.updateView(country_to.getBelongsToPlayer().getName() + " has no countries left, player looses the game and is eliminated");
 
-        //Attacker will get all the cards of the defender as defender has lost all of it's countries
-//        List<Card> listOfDefenderCards = country_to.getBelongsToPlayer().getHand();
-//        for (Card card : listOfDefenderCards)
-//            country_from.getBelongsToPlayer().addRiskCard(card);
+	public void playerEliminated(Country country_from, Country country_to, GameScreen game_view){
+		game_view.updateView(country_to.getBelongsToPlayer().getName() + " has no countries left, player looses the game and is eliminated");
+		game_view.player_list.remove(country_to.getBelongsToPlayer());
+	}
 
-        game_view.player_list.remove(country_to.getBelongsToPlayer());
-    }
 
+	public void checkCanContinue(GameScreen game_view) {
+		can_attack = false;
+		can_fortify = false;
+		for (Country c : this.getAssignedCountries()) {
+
+			if (c.getCurrentArmiesDeployed() > 1) {
+				can_attack = true;
+				can_fortify = true;
+				break;
+			}
+		}
+		if(!can_attack && !can_fortify){
+			status_text=" Attack Phase Completed";
+			this.setPhaseDetails(name+" can End the turn now.");
+			this.setUpdateMessage("phase");
+			setChanged();
+			notifyObservers(this);
+			game_view.updateStatus(status_text);
+			game_view.EndTurnButton();
+		}
+	}
 
 
 	public int showAttackDiceDialog(Country country){
 
-		int dices = 1;
-		if (country.getCurrentArmiesDeployed() > 3) {
-			dices = 3;
-		} else if (country.getCurrentArmiesDeployed() == 3) {
-			dices = 2;
-		}
+		int dices = getMaxDiceAttacker(country);
+		
 		Integer[] choices=new Integer[dices];
 		for(int i=0;i<dices;i++)
 			choices[i]=i+1;
@@ -514,10 +556,20 @@ public class Player extends Observable{
 				"Attacker Select",country.getBelongsToPlayer().getName() + "! How many dice will you roll?", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), choices,
 				choices[0]);
 	}
+	
+	public int getMaxDiceAttacker(Country country){
+		int dices = 1;
+		if (country.getCurrentArmiesDeployed() > 3) {
+			dices = 3;
+		} else if (country.getCurrentArmiesDeployed() == 3) {
+			dices = 2;
+		}
+		return dices;
+	}
 
 	public int showDefenceDiceDialog(Country country){
 
-		int dices = country.getCurrentArmiesDeployed() >= 2 ? 2 : 1;
+		int dices = getMaxDiceDefender(country);
 
 		Integer[] choices=new Integer[dices];
 		for(int i=0;i<dices;i++)
@@ -528,6 +580,12 @@ public class Player extends Observable{
 				choices[0]);
 	}
 
+	public int getMaxDiceDefender(Country country){
+		int dices = country.getCurrentArmiesDeployed() >= 2 ? 2 : 1;
+		
+		return dices;
+	}
+	
 	public int showMoveArmiesDialogBox(Country country,GameScreen game_view) {
 
 		Integer[] choices=new Integer[country.getCurrentArmiesDeployed()-1];

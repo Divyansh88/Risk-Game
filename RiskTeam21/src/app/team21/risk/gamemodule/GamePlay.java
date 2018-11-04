@@ -50,6 +50,9 @@ public class GamePlay extends Observable{
 			turn_value++;
 			p.setTurnValue(turn_value);
 		}
+		for(Player p:players){
+			System.out.println(p.getName()+"  "+p.getTurnValue());
+		}
 		while(countries.size()>0){
 			for(Player p:players){
 				List<Country> new_list=p.getAssignedCountries();
@@ -98,8 +101,27 @@ public class GamePlay extends Observable{
 	 */
 	public static int endTurn(Player player,List<Player> player_list){
 		int new_turn=player.getTurnValue()+1;
-		if(new_turn>player_list.size())
+		int max_turn_value=0;
+		for(Player p:player_list){
+			if(p.getTurnValue()>max_turn_value)
+				max_turn_value=p.getTurnValue();
+		}
+		if(new_turn>max_turn_value)
 			new_turn=1;
+		
+		boolean player_flag=true;
+		while(player_flag){
+			for(Player p:player_list){
+				if(p.getTurnValue()==new_turn){
+					player_flag=false;
+					break;
+				}
+			}
+			if(player_flag)
+				new_turn+=1;
+			if(new_turn>max_turn_value)
+				new_turn=1;
+		}
 		return new_turn;
 	}
 	
