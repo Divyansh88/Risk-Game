@@ -1,7 +1,9 @@
 package app.team21.risk.views;
 
+import app.team21.risk.elements.Card;
 import app.team21.risk.elements.Continent;
 import app.team21.risk.elements.Country;
+import app.team21.risk.gamemodule.Deck;
 import app.team21.risk.elements.Player;
 import app.team21.risk.gamemodule.GamePlay;
 import app.team21.risk.mapmodule.MapElements;
@@ -10,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -22,10 +25,11 @@ import java.util.Observer;
  * @version 1.0.0
  */
 
-public class GameScreen implements Observer{
-	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn, btn_endturn_ep,btn_attack_ap;
+public class GameScreen implements Observer {
+	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn, btn_endturn_ep,
+	btn_attack_ap, btn_turnin_rp;
 	JLabel lbl_game_history, lbl_select_army, lbl_select_country, lbl_choose_player, lbl_select_from_country,
-	lbl_select_to_country, lbl_game_map, lbl_domination_panel, lbl_map_finder,lbl_select_mode;
+	lbl_select_to_country, lbl_game_map, lbl_domination_panel, lbl_map_finder, lbl_select_mode;
 	JTextField txt_armies;
 	JPanel master_panel, game_history_panel, mr_panel, turn_panel, second_master_panel, phase_screen_panel,
 	action_panel;
@@ -33,20 +37,22 @@ public class GameScreen implements Observer{
 	domination_master_panel, domination_panel, map_finder_panel, select_country_panel, result_panel;
 	JTextArea text_area_game_map, text_area_game_history, text_area_domination, text_area_result,
 	text_area_select_country;
-	JScrollPane scroll_panel, scroll_panel1, scroll_panel2, scroll_panel3, scroll_panel4;
+	JScrollPane scroll_panel, scroll_panel1, scroll_panel2, scroll_panel3, scroll_panel4, scroll_panel5;
 	JComboBox combobox_armies, combobox_country, combobox_country2, combobox_mode;
-	DefaultListModel<String> country_display1, country_display2;
-	JList<String> country_list1, country_list2;
+	DefaultListModel<String> country_display1, country_display2, turnin_cards_display;
+	JList<String> country_list1, country_list2, turnin_cards_list;
 	CardLayout cl_ps = new CardLayout();
 	JLabel turn_label = new JLabel();
 	JLabel status_label = new JLabel();
+	public boolean must_turn_in=false;
 	public MapElements map_elements;
 	public List<Player> player_list;
+	public int extra_armies;
 	GamePlay game_play;
 	Player current_player;
 	int turn_value;
 	GameScreen view;
-	int reinforcement_army;
+	Deck deck;
 
 	/**
 	 * It is the main game screen
@@ -68,8 +74,10 @@ public class GameScreen implements Observer{
 		this.map_elements = map_elements;
 		this.player_list = player_list;
 		this.turn_value = turn_value;
+		deck = new Deck(map_elements.getCountries());
+
 		game_play = new GamePlay();
-		
+
 		String first_print = GamePlay.distributeCountries(player_list, map_elements.getCountries());
 		GamePlay.setInitialArmies(player_list);
 		String second_print = game_play.placeInitialArmiesInRR(player_list);
@@ -96,19 +104,18 @@ public class GameScreen implements Observer{
 		game_history_panel = new JPanel();
 		game_history_panel.setPreferredSize(new Dimension(400, 600));
 		game_history_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		
-	
+
 		domination_master_panel = new JPanel();
 		domination_master_panel.setPreferredSize(new Dimension(300, 600));
 		domination_master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		
+
 		domination_panel = new JPanel();
 		domination_panel.setPreferredSize(new Dimension(300, 200));
 		domination_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		map_finder_panel = new JPanel();
 		map_finder_panel.setPreferredSize(new Dimension(300, 380));
 		map_finder_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		
+
 		lbl_map_finder = new JLabel("Map Finder - Select Country");
 		select_country_panel = new JPanel();
 		select_country_panel.setPreferredSize(new Dimension(300, 160));
@@ -116,46 +123,44 @@ public class GameScreen implements Observer{
 		result_panel = new JPanel();
 		result_panel.setPreferredSize(new Dimension(300, 190));
 		result_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		
-		
-		lbl_domination_panel = new JLabel("Domination");
-		
-		country_display1 = new DefaultListModel<>();
-        country_list1 = new JList<>(country_display1);
-        country_list1.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        country_list1.setLayoutOrientation(JList.VERTICAL);
-        country_list1.setVisibleRowCount(8);
-        country_list1.setFixedCellWidth(150);
-        scroll_panel3 = new JScrollPane(country_list1);
-        scroll_panel3.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        country_list1.setVisible(true);
-        
 
-        for(Country c:map_elements.getCountries()){
-        	country_display1.addElement(c.getCountryName());
-        }
-        
+		lbl_domination_panel = new JLabel("Domination");
+
+		country_display1 = new DefaultListModel<>();
+		country_list1 = new JList<>(country_display1);
+		country_list1.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		country_list1.setLayoutOrientation(JList.VERTICAL);
+		country_list1.setVisibleRowCount(8);
+		country_list1.setFixedCellWidth(150);
+		scroll_panel3 = new JScrollPane(country_list1);
+		scroll_panel3.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		country_list1.setVisible(true);
+
+		for (Country c : map_elements.getCountries()) {
+			country_display1.addElement(c.getCountryName());
+		}
+
 		text_area_result = new JTextArea(11, 25);
 		text_area_result.setEditable(false);
 		scroll_panel4 = new JScrollPane(text_area_result);
 		scroll_panel4.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        
-        text_area_domination = new JTextArea(11, 25);
+
+		text_area_domination = new JTextArea(11, 25);
 		text_area_domination.setEditable(false);
 		scroll_panel2 = new JScrollPane(text_area_domination);
 		scroll_panel2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		
+
 		select_country_panel.add(scroll_panel3);
 		select_country_panel.setLayout(new BoxLayout(select_country_panel, BoxLayout.Y_AXIS));
 		result_panel.add(scroll_panel4);
-				
+
 		map_finder_panel.add(lbl_map_finder, BorderLayout.NORTH);
 		map_finder_panel.add(select_country_panel, BorderLayout.NORTH);
 		map_finder_panel.add(result_panel, BorderLayout.NORTH);
-		
+
 		domination_panel.add(lbl_domination_panel, BorderLayout.NORTH);
 		domination_panel.add(scroll_panel2, BorderLayout.SOUTH);
-		
+
 		domination_master_panel.add(domination_panel, BorderLayout.NORTH);
 		domination_master_panel.add(map_finder_panel, BorderLayout.SOUTH);
 
@@ -233,19 +238,21 @@ public class GameScreen implements Observer{
 
 		btn_reinforcement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (current_player.isCanReinforce())
-					ReinforcementButton(reinforcement_army, current_player, map_elements);
-				else
+				if (current_player.isCanReinforce()){
+					int reinforcement_army=GamePlay.getReinforcementArmies(current_player, map_elements);
+					ReinforcementButton(reinforcement_army+extra_armies, current_player, map_elements);
+				}else
 					status_label.setText("\nSorry. You cannot reinforce right now.");
 			}
 		});
 
 		btn_attack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println(current_player.isCanAttack());
 				if (current_player.isCanAttack())
 					AttackButton(current_player, map_elements);
 				else
-					status_label.setText("\nSorry. You cannot attack right now. Feature Coming Soon.");
+					status_label.setText("\nSorry. You cannot attack right now. Reinforce First");
 			}
 		});
 
@@ -267,27 +274,27 @@ public class GameScreen implements Observer{
 					status_label.setText("\nSorry. You cannot End Turn right now.");
 			}
 		});
-		
+
 		country_list1.addMouseListener(new MouseAdapter() {
-    		public void mouseClicked(MouseEvent evt) {
-    	
-    			Country selected_from=null;
-    			String selected_country=country_list1.getSelectedValue().toString();
-    			text_area_result.setText("");
-    			for(Country c:map_elements.getCountries()){
-    				if(c.getCountryName().equals(selected_country)){
-    					selected_from=c;
-    					break;
-    				}
-    			}
+			public void mouseClicked(MouseEvent evt) {
 
-    			if(selected_from!=null){
-    				for (Country c : selected_from.getNeighbourNodes()) {
-    					text_area_result.append("\n"+c.getCountryName());
-    				}
-    			}
+				Country selected_from = null;
+				String selected_country = country_list1.getSelectedValue().toString();
+				text_area_result.setText("");
+				for (Country c : map_elements.getCountries()) {
+					if (c.getCountryName().equals(selected_country)) {
+						selected_from = c;
+						break;
+					}
+				}
 
-    		}
+				if (selected_from != null) {
+					for (Country c : selected_from.getNeighbourNodes()) {
+						text_area_result.append("\n" + c.getCountryName());
+					}
+				}
+
+			}
 		});
 
 		JFrame jf = new JFrame();
@@ -316,6 +323,7 @@ public class GameScreen implements Observer{
 	 */
 	public void ReinforcementButton(int reinforce_armies, Player current_player, MapElements map_elements) {
 		this.current_player = current_player;
+
 		
 		reinforcement_panel.removeAll();
 		cl_ps.show(phase_screen_panel, "rp");
@@ -334,19 +342,108 @@ public class GameScreen implements Observer{
 		combobox_country = bindCountryCombobox(combobox_country, current_player);
 		reinforcement_panel.add(combobox_country);
 
-		btn_continue_rp = new JButton("Continue");
+		btn_continue_rp = new JButton("ReInforce");
 		reinforcement_panel.add(btn_continue_rp);
+
+		btn_turnin_rp = new JButton("Turn In Cards");
+		reinforcement_panel.add(btn_turnin_rp);
+
+
+		turnin_cards_display = new DefaultListModel<>();
+		turnin_cards_list = new JList<>(turnin_cards_display);
+		turnin_cards_list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		turnin_cards_list.setLayoutOrientation(JList.VERTICAL);
+		turnin_cards_list.setVisibleRowCount(4);
+		turnin_cards_list.setFixedCellWidth(300);
+		scroll_panel5 = new JScrollPane(turnin_cards_list);
+		scroll_panel5.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		turnin_cards_list.setVisible(true);
+		scroll_panel5.setVisible(true);
+		reinforcement_panel.add(scroll_panel5);
+
+		if (current_player.getCards().size() > 0) {
+			for (Card c : current_player.getCards()) {
+				turnin_cards_display.addElement(c.getName());
+			}
+		}
+
 		reinforcement_panel.revalidate();
 		reinforcement_panel.repaint();
 
 		GameScreen game_view = this;
 		btn_continue_rp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int armies_selected = Integer.valueOf(combobox_armies.getSelectedItem().toString());
-				String country_name = combobox_country.getSelectedItem().toString();
-				current_player.playerReinforces(armies_selected, map_elements, country_name, game_view);
+				System.out.println("INSIDE CONTINUE");
+				if(!must_turn_in){
+					System.out.println("GOGOGO");
+					int armies_selected = Integer.valueOf(combobox_armies.getSelectedItem().toString());
+					String country_name = combobox_country.getSelectedItem().toString();
+					current_player.playerReinforces(armies_selected, map_elements, country_name, game_view);
+				}
+				else
+					status_label.setText("Turn In Cards First. You have 5 or more cards.");
 			}
 		});
+		btn_turnin_rp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int[] selected_cards = turnin_cards_list.getSelectedIndices();
+				
+				int count_infantry=0;
+				int count_artillery=0;
+				int count_cavalry=0;
+				extra_armies=0;
+				if(selected_cards.length==3){
+					//List<String> choices=turnin_cards_list.getSelectedValuesList();
+					StringBuilder sb=new StringBuilder();
+					sb.append(current_player.getName()+" traded \n");
+					
+					List<Card> selected_turncards=new ArrayList<>();
+					List<Card> hand=current_player.getCards();
+					List<Card> new_hand=hand;
+					for(int i=0;i<selected_cards.length;i++){
+						Card c=hand.get(selected_cards[i]);
+						sb.append(c.getName()+"\n");
+						selected_turncards.add(c);
+					}
+					new_hand.removeAll(selected_turncards);
+					
+					for(Card c:selected_turncards){
+						if((c.getType().equals("Infantry")))
+							count_infantry++;
+						else if((c.getType().equals("Cavalry")))
+							count_cavalry++;
+						else if((c.getType().equals("Artillery")))
+							count_artillery++;
+						else
+							System.out.println("FALSE VALUE OF CARD");
+					}
+					
+					
+					if((count_infantry==1&&count_artillery==1&&count_cavalry==1)||count_infantry==3||count_artillery==3||count_cavalry==3){
+						for(Card c:selected_turncards){
+							deck.add(c);
+						}
+						extra_armies=current_player.getExchangeArmies();
+						sb.append("and got "+extra_armies+" armies in exchange.");
+						current_player.setCards(new_hand);
+						current_player.setTradedSet(current_player.getTradedSet()+1);
+						current_player.setCanReinforce(true);
+						current_player.setReinforceArmies(reinforce_armies+extra_armies);
+						updateView(sb.toString());
+						must_turn_in=false;
+						ReinforcementButton(reinforce_armies+extra_armies, current_player, map_elements);
+						
+					}
+					else{
+						status_label.setText("Select 3 of one type or Select 1 of each type to trade in for armies.");
+					}
+					
+				}
+				else{
+					status_label.setText("Must Select 3 valid Cards to Exchange");
+				}
+			}
+		}); 
 	}
 
 	/**
@@ -355,61 +452,59 @@ public class GameScreen implements Observer{
 	public void AttackButton(Player current_player, MapElements map_elements) {
 		attack_panel.removeAll();
 		cl_ps.show(phase_screen_panel, "ap");
-		
+
 		lbl_select_from_country = new JLabel("Attack from");
 		attack_panel.add(lbl_select_from_country);
 		combobox_country = new JComboBox();
-		combobox_country=bindCountryCombobox(combobox_country,current_player);
+		combobox_country = bindCountryCombobox(combobox_country, current_player);
 		attack_panel.add(combobox_country);
 
 		lbl_select_to_country = new JLabel("Attack on");
 		attack_panel.add(lbl_select_to_country);
-		combobox_country2= new JComboBox();
-		combobox_country2=bindNeighbourCombobox(combobox_country2,combobox_country.getSelectedItem().toString());
+		combobox_country2 = new JComboBox();
+		combobox_country2 = bindNeighbourCombobox(combobox_country2, combobox_country.getSelectedItem().toString());
 		attack_panel.add(combobox_country2);
 
 		lbl_select_mode = new JLabel("Attack Mode");
 		attack_panel.add(lbl_select_mode);
-		combobox_mode= new JComboBox();
+		combobox_mode = new JComboBox();
 		combobox_mode.addItem("NORMAL ATTACK");
 		combobox_mode.addItem("ALL OUT ATTACK");
 		attack_panel.add(combobox_mode);
-		
+
 		btn_attack_ap = new JButton("Try Attack");
 		attack_panel.add(btn_attack_ap);
-		
+
 		attack_panel.revalidate();
 		attack_panel.repaint();
-		
-		combobox_country.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){    			
-    			combobox_country2.removeAllItems();
-    			combobox_country2=bindNeighbourCombobox(combobox_country2, combobox_country.getSelectedItem().toString());
-    		}
+
+		combobox_country.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				combobox_country2.removeAllItems();
+				combobox_country2 = bindNeighbourCombobox(combobox_country2,combobox_country.getSelectedItem().toString());
+			}
 		});
 
-		
-		GameScreen game_view=this;
+		GameScreen game_view = this;
 		btn_attack_ap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				Country selected_from = null, selected_to = null;
 
-					Country selected_from=null,selected_to=null;
-
-					for(Country c:map_elements.getCountries()){
-						if(c.getCountryName().equals(combobox_country.getSelectedItem().toString())){
-							selected_from=c;
-							break;
-						}
+				for (Country c : map_elements.getCountries()) {
+					if (c.getCountryName().equals(combobox_country.getSelectedItem().toString())) {
+						selected_from = c;
+						break;
 					}
+				}
 
-					for(Country c:map_elements.getCountries()){
-						if(c.getCountryName().equals(combobox_country2.getSelectedItem().toString())){
-							selected_to=c;
-							break;
-						}
+				for (Country c : map_elements.getCountries()) {
+					if (c.getCountryName().equals(combobox_country2.getSelectedItem().toString())) {
+						selected_to = c;
+						break;
 					}
-					current_player.playerAttacks(map_elements, selected_from, selected_to, game_view, combobox_mode.getSelectedItem().toString());
+				}
+				current_player.playerAttacks(map_elements, selected_from, selected_to, game_view,combobox_mode.getSelectedItem().toString(), deck);
 			}
 
 		});
@@ -419,29 +514,31 @@ public class GameScreen implements Observer{
 	/**
 	 * This method view fortify screen in game screen.
 	 * 
-	 * @param current_player current player
-	 * @param map_elements elements
+	 * @param current_player
+	 *            current player
+	 * @param map_elements
+	 *            elements
 	 */
 	public void FortifyButton(Player current_player, MapElements map_elements) {
 		fortify_panel.removeAll();
-		
+
 		cl_ps.show(phase_screen_panel, "fp");
 
 		lbl_select_from_country = new JLabel("Fortify from");
 		fortify_panel.add(lbl_select_from_country);
 		combobox_country = new JComboBox();
-		combobox_country=bindCountryCombobox(combobox_country,current_player);
+		combobox_country = bindCountryCombobox(combobox_country, current_player);
 		fortify_panel.add(combobox_country);
 
 		lbl_select_to_country = new JLabel("Fortify to");
 		fortify_panel.add(lbl_select_to_country);
-		combobox_country2= new JComboBox();
-		combobox_country2=bindCountryCombobox(combobox_country2,current_player);
+		combobox_country2 = new JComboBox();
+		combobox_country2 = bindCountryCombobox(combobox_country2, current_player);
 		fortify_panel.add(combobox_country2);
 
 		lbl_select_army = new JLabel("Type number of armies you want to send");
 		fortify_panel.add(lbl_select_army);
-		txt_armies=new JTextField(10);
+		txt_armies = new JTextField(10);
 		txt_armies.setToolTipText("Enter an integer value");
 		fortify_panel.add(txt_armies);
 
@@ -451,35 +548,33 @@ public class GameScreen implements Observer{
 		fortify_panel.revalidate();
 		fortify_panel.repaint();
 
-		GameScreen game_view=this;
+		GameScreen game_view = this;
 		btn_ok_fp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				String s = txt_armies.getText().toString().trim();
 
-				String s=txt_armies.getText().toString().trim();
+				if (s != null && s.matches("^[0-9]*$") && !s.equals("")) {
 
-				if(s != null && s.matches("^[0-9]*$")&&!s.equals("")){
+					int armies = Integer.valueOf(s);
+					Country selected_from = null, selected_to = null;
 
-					int armies=Integer.valueOf(s);
-					Country selected_from=null,selected_to=null;
-
-					for(Country c:map_elements.getCountries()){
-						if(c.getCountryName().equals(combobox_country.getSelectedItem().toString())){
-							selected_from=c;
+					for (Country c : map_elements.getCountries()) {
+						if (c.getCountryName().equals(combobox_country.getSelectedItem().toString())) {
+							selected_from = c;
 							break;
 						}
 					}
 
-					for(Country c:map_elements.getCountries()){
-						if(c.getCountryName().equals(combobox_country2.getSelectedItem().toString())){
-							selected_to=c;
+					for (Country c : map_elements.getCountries()) {
+						if (c.getCountryName().equals(combobox_country2.getSelectedItem().toString())) {
+							selected_to = c;
 							break;
 						}
 					}
-					
-					current_player.playerFortifies(armies, map_elements, selected_from,selected_to, game_view);
-				}
-				else{
+
+					current_player.playerFortifies(armies, map_elements, selected_from, selected_to, game_view);
+				} else {
 					status_label.setText("\nPlease Enter a valid positive integer.");
 				}
 			}
@@ -493,7 +588,7 @@ public class GameScreen implements Observer{
 	 */
 	public void EndTurnButton() {
 		endturn_panel.removeAll();
-		
+
 		cl_ps.show(phase_screen_panel, "ep");
 
 		lbl_choose_player = new JLabel("Click 'End My Turn' Button to end your turn when you feel like ");
@@ -507,14 +602,19 @@ public class GameScreen implements Observer{
 
 		btn_endturn_ep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateView("\n"+current_player.getName()+" ended the turn.\n*************************");
-				for(Player p:player_list){
-					System.out.println(p.getName()+"  "+p.getTurnValue());
+				if(current_player.isCanGetCard()){
+						
+						updateView("\n" + current_player.getName() + " gets a card for conquering a territory.");
+						Card new_turnin_card=deck.draw();
+						List<Card> new_card_list=current_player.getCards();
+						new_card_list.add(new_turnin_card);
+						current_player.setCards(new_card_list);
+						current_player.setCanGetCard(false);
 				}
+				updateView("\n" + current_player.getName() + " ended the turn.\n*************************");
 				turn_value = GamePlay.endTurn(current_player, player_list);
 				current_player = game_play.getCurrentPlayer(player_list, turn_value);
 				current_player.addObserver(view);
-				System.out.println("LIST "+player_list);
 				current_player.startTurn(player_list, map_elements, view);
 			}
 		});
@@ -540,24 +640,25 @@ public class GameScreen implements Observer{
 
 	public JComboBox<Object> bindNeighbourCombobox(JComboBox<Object> combobox_country, String selected_country) {
 
-		Country selected_from=null;
+		Country selected_from = null;
 
-		for(Country c:map_elements.getCountries()){
-			if(c.getCountryName().equals(selected_country)){
-				selected_from=c;
+		for (Country c : map_elements.getCountries()) {
+			if (c.getCountryName().equals(selected_country)) {
+				selected_from = c;
 				break;
 			}
 		}
 
-		if(selected_from!=null){
+		if (selected_from != null) {
 			for (Country c : selected_from.getNeighbourNodes()) {
 				combobox_country.addItem(c.getCountryName());
 			}
 		}
 		return combobox_country;
 	}
+
 	public void updateView(String history_text) {
-		text_area_game_history.append("\n"+history_text);
+		text_area_game_history.append("\n" + history_text);
 		text_area_game_map.setText(GamePlay.updateMR(map_elements));
 	}
 
@@ -567,47 +668,54 @@ public class GameScreen implements Observer{
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		Player player=(Player) arg0;
-		if(player.getUpdateMessage().equals("phase")){
+		Player player = (Player) arg0;
+		if (player.getUpdateMessage().equals("phase")) {
 			turn_label.setText(player.getPhaseDetails());
-		}
-		else if(player.getUpdateMessage().equals("domination")){
+		} else if (player.getUpdateMessage().equals("domination")) {
 			StringBuilder domination_details = new StringBuilder();
-            double totalNumberOfCountries = map_elements.getCountryNeighboursMap().keySet().size();
-            DecimalFormat df = new DecimalFormat("#.##");
-            
-            for (Player p:player_list) {
-            	double domination_of_player = p.getAssignedCountries().size() / totalNumberOfCountries;
-            	int total_armies=0;
-            	int continents_captured=0;
-            	domination_of_player *= 100;
-                p.setDomination(Double.valueOf(df.format(domination_of_player)));
-                domination_details.append(p.getName()).append(" ").append("\n");
-                for(Country c:p.getAssignedCountries()){
-                	total_armies+=c.getCurrentArmiesDeployed();
-                }
-                for(Continent c:map_elements.getContinentList()){	
-        			List<Country> co=c.getMemberCountriesList();
-        			boolean continent_control=true;
-        			for(Country check:co){
-        				if(check.getBelongsToPlayer()==p){
-        					continue;
-        				}
-        				else{
-        					continent_control=false;
-        					break;
-        				}
-        			}
-        			if(continent_control)
-        				continents_captured+=1;
-        		}
-                domination_details.append(Double.valueOf(df.format(domination_of_player))).append("% -- "+total_armies+" -- "+continents_captured+" continents").append("\n");
-            }
-            text_area_domination.setText(domination_details.toString());
-		}
-		else{
+			double totalNumberOfCountries = map_elements.getCountryNeighboursMap().keySet().size();
+			DecimalFormat df = new DecimalFormat("#.##");
+
+			for (Player p : player_list) {
+				double domination_of_player = p.getAssignedCountries().size() / totalNumberOfCountries;
+				int total_armies = 0;
+				int continents_captured = 0;
+				domination_of_player *= 100;
+				p.setDomination(Double.valueOf(df.format(domination_of_player)));
+				domination_details.append(p.getName()).append(" ").append("\n");
+				for (Country c : p.getAssignedCountries()) {
+					total_armies += c.getCurrentArmiesDeployed();
+				}
+				for (Continent c : map_elements.getContinentList()) {
+					List<Country> co = c.getMemberCountriesList();
+					boolean continent_control = true;
+					for (Country check : co) {
+						if (check.getBelongsToPlayer() == p) {
+							continue;
+						} else {
+							continent_control = false;
+							break;
+						}
+					}
+					if (continent_control)
+						continents_captured += 1;
+				}
+				domination_details.append(Double.valueOf(df.format(domination_of_player)))
+				.append("% -- " + total_armies + " -- " + continents_captured + " continents").append("\n");
+			}
+			text_area_domination.setText(domination_details.toString());
+		} else if (player.getUpdateMessage().equals("cards")) {
+			if (player.getCards().size() > 0) {
+				for (Card c : player.getCards()) {
+					turnin_cards_display.addElement(c.getName());
+				}
+			}
+			if(player.getCards().size()>=5){
+				must_turn_in=true;
+			}
+		} else {
 			System.out.println("FALSE UPDATE CALL");
 		}
-			
+
 	}
 }

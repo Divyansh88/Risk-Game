@@ -50,9 +50,7 @@ public class GamePlay extends Observable{
 			turn_value++;
 			p.setTurnValue(turn_value);
 		}
-		for(Player p:players){
-			System.out.println(p.getName()+"  "+p.getTurnValue());
-		}
+		
 		while(countries.size()>0){
 			for(Player p:players){
 				List<Country> new_list=p.getAssignedCountries();

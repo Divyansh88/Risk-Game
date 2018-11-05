@@ -8,6 +8,7 @@ import java.util.Observable;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicIconFactory;
 
+import app.team21.risk.gamemodule.Deck;
 import app.team21.risk.gamemodule.GamePlay;
 import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.views.GameScreen;
@@ -32,12 +33,16 @@ public class Player extends Observable{
 	public Country country_A;
 	public Country country_B;
 
-	public ArrayList<String> list;
+	public List<Card> cards;
 
+	
 	public List<Country> assigned_countries;
 
 	public int initial_armies;
 	public int reinforce_armies;
+	public int traded_set=0;
+
+	
 
 	public int attacker_losses;
 	public int defender_losses;
@@ -62,6 +67,7 @@ public class Player extends Observable{
 	 */
 	public Player(String name){
 		this.name=name;
+		cards=new ArrayList<Card>();
 		assigned_countries=new ArrayList<Country>();
 		can_reinforce=false;
 		can_attack=false;
@@ -271,6 +277,33 @@ public class Player extends Observable{
 	public void setCanGetCard(boolean can_get_card) {
 		this.can_get_card = can_get_card;
 	}
+	
+	/**
+	 * @return the cards
+	 */
+	public List<Card> getCards() {
+		return cards;
+	}
+	/**
+	 * @param cards the cards to set
+	 */
+	public void setCards(List<Card> cards) {
+		this.cards = cards;
+	}
+	
+	/**
+	 * @return the traded_set
+	 */
+	public int getTradedSet() {
+		return traded_set;
+	}
+	/**
+	 * @param traded_set the traded_set to set
+	 */
+	public void setTradedSet(int traded_set) {
+		this.traded_set = traded_set;
+	}
+
 
 	/**
 	 * this method will subtract reinforce armies.
@@ -290,8 +323,11 @@ public class Player extends Observable{
 	 * @param view gamescreen 
 	 */
 	public void startTurn(List<Player> player_list, MapElements map_elements, GameScreen game_view) {
-		this.setCanReinforce(true);
-
+		setCanReinforce(true);
+		setCanAttack(false);
+		setCanFortify(false);
+		setCanEndTurn(false);
+		setCanGetCard(false);
 		int armies=GamePlay.getReinforcementArmies(this, map_elements);
 		this.setReinforceArmies(armies);
 		this.setPhaseDetails("Its "+name+"'s turn and Reinforcement phase.");
@@ -301,13 +337,16 @@ public class Player extends Observable{
 		this.setUpdateMessage("domination");
 		setChanged();
 		notifyObservers();
+		this.setUpdateMessage("cards");
+		setChanged();
+		notifyObservers();
 		game_view.updateStatus("");
 		game_view.ReinforcementButton(armies,this,map_elements);
 	}
 
 	public void playerReinforces(int armies_selected,MapElements map_elements,String country_name,GameScreen game_view){
 		boolean reinforce_successful=false;
-
+		setCanReinforce(false);
 		Country selected_country=null;
 		for(Country c:map_elements.getCountries()){
 			if(c.getCountryName().equals(country_name)){
@@ -346,7 +385,7 @@ public class Player extends Observable{
 		}
 	}
 
-	public void playerAttacks(MapElements map_elements,Country country_from,Country country_to,GameScreen game_view, String mode_string){
+	public void playerAttacks(MapElements map_elements,Country country_from,Country country_to,GameScreen game_view, String mode_string, Deck deck){
 
 		int mode;
 		if(mode_string.equalsIgnoreCase("ALL OUT ATTACK"))
@@ -413,7 +452,7 @@ public class Player extends Observable{
 					}
 					
 					if(mode==1 && !country_to.getBelongsToPlayer().equals(this) && country_from.getCurrentArmiesDeployed()>1){
-						playerAttacks(map_elements, country_from, country_to, game_view, mode_string);
+						playerAttacks(map_elements, country_from, country_to, game_view, mode_string,deck);
 					}
 				}
 				else{
@@ -509,7 +548,8 @@ public class Player extends Observable{
 			country_to.addArmy(moveArmies);
 		}
 		game_view.updateView(country_from.getBelongsToPlayer().getName()+" moved "+moveArmies+" armies to"+country_to.getCountryName()+"!");
-		can_get_card= true;
+		if(!isCanGetCard())
+			can_get_card= true;
 		this.setUpdateMessage("domination");
 		setChanged();
 		notifyObservers();        
@@ -543,6 +583,29 @@ public class Player extends Observable{
 		}
 	}
 
+	public int getExchangeArmies(){
+		int armies=0;
+		switch(traded_set){
+			case 0: armies=4;
+					break;
+			case 1: armies=6;
+					break;
+			case 2: armies=8;
+					break;
+			case 3: armies=10;
+					break;
+			case 4: armies=12;
+					break;
+			case 5: armies=15;
+					break;
+			default: armies=0;
+					break;
+		}
+		if(traded_set>5){
+			armies=15+5*(traded_set-5);
+		}
+		return armies;
+	}
 
 	public int showAttackDiceDialog(Country country){
 
