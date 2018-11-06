@@ -402,8 +402,7 @@ public class GameScreen implements Observer {
 				int count_cavalry = 0;
 				extra_armies = 0;
 				if (selected_cards.length == 3) {
-					// List<String>
-					// choices=turnin_cards_list.getSelectedValuesList();
+
 					StringBuilder sb = new StringBuilder();
 					sb.append(current_player.getName() + " traded \n");
 
@@ -582,8 +581,13 @@ public class GameScreen implements Observer {
 							break;
 						}
 					}
-
-					current_player.playerFortifies(armies, map_elements, selected_from, selected_to, game_view);
+					if(!selected_from.getCountryName().equals(selected_to.getCountryName())){
+						current_player.playerFortifies(armies, map_elements, selected_from, selected_to, game_view);
+					}
+					else{
+						status_label.setText("\nReinforce Unsuccessful. Cannot Reinforce yourself.");
+					}
+					
 				} else {
 					status_label.setText("\nPlease Enter a valid positive integer.");
 				}
@@ -695,6 +699,7 @@ public class GameScreen implements Observer {
 				domination_details.append(p.getName()).append(" ").append("\n");
 				for (Country c : p.getAssignedCountries()) {
 					total_armies += c.getCurrentArmiesDeployed();
+					//System.out.println(c.getCountryName()+c.getBelongsToPlayer().getName());
 				}
 				for (Continent c : map_elements.getContinentList()) {
 					List<Country> co = c.getMemberCountriesList();

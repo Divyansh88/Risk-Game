@@ -253,7 +253,22 @@ public class MapElements {
 	}
 	
 	
-
+	/**
+     * Gets the list of countries in the map
+     *
+     * @return Countries in the map
+     */
+    public Country getCountry(String country_name) {
+        Country country=null;
+    	for(Country c:getCountries()){
+        	if(c.getCountryName().equals(country_name)){
+        		country=c;
+        		break;
+        		
+        	}
+        }
+        return country;
+    }
 	/**
 	 * To get the currentPlayer Playing in map.
 	 * 

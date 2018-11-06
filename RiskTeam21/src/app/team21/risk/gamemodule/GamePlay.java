@@ -3,12 +3,9 @@
  */
 package app.team21.risk.gamemodule;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
-import java.util.PriorityQueue;
 import java.util.Random;
 
 import app.team21.risk.elements.Continent;
@@ -70,7 +67,6 @@ public class GamePlay extends Observable{
 		}
 		sb.append("-----COUNTRIES ASSIGNED-----\n\n");
 		return sb.toString();
-
 	}
 	
 	/**
@@ -232,7 +228,5 @@ public class GamePlay extends Observable{
 				armies+=c.getControlValue();
 		}
 		return armies;
-	}
-	
-	
+	}	
 }
