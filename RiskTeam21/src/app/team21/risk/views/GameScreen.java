@@ -27,7 +27,7 @@ import java.util.Observer;
 
 public class GameScreen implements Observer {
 	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn, btn_endturn_ep,
-	btn_attack_ap, btn_turnin_rp;
+	btn_attack_ap, btn_turnin_rp, btn_cards;
 	JLabel lbl_game_history, lbl_select_army, lbl_select_country, lbl_choose_player, lbl_select_from_country,
 	lbl_select_to_country, lbl_game_map, lbl_domination_panel, lbl_map_finder, lbl_select_mode;
 	JTextField txt_armies;
@@ -44,7 +44,8 @@ public class GameScreen implements Observer {
 	CardLayout cl_ps = new CardLayout();
 	JLabel turn_label = new JLabel();
 	JLabel status_label = new JLabel();
-	public boolean must_turn_in=false;
+	public boolean must_turn_in = false;
+	public boolean view_visibility = false;
 	public MapElements map_elements;
 	public List<Player> player_list;
 	public int extra_armies;
@@ -238,17 +239,16 @@ public class GameScreen implements Observer {
 
 		btn_reinforcement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (current_player.isCanReinforce()){
-					int reinforcement_army=GamePlay.getReinforcementArmies(current_player, map_elements);
-					ReinforcementButton(reinforcement_army+extra_armies, current_player, map_elements);
-				}else
+				if (current_player.isCanReinforce()) {
+					int reinforcement_army = GamePlay.getReinforcementArmies(current_player, map_elements);
+					ReinforcementButton(reinforcement_army + extra_armies, current_player, map_elements);
+				} else
 					status_label.setText("\nSorry. You cannot reinforce right now.");
 			}
 		});
 
 		btn_attack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(current_player.isCanAttack());
 				if (current_player.isCanAttack())
 					AttackButton(current_player, map_elements);
 				else
@@ -324,7 +324,6 @@ public class GameScreen implements Observer {
 	public void ReinforcementButton(int reinforce_armies, Player current_player, MapElements map_elements) {
 		this.current_player = current_player;
 
-		
 		reinforcement_panel.removeAll();
 		cl_ps.show(phase_screen_panel, "rp");
 
@@ -345,9 +344,12 @@ public class GameScreen implements Observer {
 		btn_continue_rp = new JButton("ReInforce");
 		reinforcement_panel.add(btn_continue_rp);
 
+		btn_cards = new JButton("Show Cards");
+		reinforcement_panel.add(btn_cards);
+
 		btn_turnin_rp = new JButton("Turn In Cards");
 		reinforcement_panel.add(btn_turnin_rp);
-
+		btn_turnin_rp.setVisible(view_visibility);
 
 		turnin_cards_display = new DefaultListModel<>();
 		turnin_cards_list = new JList<>(turnin_cards_display);
@@ -358,7 +360,7 @@ public class GameScreen implements Observer {
 		scroll_panel5 = new JScrollPane(turnin_cards_list);
 		scroll_panel5.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		turnin_cards_list.setVisible(true);
-		scroll_panel5.setVisible(true);
+		scroll_panel5.setVisible(view_visibility);
 		reinforcement_panel.add(scroll_panel5);
 
 		if (current_player.getCards().size() > 0) {
@@ -373,77 +375,83 @@ public class GameScreen implements Observer {
 		GameScreen game_view = this;
 		btn_continue_rp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("INSIDE CONTINUE");
-				if(!must_turn_in){
-					System.out.println("GOGOGO");
+				if (!must_turn_in) {
 					int armies_selected = Integer.valueOf(combobox_armies.getSelectedItem().toString());
 					String country_name = combobox_country.getSelectedItem().toString();
 					current_player.playerReinforces(armies_selected, map_elements, country_name, game_view);
-				}
-				else
+				} else
 					status_label.setText("Turn In Cards First. You have 5 or more cards.");
+			}
+		});
+		btn_cards.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (current_player.isCanShowCard()) {
+					view_visibility = true;
+					int reinforcement_army = GamePlay.getReinforcementArmies(current_player, map_elements);
+					ReinforcementButton(reinforcement_army + extra_armies, current_player, map_elements);
+				} else
+					status_label.setText("\nSorry. You cannot View Cards right now.");
 			}
 		});
 		btn_turnin_rp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int[] selected_cards = turnin_cards_list.getSelectedIndices();
-				
-				int count_infantry=0;
-				int count_artillery=0;
-				int count_cavalry=0;
-				extra_armies=0;
-				if(selected_cards.length==3){
-					//List<String> choices=turnin_cards_list.getSelectedValuesList();
-					StringBuilder sb=new StringBuilder();
-					sb.append(current_player.getName()+" traded \n");
-					
-					List<Card> selected_turncards=new ArrayList<>();
-					List<Card> hand=current_player.getCards();
-					List<Card> new_hand=hand;
-					for(int i=0;i<selected_cards.length;i++){
-						Card c=hand.get(selected_cards[i]);
-						sb.append(c.getName()+"\n");
+
+				int count_infantry = 0;
+				int count_artillery = 0;
+				int count_cavalry = 0;
+				extra_armies = 0;
+				if (selected_cards.length == 3) {
+					// List<String>
+					// choices=turnin_cards_list.getSelectedValuesList();
+					StringBuilder sb = new StringBuilder();
+					sb.append(current_player.getName() + " traded \n");
+
+					List<Card> selected_turncards = new ArrayList<>();
+					List<Card> hand = current_player.getCards();
+					List<Card> new_hand = hand;
+					for (int i = 0; i < selected_cards.length; i++) {
+						Card c = hand.get(selected_cards[i]);
+						sb.append(c.getName() + "\n");
 						selected_turncards.add(c);
 					}
 					new_hand.removeAll(selected_turncards);
-					
-					for(Card c:selected_turncards){
-						if((c.getType().equals("Infantry")))
+
+					for (Card c : selected_turncards) {
+						if ((c.getType().equals("Infantry")))
 							count_infantry++;
-						else if((c.getType().equals("Cavalry")))
+						else if ((c.getType().equals("Cavalry")))
 							count_cavalry++;
-						else if((c.getType().equals("Artillery")))
+						else if ((c.getType().equals("Artillery")))
 							count_artillery++;
 						else
 							System.out.println("FALSE VALUE OF CARD");
 					}
-					
-					
-					if((count_infantry==1&&count_artillery==1&&count_cavalry==1)||count_infantry==3||count_artillery==3||count_cavalry==3){
-						for(Card c:selected_turncards){
+
+					if ((count_infantry == 1 && count_artillery == 1 && count_cavalry == 1) || count_infantry == 3
+							|| count_artillery == 3 || count_cavalry == 3) {
+						for (Card c : selected_turncards) {
 							deck.add(c);
 						}
-						extra_armies=current_player.getExchangeArmies();
-						sb.append("and got "+extra_armies+" armies in exchange.");
+						extra_armies = current_player.getExchangeArmies();
+						sb.append("and got " + extra_armies + " armies in exchange.");
 						current_player.setCards(new_hand);
-						current_player.setTradedSet(current_player.getTradedSet()+1);
+						current_player.setTradedSet(current_player.getTradedSet() + 1);
 						current_player.setCanReinforce(true);
-						current_player.setReinforceArmies(reinforce_armies+extra_armies);
+						current_player.setReinforceArmies(reinforce_armies + extra_armies);
 						updateView(sb.toString());
-						must_turn_in=false;
-						ReinforcementButton(reinforce_armies+extra_armies, current_player, map_elements);
-						
-					}
-					else{
+						must_turn_in = false;
+						ReinforcementButton(reinforce_armies + extra_armies, current_player, map_elements);
+
+					} else {
 						status_label.setText("Select 3 of one type or Select 1 of each type to trade in for armies.");
 					}
-					
-				}
-				else{
+
+				} else {
 					status_label.setText("Must Select 3 valid Cards to Exchange");
 				}
 			}
-		}); 
+		});
 	}
 
 	/**
@@ -481,7 +489,8 @@ public class GameScreen implements Observer {
 		combobox_country.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				combobox_country2.removeAllItems();
-				combobox_country2 = bindNeighbourCombobox(combobox_country2,combobox_country.getSelectedItem().toString());
+				combobox_country2 = bindNeighbourCombobox(combobox_country2,
+						combobox_country.getSelectedItem().toString());
 			}
 		});
 
@@ -504,7 +513,8 @@ public class GameScreen implements Observer {
 						break;
 					}
 				}
-				current_player.playerAttacks(map_elements, selected_from, selected_to, game_view,combobox_mode.getSelectedItem().toString(), deck);
+				current_player.playerAttacks(map_elements, selected_from, selected_to, game_view,
+						combobox_mode.getSelectedItem().toString(), deck);
 			}
 
 		});
@@ -602,15 +612,15 @@ public class GameScreen implements Observer {
 
 		btn_endturn_ep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(current_player.isCanGetCard()){
-						
-						updateView("\n" + current_player.getName() + " gets a card for conquering a territory.");
-						Card new_turnin_card=deck.draw();
-						List<Card> new_card_list=current_player.getCards();
-						new_card_list.add(new_turnin_card);
-						current_player.setCards(new_card_list);
-						current_player.setCanGetCard(false);
+				if (current_player.isCanGetCard()) {
+					updateView("\n" + current_player.getName() + " gets a card for conquering a territory.");
+					Card new_turnin_card = deck.draw();
+					List<Card> new_card_list = current_player.getCards();
+					new_card_list.add(new_turnin_card);
+					current_player.setCards(new_card_list);
+					current_player.setCanGetCard(false);
 				}
+				view_visibility = false;
 				updateView("\n" + current_player.getName() + " ended the turn.\n*************************");
 				turn_value = GamePlay.endTurn(current_player, player_list);
 				current_player = game_play.getCurrentPlayer(player_list, turn_value);
@@ -710,8 +720,9 @@ public class GameScreen implements Observer {
 					turnin_cards_display.addElement(c.getName());
 				}
 			}
-			if(player.getCards().size()>=5){
-				must_turn_in=true;
+			if (player.getCards().size() >= 5) {
+				must_turn_in = true;
+				view_visibility = true;
 			}
 		} else {
 			System.out.println("FALSE UPDATE CALL");

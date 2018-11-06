@@ -56,6 +56,7 @@ public class Player extends Observable{
 	public boolean can_fortify;
 	public boolean can_end_turn;
 	public boolean can_get_card;
+	public boolean can_show_card;
 
 	public String phase_details;
 	public String update_message;
@@ -304,6 +305,18 @@ public class Player extends Observable{
 		this.traded_set = traded_set;
 	}
 
+	/**
+	 * @return the can_show_card
+	 */
+	public boolean isCanShowCard() {
+		return can_show_card;
+	}
+	/**
+	 * @param can_show_card the can_show_card to set
+	 */
+	public void setCanShowCard(boolean can_show_card) {
+		this.can_show_card = can_show_card;
+	}
 
 	/**
 	 * this method will subtract reinforce armies.
@@ -328,6 +341,7 @@ public class Player extends Observable{
 		setCanFortify(false);
 		setCanEndTurn(false);
 		setCanGetCard(false);
+		setCanShowCard(true);
 		int armies=GamePlay.getReinforcementArmies(this, map_elements);
 		this.setReinforceArmies(armies);
 		this.setPhaseDetails("Its "+name+"'s turn and Reinforcement phase.");
@@ -346,7 +360,8 @@ public class Player extends Observable{
 
 	public void playerReinforces(int armies_selected,MapElements map_elements,String country_name,GameScreen game_view){
 		boolean reinforce_successful=false;
-		setCanReinforce(false);
+		this.setCanShowCard(true);
+//		setCanReinforce(false);
 		Country selected_country=null;
 		for(Country c:map_elements.getCountries()){
 			if(c.getCountryName().equals(country_name)){
@@ -373,6 +388,7 @@ public class Player extends Observable{
 		else{
 			status_text=" Reinforcement Phase Completed";
 			this.setCanReinforce(false);
+			this.setCanShowCard(false);
 			this.setCanAttack(true);
 			this.setCanFortify(true);
 			this.setCanEndTurn(true);
