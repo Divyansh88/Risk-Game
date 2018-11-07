@@ -1,6 +1,3 @@
-/**
- * 
- */
 package app.team21.risk.gamemodule;
 
 import java.util.Collections;
@@ -16,11 +13,11 @@ import app.team21.risk.mapmodule.MapLoader;
 import app.team21.risk.views.GameScreen;
 
 /**
- * Last Updated on : 18/10/2018, Thursday
+ * Last Updated on : 06/11/2018, Tuesday 
  * GamePlay class that contains all the game play logic.
  * 
- * @author Yash Sheth, Samip Thakkar
- * @version 1.0.0
+ * @author Yash Sheth and Samip Thakkar
+ * @version 2.0.0
  */
 public class GamePlay extends Observable{
 	
@@ -160,7 +157,7 @@ public class GamePlay extends Observable{
 	}
 	
     /**
-     * This method will add initial armies to the country of the player in round robin fashion.
+     * this method will add initial armies to the country of the player in round robin fashion.
      * 
      * @param player_list list of players
      * @return string value
