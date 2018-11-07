@@ -16,12 +16,11 @@ import app.team21.risk.views.StartGame;
 
 
 /**
- * Last Updated on : 18/10/2018, Thursday Player class that retrieves and
- * assigns different properties for the Player object.
+ * Last Updated on : 06/11/2018, Tuesday 
+ * Player class that retrieves and assigns different properties for the Player object.
  * 
  * @author Yash Sheth
- * @version 1.0.0
- *
+ * @version 2.0.0
  */
 public class Player extends Observable {
 	public String name;
@@ -63,8 +62,7 @@ public class Player extends Observable {
 	/**
 	 * This constructor will assign name to player.
 	 * 
-	 * @param name
-	 *            name of player
+	 * @param name name of player
 	 */
 	public Player(String name) {
 		this.name = name;
@@ -88,8 +86,7 @@ public class Player extends Observable {
 	/**
 	 * setter method to assign turn value to player.
 	 * 
-	 * @param turn_value
-	 *            the turn_value to set
+	 * @param turn_valuethe turn_value to set       
 	 */
 	public void setTurnValue(int turn_value) {
 		this.turn_value = turn_value;
@@ -107,8 +104,7 @@ public class Player extends Observable {
 	/**
 	 * setter method to assign name to player.
 	 * 
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -126,8 +122,7 @@ public class Player extends Observable {
 	/**
 	 * setter method to assign countries.
 	 * 
-	 * @param assigned_countries
-	 *            the assignedCountries to set
+	 * @param assigned_countries the assignedCountries to set
 	 */
 	public void setAssignedCountries(List<Country> assigned_countries) {
 		this.assigned_countries = assigned_countries;
@@ -145,8 +140,7 @@ public class Player extends Observable {
 	/**
 	 * setter method to assign initial armies.
 	 * 
-	 * @param intial_armies
-	 *            the intial_armies to set
+	 * @param intial_armies the intial_armies to set
 	 */
 	public void setInitialArmies(int intial_armies) {
 		this.initial_armies = intial_armies;
@@ -164,8 +158,7 @@ public class Player extends Observable {
 	/**
 	 * setter method to assign reinforce armies.
 	 * 
-	 * @param reinforce_armies
-	 *            the reinforce_armies to set
+	 * @param reinforce_armies the reinforce_armies to set
 	 */
 	public void setReinforceArmies(int reinforce_armies) {
 		this.reinforce_armies = reinforce_armies;
@@ -183,8 +176,7 @@ public class Player extends Observable {
 	/**
 	 * setter method to assign can reinforce value.
 	 * 
-	 * @param can_reinforce
-	 *            the canReinforce to set
+	 * @param can_reinforce the canReinforce to set
 	 */
 	public void setCanReinforce(boolean can_reinforce) {
 		this.can_reinforce = can_reinforce;
@@ -202,8 +194,7 @@ public class Player extends Observable {
 	/**
 	 * setter method to assign can attack value.
 	 * 
-	 * @param can_attack
-	 *            the can_attack to set
+	 * @param can_attack the can_attack to set
 	 */
 	public void setCanAttack(boolean can_attack) {
 		this.can_attack = can_attack;
@@ -221,8 +212,7 @@ public class Player extends Observable {
 	/**
 	 * setter method to assign can fortify value.
 	 * 
-	 * @param can_fortify
-	 *            the can_fortify to set
+	 * @param can_fortify the can_fortify to set
 	 */
 	public void setCanFortify(boolean can_fortify) {
 		this.can_fortify = can_fortify;
@@ -240,14 +230,15 @@ public class Player extends Observable {
 	/**
 	 * setter method to assign can end turn value.
 	 * 
-	 * @param can_end_turn
-	 *            the can_end_turn to set
+	 * @param can_end_turn the can_end_turn to set
 	 */
 	public void setCanEndTurn(boolean can_end_turn) {
 		this.can_end_turn = can_end_turn;
 	}
 
 	/**
+	 * getter method for phase details.
+	 * 
 	 * @return the phase_details
 	 */
 	public String getPhaseDetails() {
@@ -255,14 +246,17 @@ public class Player extends Observable {
 	}
 
 	/**
-	 * @param phase_details
-	 *            the phase_details to set
+	 * setter method to assign phase details.
+	 * 
+	 * @param phase_details the phase_details to set
 	 */
 	public void setPhaseDetails(String phase_details) {
 		this.phase_details = phase_details;
 	}
 
 	/**
+	 * getter method for update message.
+	 * 
 	 * @return the update_message
 	 */
 	public String getUpdateMessage() {
@@ -270,14 +264,17 @@ public class Player extends Observable {
 	}
 
 	/**
-	 * @param update_message
-	 *            the update_message to set
+	 * setter method to assign update message.
+	 * 
+	 * @param update_message the update_message to set
 	 */
 	public void setUpdateMessage(String update_message) {
 		this.update_message = update_message;
 	}
 
 	/**
+	 * getter method for domination.
+	 * 
 	 * @return the domination
 	 */
 	public double getDomination() {
@@ -285,14 +282,17 @@ public class Player extends Observable {
 	}
 
 	/**
-	 * @param domination
-	 *            the domination to set
+	 * setter method to assign domination.
+	 * 
+	 * @param domination the domination to set
 	 */
 	public void setDomination(double domination) {
 		this.domination = domination;
 	}
 
 	/**
+	 * getter method to check can get card.
+	 * 
 	 * @return the can_get_card
 	 */
 	public boolean isCanGetCard() {
@@ -300,14 +300,17 @@ public class Player extends Observable {
 	}
 
 	/**
-	 * @param can_get_card
-	 *            the can_get_card to set
+	 * setter method to assign can get card.
+	 * 
+	 * @param can_get_card the can_get_card to set
 	 */
 	public void setCanGetCard(boolean can_get_card) {
 		this.can_get_card = can_get_card;
 	}
 
 	/**
+	 * getter method for list of card.
+	 * 
 	 * @return the cards
 	 */
 	public List<Card> getCards() {
@@ -315,14 +318,17 @@ public class Player extends Observable {
 	}
 
 	/**
-	 * @param cards
-	 *            the cards to set
+	 * setter method to assign list of cards.
+	 * 
+	 * @param cards the cards to set
 	 */
 	public void setCards(List<Card> cards) {
 		this.cards = cards;
 	}
 
 	/**
+	 * getter method for traded set.
+	 * 
 	 * @return the traded_set
 	 */
 	public int getTradedSet() {
@@ -330,14 +336,17 @@ public class Player extends Observable {
 	}
 
 	/**
-	 * @param traded_set
-	 *            the traded_set to set
+	 * setter method to assign traded set.
+	 * 
+	 * @param traded_set the traded_set to set
 	 */
 	public void setTradedSet(int traded_set) {
 		this.traded_set = traded_set;
 	}
 
 	/**
+	 * getter method to check can show card.
+	 * 
 	 * @return the can_show_card
 	 */
 	public boolean isCanShowCard() {
@@ -345,8 +354,9 @@ public class Player extends Observable {
 	}
 
 	/**
-	 * @param can_show_card
-	 *            the can_show_card to set
+	 * setter method to assign can show card.
+	 * 
+	 * @param can_show_card the can_show_card to set
 	 */
 	public void setCanShowCard(boolean can_show_card) {
 		this.can_show_card = can_show_card;
@@ -355,8 +365,7 @@ public class Player extends Observable {
 	/**
 	 * this method will subtract reinforce armies.
 	 * 
-	 * @param armies_selected
-	 *            subtract this amount
+	 * @param armies_selected subtract this amount
 	 */
 	public void subReinforceArmies(int armies_selected) {
 		reinforce_armies -= armies_selected;
@@ -365,14 +374,9 @@ public class Player extends Observable {
 	/**
 	 * this method will start the turn of player.
 	 * 
-	 * @param current_player
-	 *            present player
-	 * @param player_list
-	 *            list of players
-	 * @param map_elements
-	 *            map elements
-	 * @param view
-	 *            gamescreen
+	 * @param player_list list of players
+	 * @param map_elements map elements
+	 * @param game_view GameScreen object
 	 */
 	public void startTurn(List<Player> player_list, MapElements map_elements, GameScreen game_view) {
 		setCanReinforce(true);
@@ -397,8 +401,15 @@ public class Player extends Observable {
 		game_view.ReinforcementButton(armies, this, map_elements);
 	}
 
-	public void playerReinforces(int armies_selected, MapElements map_elements, String country_name,
-			GameScreen game_view) {
+	/**
+	 * this method will reinforcement on players.
+	 * 
+	 * @param armies_selected selected armies
+	 * @param map_elements map elements
+	 * @param country_name name of country
+	 * @param game_view GameScreen object
+	 */
+	public void playerReinforces(int armies_selected, MapElements map_elements, String country_name, GameScreen game_view) {
 		boolean reinforce_successful = false;
 		this.setCanShowCard(true);
 		Country selected_country = null;
@@ -439,9 +450,17 @@ public class Player extends Observable {
 		}
 	}
 
-	public void playerAttacks(MapElements map_elements, Country country_from, Country country_to, GameScreen game_view,
-			String mode_string, Deck deck) {
-
+	/**
+	 * this method will perform attack on players.
+	 * 
+	 * @param map_elements
+	 * @param country_from
+	 * @param country_to
+	 * @param game_view
+	 * @param mode_string
+	 * @param deck
+	 */
+	public void playerAttacks(MapElements map_elements, Country country_from, Country country_to, GameScreen game_view, String mode_string, Deck deck) {
 		int mode;
 		if (mode_string.equalsIgnoreCase("ALL OUT ATTACK"))
 			mode = 1;
@@ -527,8 +546,16 @@ public class Player extends Observable {
 		}
 	}
 
-	public void playerFortifies(int armies, MapElements map_elements, Country country_from, Country country_to,
-			GameScreen game_view) {
+	/**
+	 * this method will perform fortification on players.
+	 * 
+	 * @param armies number of armies
+	 * @param map_elements map elements
+	 * @param country_from from country to attack
+	 * @param country_to to country to attack
+	 * @param game_view GameScreen object
+	 */
+	public void playerFortifies(int armies, MapElements map_elements, Country country_from, Country country_to, GameScreen game_view) {
 		boolean fortify_successful = false;
 		List<Country> unwanted = new ArrayList<>();
 		if (isFortifyValid(country_from, country_to, unwanted, map_elements)
@@ -560,6 +587,9 @@ public class Player extends Observable {
 
 	}
 
+	/**
+	 * This method will calculate who losses armies.
+	 */
 	public void calculateLosses() {
 		// Calculate losses
 		if (attacker_rolls[0] > defender_rolls[0]) {
@@ -579,8 +609,16 @@ public class Player extends Observable {
 		}
 	}
 
+	/**
+	 * this method will check fortify is valid or not.
+	 * 
+	 * @param c1 Country object 1
+	 * @param c2 Country object 2
+	 * @param unwanted list of countries
+	 * @param map_elements map elements
+	 * @return boolean boolean value for valid or not
+	 */
 	public boolean isFortifyValid(Country c1, Country c2, List<Country> unwanted, MapElements map_elements) {
-
 		c1=map_elements.getCountry(c1.getCountryName());
 		
 		if (c1.getNeighbourNodes().contains(c2) && c2.getNeighbourNodes().contains(c1) && c1.getBelongsToPlayer().equals(c2.getBelongsToPlayer()))
@@ -599,8 +637,13 @@ public class Player extends Observable {
 
 	}
 
-	
-
+	/**
+	 * this method will be called if defender lost country. 
+	 * 
+	 * @param country_from from country
+	 * @param country_to to country
+	 * @param game_view GameScreen object
+	 */
 	public void defenderLostCountry(Country country_from, Country country_to, GameScreen game_view) {
 		country_to.getBelongsToPlayer().getAssignedCountries().remove(country_to);
 		country_from.getBelongsToPlayer().getAssignedCountries().add(country_to);
@@ -628,12 +671,24 @@ public class Player extends Observable {
 		notifyObservers();
 	}
 
+	/**
+	 * this method will eliminate player.
+	 * 
+	 * @param country_from from country
+	 * @param country_to to country
+	 * @param game_view GameScreen object
+	 */
 	public void playerEliminated(Country country_from, Country country_to, GameScreen game_view) {
 		game_view.updateView(country_to.getBelongsToPlayer().getName()
 				+ " has no countries left, player looses the game and is eliminated");
 		game_view.player_list.remove(country_to.getBelongsToPlayer());
 	}
 
+	/**
+	 * this method will check can countinue or not.
+	 * 
+	 * @param game_view GameScreen object
+	 */
 	public void checkCanContinue(GameScreen game_view) {
 		can_attack = false;
 		can_fortify = false;
@@ -656,6 +711,11 @@ public class Player extends Observable {
 		}
 	}
 
+	/**
+	 * this method exchange armies.
+	 * 
+	 * @return the armies 
+	 */
 	public int getExchangeArmies() {
 		int armies = 0;
 		switch (traded_set) {
@@ -687,6 +747,12 @@ public class Player extends Observable {
 		return armies;
 	}
 
+	/**
+	 * this method will show attack dice dialog.
+	 * 
+	 * @param country Country class object
+	 * @return integer number of dices which attacker select to throw
+	 */
 	public int showAttackDiceDialog(Country country) {
 
 		int dices = getMaxDiceAttacker(country);
@@ -700,6 +766,12 @@ public class Player extends Observable {
 				BasicIconFactory.getMenuArrowIcon(), choices, choices[0]);
 	}
 
+	/**
+	 * this method will get maximum dice that attacker have.
+	 * 
+	 * @param country Country class object
+	 * @return integer maximum dices attacker have
+	 */
 	public int getMaxDiceAttacker(Country country) {
 		int dices = 1;
 		if (country.getCurrentArmiesDeployed() > 3) {
@@ -710,6 +782,12 @@ public class Player extends Observable {
 		return dices;
 	}
 
+	/**
+	 * this method will show defence dice dialog. 
+	 * 
+	 * @param country Country class object
+	 * @return integer number of dices which attacker select to throw
+	 */
 	public int showDefenceDiceDialog(Country country) {
 
 		int dices = getMaxDiceDefender(country);
@@ -723,14 +801,26 @@ public class Player extends Observable {
 				BasicIconFactory.getMenuArrowIcon(), choices, choices[0]);
 	}
 
+	/**
+	 * this method will get maximum dice that defender have.
+	 * 
+	 * @param country Country class object
+	 * @return maximum dices defender have
+	 */
 	public int getMaxDiceDefender(Country country) {
 		int dices = country.getCurrentArmiesDeployed() >= 2 ? 2 : 1;
 
 		return dices;
 	}
 
+	/**
+	 * this method will show move armies dialogbox.
+	 * 
+	 * @param country Country class object
+	 * @param game_view GameScreen object
+	 * @return integer number of armies  
+	 */
 	public int showMoveArmiesDialogBox(Country country, GameScreen game_view) {
-
 		Integer[] choices = new Integer[country.getCurrentArmiesDeployed() - 1];
 		for (int i = 0; i < choices.length; i++)
 			choices[i] = i + 1;
