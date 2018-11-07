@@ -12,11 +12,11 @@ import app.team21.risk.elements.Continent;
 import app.team21.risk.elements.Country;
 
 /**
- * Last Updated on: 18-10-2018, Thursday 
+ * Last Updated on: 06/11/2018, Tuesday 
  * This class file handles .map  file and loads the map for the game
  * 
  * @author Yash Sheth
- * @version 1.0.0
+ * @version 2.0.0
  *
  */
 
@@ -153,7 +153,7 @@ public class MapLoader {
 	}
 
 	/**
-	 * This method will perform validation of provided input file
+	 * This method will perform validation of provided input file.
 	 *
 	 * @param file File class object is passed where input file is selected by user and is check for validation
 	 * @return error/success Message
@@ -216,7 +216,7 @@ public class MapLoader {
 	}
 
 	/**
-	 * This method will read the continent part of map file
+	 * This method will read the continent part of map file.
 	 *
 	 * @param reader BufferReader object that read the .map file for continent
 	 * @param map_elements elements of map
@@ -252,11 +252,10 @@ public class MapLoader {
 	}
 
 	/**
-	 * This method will prepare HashMap for continent and country objects
+	 * This method will prepare HashMap for continent and country objects.
 	 *
 	 * @param country list of country that we have got while parsing the map file
 	 * @param continent_list continent_list that we have got while parsing the map file
-	 * 
 	 */
 	private static void getContinentCountryMap(List<Country> country, List<Continent> continent_list) {
 		for (Country c : country) {
