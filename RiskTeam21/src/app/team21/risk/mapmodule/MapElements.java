@@ -6,11 +6,11 @@ import java.util.List;
 
 import app.team21.risk.elements.*;
 /**
- * Last Updated on: 18-10-2018, Thursday
+ * Last Updated on: 06/11/2018, Tuesday 
  * This class contains methods for validation and updation of map representation
  * 
  * @author Yash Sheth
- * @version 1.0.0
+ * @version 2.0.0
  */
 public class MapElements {
 
@@ -79,7 +79,7 @@ public class MapElements {
 	}
 
 	/**
-	 * To get the phase details
+	 * getter method for phase details.
 	 * 
 	 * @return phase object
 	 */
@@ -88,7 +88,7 @@ public class MapElements {
 	}
 
 	/**
-	 * To set the phase details
+	 * setter method for phase details.
 	 * 
 	 * @param phase_details info about phase
 	 */
@@ -226,7 +226,7 @@ public class MapElements {
 	}
 
 	/**
-	 * getter method to get countries by continent
+	 * getter method to get countries by continent.
 	 * 
 	 * @param continent_name Name of the continent. 
 	 * @return continent_country_list list of continent and country
