@@ -3,12 +3,12 @@ package app.team21.risk.elements;
 
 import java.io.Serializable;
 
-
-
 /**
- * This class will handle operations on  cards
+ * Last Updated on : 06/11/2018, Tuesday
+ * This class will handle operations on  cards.
  *
  * @author Yash Sheth
+ * @version 2.0.0
  */
 public final class Card{
 
@@ -16,7 +16,8 @@ public final class Card{
     private final Country country;
 
     /**
-     * this setter method assigning the country and the card  type
+     * this setter method assigning the country and the card  type.
+     * 
      * @param type card type
      * @param country name of the country
      */
@@ -26,7 +27,8 @@ public final class Card{
     }
 
     /**
-     * getter method gives the country name and card type
+     * getter method gives the country name and card type.
+     * 
      * @return name of country and type
      */
     public String getName() {
@@ -34,7 +36,8 @@ public final class Card{
     }
 
     /**
-     * getter method gives type of the card
+     * getter method gives type of the card.
+     * 
      * @return string card object
      */
     public String getType() {
@@ -42,7 +45,8 @@ public final class Card{
     }
 
     /**
-     * getter method gives name of the country
+     * getter method gives name of the country.
+     * 
      * @return string country object
      */
     public Country getCountry() {
