@@ -15,11 +15,11 @@ import app.team21.risk.elements.*;
 public class MapElements {
 
 	private static MapElements map_elements;
-	public HashMap<String, String> map_details=new HashMap<>();
-	public List<Continent> continent_list=new ArrayList<>();
-	public HashMap<Continent, List<Country>> continent_country_map=new HashMap<>();
-	public HashMap<Country, List<Country>> country_neighbour_map=new HashMap<>();
-	public List<Player> player_list = new ArrayList<>();
+	public HashMap<String, String> map_details=new HashMap<String, String>();
+	public List<Continent> continent_list=new ArrayList<Continent>();
+	public HashMap<Continent, List<Country>> continent_country_map=new HashMap<Continent, List<Country>>();
+	public HashMap<Country, List<Country>> country_neighbour_map=new HashMap<Country, List<Country>>();
+	public List<Player> player_list = new ArrayList<Player>();
 	public boolean is_correct_map = true;
 	public String error_message;
 	public Player current_player;
@@ -40,10 +40,11 @@ public class MapElements {
 	 */
 	public static MapElements getInstance(MapElements instance) {
 		if (null == map_elements) {
-			if (instance == null)
+			if (instance == null) {
 				map_elements = new MapElements();
-			else
+			} else {
 				map_elements = instance;
+			}
 		}
 		return map_elements;
 	}
@@ -298,8 +299,9 @@ public class MapElements {
 		sb.append("======|HOW THE MAP LOOKS LIKE|======\n");
 		for (Continent c : getContinentList()) {
 			sb.append("\n\n" + c.getContinentName() + "  " + c.getControlValue() + "\n");
-			for (Country c1 : c.getMemberCountriesList())
+			for (Country c1 : c.getMemberCountriesList()) {
 				sb.append("\n"+c1.getCountryName());
+			}
 		}
 		return	sb.toString();
 	}
