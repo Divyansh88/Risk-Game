@@ -5,10 +5,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
+
 /**
- * this class sets and gets the properties of cards
- * @author Yash Sheth
+ * Last Updated on : 06/11/2018, Tuesday
+ * This class sets and gets the properties of cards.
  *
+ * @author Yash Sheth
+ * @version 2.0.0
  */
 public class Dice {
     int numberOfDice; //number of Dice user wants to roll
@@ -16,10 +19,9 @@ public class Dice {
     public boolean isDiceRolled; // check if dice rolled
 
     /**
-     * Returns result of Dice roll stored into object of values between 1 and 6 representing the
-     * outcome of rolling the dice.  The number of values in the array should be
-     * between 1 and 3, depending on the number of dice rolled by the player.  The
-     * number of dice rolled by the player is specified by the argument numberOfDice
+     * Returns result of Dice roll stored into object of values between 1 and 6 representing the outcome of rolling the dice.  
+     * The number of values in the array should be between 1 and 3, depending on the number of dice rolled by the player.  
+     * The number of dice rolled by the player is specified by the argument numberOfDice.
      *
      * @param numberOfDice number of Dice User wants to roll
      * @return return diceModel object that will have dice roll result
@@ -47,7 +49,8 @@ public class Dice {
     }
 
     /**
-     * getter method checks whether dices is rolled or not
+     * getter method checks whether dices is rolled or not.
+     * 
      * @return true if dices is rolled ,otherwise false
      */
     public boolean isDiceRolled() {
@@ -55,7 +58,8 @@ public class Dice {
     }
 
     /**
-     * setter method assigns boolean result of is dice rolled
+     * setter method assigns boolean result of is dice rolled.
+     * 
      * @param isDiceRolled true or false values
      */
     public void setDiceRolled(boolean isDiceRolled) {
@@ -63,7 +67,8 @@ public class Dice {
     }
 
     /**
-     * getter method gives number of dices to be rolled
+     * getter method gives number of dices to be rolled.
+     * 
      * @return values of number of dices
      */
     public int getNumberOfDice() {
@@ -71,7 +76,8 @@ public class Dice {
     }
 
     /**
-     * setter method assigns number of dices to be rolled
+     * setter method assigns number of dices to be rolled.
+     * 
      * @param numberOfDice number of dices to be rolled
      */
     public void setNumberOfDice(int numberOfDice) {
@@ -79,7 +85,8 @@ public class Dice {
     }
 
     /**
-     * getter method gives the result of rolled dices
+     * getter method gives the result of rolled dices.
+     * 
      * @return value of the result
      */
     public Integer[] getDiceResult() {
@@ -88,7 +95,8 @@ public class Dice {
 
 
     /**
-     * setter method assigns the result of rolled dices
+     * setter method assigns the result of rolled dices.
+     * 
      * @param diceResult value of result of rolled dices
      */
     public void setDiceResult(Integer[] diceResult) {
