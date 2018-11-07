@@ -6,11 +6,11 @@ import java.util.List;
 import app.team21.risk.elements.Player;
 
 /**
- * Last Updated on : 18/10/2018, Thursday
+ * Last Updated on : 06/11/2018, Tuesday
  * Country Bean class to get and set properties related to country.
  *
  * @author Yash Sheth and Divyansh Thakar
- * @version 1.0.0
+ * @version 2.0.0
  */
 public class Country{
     public String country_name;
