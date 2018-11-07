@@ -19,14 +19,14 @@ import app.team21.risk.views.GameScreen;
  * Last Updated on : 18/10/2018, Thursday
  * GamePlay class that contains all the game play logic.
  * 
- * @author Yash Sheth
+ * @author Yash Sheth, Samip Thakkar
  * @version 1.0.0
  */
 public class GamePlay extends Observable{
 	
 	static Player current_player;
 	static int playerCount;
-	static StringBuilder tb=new StringBuilder();
+	static StringBuilder tb = new StringBuilder();
 	
 	
 	/**
@@ -61,8 +61,9 @@ public class GamePlay extends Observable{
 					countries.remove(0);
 					p.setAssignedCountries(new_list);
 				}
-				else
+				else{
 					break;
+				}
 			}
 		}
 		sb.append("-----COUNTRIES ASSIGNED-----\n\n");
@@ -100,9 +101,9 @@ public class GamePlay extends Observable{
 			if(p.getTurnValue()>max_turn_value)
 				max_turn_value=p.getTurnValue();
 		}
-		if(new_turn>max_turn_value)
+		if(new_turn>max_turn_value){
 			new_turn=1;
-		
+		}
 		boolean player_flag=true;
 		while(player_flag){
 			for(Player p:player_list){
@@ -111,10 +112,12 @@ public class GamePlay extends Observable{
 					break;
 				}
 			}
-			if(player_flag)
+			if(player_flag){
 				new_turn+=1;
-			if(new_turn>max_turn_value)
+			}
+			if(new_turn>max_turn_value){
 				new_turn=1;
+			}
 		}
 		return new_turn;
 	}
@@ -128,20 +131,26 @@ public class GamePlay extends Observable{
 		int armies=0;
 		int num_of_players=player_list.size();
 		
-		if(num_of_players==2)
+		switch (num_of_players){
+		case 2:
 			armies=40;
-		else if(num_of_players==3)
+			break;
+		case 3:
 			armies=35;
-		else if(num_of_players==4)
+			break;
+		case 4:
 			armies=30;
-		else if(num_of_players==5)
+			break;
+		case 5:
 			armies=25;
-		else if(num_of_players==6)
+			break;
+		case 6:
 			armies=20;
+			break;
+		}
 		
 		for(Player p:player_list){
 			p.setInitialArmies(armies);
-			
 		}
 		
 		for(Player p:player_list){
@@ -159,17 +168,15 @@ public class GamePlay extends Observable{
     public String placeInitialArmiesInRR(List<Player> player_list) {
         int j = 0;
         int playersLeftForAssign = player_list.size();
-        while (playersLeftForAssign > 0) {
-        	
+        while (playersLeftForAssign > 0){
             if (player_list.get(j % playerCount).getInitialArmies() > 0) {
-            	
                 List<Country> playerCountryList = player_list.get(j % playerCount).getAssignedCountries();
                 Country randomCountry = playerCountryList.get(new Random().nextInt(playerCountryList.size()));
-                
                 randomCountry.addArmy(1);
                 player_list.get(j % playerCount).setInitialArmies(player_list.get(j % playerCount).getInitialArmies()- 1);
                 tb.append(player_list.get(j % playerCount).getName() + " put 1 army on "+ randomCountry.getCountryName()+".\n");
-            } else {
+            } 
+            else{
                 playersLeftForAssign--;
             }
             j++;
@@ -189,8 +196,9 @@ public class GamePlay extends Observable{
 		sb.append("======|CAPTURE THEM ALL|======\n");
 		for (Continent c : map_elements.getContinentList()) {
 			sb.append("\n\n" + c.getContinentName() + "  " + c.getControlValue() + "\n");
-			for (Country c1 : c.getMemberCountriesList())				
+			for (Country c1 : c.getMemberCountriesList()){			
 				sb.append("\n"+c1.getCountryName() + " - " +c1.getCurrentArmiesDeployed()+ " - " + c1.getBelongsToPlayer().getName());
+			}		
 		}
 		return	sb.toString();
 	}
@@ -206,11 +214,12 @@ public class GamePlay extends Observable{
 	public static int getReinforcementArmies(Player player,MapElements map){
 		int armies=0;
 		int player_countries=player.getAssignedCountries().size();
-		if(player_countries>9)
+		if(player_countries>9){
 			armies=player_countries/3;
-		else
+		}
+		else{
 			armies=3;
-		
+		}
 		//check if user holds any continents
 		for(Continent c:map.getContinentList()){	
 			List<Country> co=c.getMemberCountriesList();
@@ -224,8 +233,9 @@ public class GamePlay extends Observable{
 					break;
 				}
 			}
-			if(continent_control)
+			if(continent_control){
 				armies+=c.getControlValue();
+			}
 		}
 		return armies;
 	}	

@@ -7,7 +7,7 @@ import java.util.List;
 import app.team21.risk.elements.Card;
 import app.team21.risk.elements.Country;
 
-/**
+/**hello bhailu
  * Allows the creation of the Risk deck containing the 42 Risk cards.
  *
  * @author Yash Sheth
@@ -20,9 +20,7 @@ public class Deck{
     private String name;
 
     private String[] typesArray;
-
     public ArrayList<Card> deck;
-
     private Card drawCard;
 
    /**
@@ -42,7 +40,7 @@ public class Deck{
         for (i = 0; i < countries.size(); i++) {
             // Add new cards to deck
             deck.add(new Card(typesArray[i % 3], countries.get(i)));
-            //System.out.println("Added new card to deck: " + deck.get(i).getName());
+           
         }
         Collections.shuffle(deck);
     }
@@ -51,7 +49,7 @@ public class Deck{
      * Public default constructor to access other methods.
      */
     public Deck(){
-        deck = new ArrayList<>();
+        deck = new ArrayList<Card>();
     }
 
     /**
