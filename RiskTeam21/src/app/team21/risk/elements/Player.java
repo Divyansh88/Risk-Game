@@ -386,15 +386,15 @@ public class Player extends Observable {
 		setCanGetCard(false);
 		setCanShowCard(true);
 		int armies = GamePlay.getReinforcementArmies(this, map_elements);
-		this.setReinforceArmies(armies);
-		this.setPhaseDetails("Its " + name + "'s turn and Reinforcement phase.");
-		this.setUpdateMessage("phase");
+		setReinforceArmies(armies);
+		setPhaseDetails("Its " + name + "'s turn and Reinforcement phase.");
+		setUpdateMessage("phase");
 		setChanged();
 		notifyObservers();
-		this.setUpdateMessage("domination");
+		setUpdateMessage("domination");
 		setChanged();
 		notifyObservers();
-		this.setUpdateMessage("cards");
+		setUpdateMessage("cards");
 		setChanged();
 		notifyObservers();
 		game_view.updateStatus("");
@@ -411,7 +411,7 @@ public class Player extends Observable {
 	 */
 	public void playerReinforces(int armies_selected, MapElements map_elements, String country_name, GameScreen game_view) {
 		boolean reinforce_successful = false;
-		this.setCanShowCard(true);
+		setCanShowCard(true);
 		Country selected_country = null;
 		for (Country c : map_elements.getCountries()) {
 			if (c.getCountryName().equals(country_name)) {
@@ -420,9 +420,9 @@ public class Player extends Observable {
 			}
 		}
 
-		if (armies_selected <= this.getReinforceArmies()) {
+		if (armies_selected <= getReinforceArmies()) {
 			selected_country.addArmy(armies_selected);
-			this.subReinforceArmies(armies_selected);
+			subReinforceArmies(armies_selected);
 			reinforce_successful = true;
 			history_text = "\n" + name + " reinforces " + selected_country.getCountryName() + " with " + armies_selected
 					+ " armies.";
@@ -432,17 +432,17 @@ public class Player extends Observable {
 			game_view.updateStatus(status_text);
 		}
 
-		if (this.getReinforceArmies() > 0 && reinforce_successful) {
-			game_view.ReinforcementButton(this.getReinforceArmies(), this, map_elements);
+		if (getReinforceArmies() > 0 && reinforce_successful) {
+			game_view.ReinforcementButton(getReinforceArmies(), this, map_elements);
 		} else {
 			status_text = " Reinforcement Phase Completed";
-			this.setCanReinforce(false);
-			this.setCanShowCard(false);
-			this.setCanAttack(true);
-			this.setCanFortify(true);
-			this.setCanEndTurn(true);
-			this.setPhaseDetails("Its " + name + "'s turn and Attack phase.");
-			this.setUpdateMessage("phase");
+			setCanReinforce(false);
+			setCanShowCard(false);
+			setCanAttack(true);
+			setCanFortify(true);
+			setCanEndTurn(true);
+			setPhaseDetails("Its " + name + "'s turn and Attack phase.");
+			setUpdateMessage("phase");
 			setChanged();
 			notifyObservers(this);
 			game_view.updateStatus(status_text);
@@ -462,10 +462,11 @@ public class Player extends Observable {
 	 */
 	public void playerAttacks(MapElements map_elements, Country country_from, Country country_to, GameScreen game_view, String mode_string, Deck deck) {
 		int mode;
-		if (mode_string.equalsIgnoreCase("ALL OUT ATTACK"))
+		if (mode_string.equalsIgnoreCase("ALL OUT ATTACK")) {
 			mode = 1;
-		else
+		} else {
 			mode = 0;
+		}
 		if (can_attack) {
 			if (!country_to.belongs_to_player.equals(this)) {
 				if (country_from.getCurrentArmiesDeployed() > 1) {
@@ -515,10 +516,10 @@ public class Player extends Observable {
 						defenderLostCountry(country_from, country_to, game_view);
 						game_view.AttackButton(this, map_elements);
 					}
-					if (this.getAssignedCountries().size() == game_view.map_elements.getCountries().size()) {
-						game_view.updateView("" + this.getName() + " has won the game ! Congratulations ! ");
+					if (getAssignedCountries().size() == game_view.map_elements.getCountries().size()) {
+						game_view.updateView("" + getName() + " has won the game ! Congratulations ! ");
 						game_view.EndTurnButton();
-						JOptionPane.showMessageDialog(null, "Congratulations! " + this.getName() + " won the game.");
+						JOptionPane.showMessageDialog(null, "Congratulations! " + getName() + " won the game.");
 						StartGame.createStartScreen();
 					} else {
 						checkCanContinue(game_view);
@@ -537,8 +538,8 @@ public class Player extends Observable {
 		} else {
 			game_view.updateStatus("You cannot attack anymore.");
 			status_text = " Attack Phase Completed";
-			this.setPhaseDetails(name + " can End the turn now.");
-			this.setUpdateMessage("phase");
+			setPhaseDetails(name + " can End the turn now.");
+			setUpdateMessage("phase");
 			setChanged();
 			notifyObservers(this);
 			game_view.updateStatus(status_text);
@@ -568,12 +569,12 @@ public class Player extends Observable {
 		}
 
 		if (fortify_successful) {
-			this.setCanFortify(false);
+			setCanFortify(false);
 			status_text = " Fortification Phase Completed";
 			history_text = "\n" + name + " fortified " + country_to.getCountryName() + " with " + armies
 					+ " armies from " + country_from.getCountryName();
-			this.setPhaseDetails(name + " can End the turn now.");
-			this.setUpdateMessage("phase");
+			setPhaseDetails(name + " can End the turn now.");
+			setUpdateMessage("phase");
 			setChanged();
 			notifyObservers(this);
 			game_view.updateView(history_text);
@@ -621,17 +622,20 @@ public class Player extends Observable {
 	public boolean isFortifyValid(Country c1, Country c2, List<Country> unwanted, MapElements map_elements) {
 		c1=map_elements.getCountry(c1.getCountryName());
 		
-		if (c1.getNeighbourNodes().contains(c2) && c2.getNeighbourNodes().contains(c1) && c1.getBelongsToPlayer().equals(c2.getBelongsToPlayer()))
+		if (c1.getNeighbourNodes().contains(c2) && c2.getNeighbourNodes().contains(c1) && c1.getBelongsToPlayer().equals(c2.getBelongsToPlayer())) {
 			return true;
+		}
 
-		if (unwanted.contains(c1))
+		if (unwanted.contains(c1)) {
 			return false;
+		}
 		
 		unwanted.add(c1);
 
 		for (Country c : c1.getNeighbourNodes()) {
-			if (!unwanted.contains(c) && isFortifyValid(c, c2, unwanted, map_elements))
+			if (!unwanted.contains(c) && isFortifyValid(c, c2, unwanted, map_elements)) {
 				return true;
+			}
 		}
 		return false;
 
@@ -664,9 +668,10 @@ public class Player extends Observable {
 		}
 		game_view.updateView(country_from.getBelongsToPlayer().getName() + " moved " + moveArmies + " armies to"
 				+ country_to.getCountryName() + "!");
-		if (!isCanGetCard())
+		if (!isCanGetCard()) {
 			can_get_card = true;
-		this.setUpdateMessage("domination");
+		}
+		setUpdateMessage("domination");
 		setChanged();
 		notifyObservers();
 	}
@@ -692,7 +697,7 @@ public class Player extends Observable {
 	public void checkCanContinue(GameScreen game_view) {
 		can_attack = false;
 		can_fortify = false;
-		for (Country c : this.getAssignedCountries()) {
+		for (Country c : getAssignedCountries()) {
 
 			if (c.getCurrentArmiesDeployed() > 1) {
 				can_attack = true;
@@ -702,8 +707,8 @@ public class Player extends Observable {
 		}
 		if (!can_attack && !can_fortify) {
 			status_text = " Attack Phase Completed";
-			this.setPhaseDetails(name + " can End the turn now.");
-			this.setUpdateMessage("phase");
+			setPhaseDetails(name + " can End the turn now.");
+			setUpdateMessage("phase");
 			setChanged();
 			notifyObservers(this);
 			game_view.updateStatus(status_text);
@@ -741,9 +746,10 @@ public class Player extends Observable {
 			armies = 0;
 			break;
 		}
-		if (traded_set > 5) {
+		if (traded_set > 5){
 			armies = 15 + 5 * (traded_set - 5);
 		}
+		
 		return armies;
 	}
 
@@ -758,8 +764,9 @@ public class Player extends Observable {
 		int dices = getMaxDiceAttacker(country);
 
 		Integer[] choices = new Integer[dices];
-		for (int i = 0; i < dices; i++)
+		for (int i = 0; i < dices; i++) {
 			choices[i] = i + 1;
+		}
 
 		return (Integer) JOptionPane.showInputDialog(null, "Attacker Select",
 				country.getBelongsToPlayer().getName() + "! How many dice will you roll?", JOptionPane.OK_OPTION,
@@ -793,8 +800,9 @@ public class Player extends Observable {
 		int dices = getMaxDiceDefender(country);
 
 		Integer[] choices = new Integer[dices];
-		for (int i = 0; i < dices; i++)
+		for (int i = 0; i < dices; i++) {
 			choices[i] = i + 1;
+		}
 
 		return (Integer) JOptionPane.showInputDialog(null, "Defender Select",
 				country.getBelongsToPlayer().getName() + "! How many dice will you roll?", JOptionPane.OK_OPTION,
@@ -822,8 +830,9 @@ public class Player extends Observable {
 	 */
 	public int showMoveArmiesDialogBox(Country country, GameScreen game_view) {
 		Integer[] choices = new Integer[country.getCurrentArmiesDeployed() - 1];
-		for (int i = 0; i < choices.length; i++)
+		for (int i = 0; i < choices.length; i++) {
 			choices[i] = i + 1;
+		}
 
 		return (Integer) JOptionPane.showInputDialog(null, "Select Armies",
 				country.getBelongsToPlayer().getName() + "! How many armies will you move?", JOptionPane.OK_OPTION,
