@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Last Updated on : 17/10/2018, Wednesday
+ * Last Updated on : 06/11/2018, Tuesday
  * Continent class that retrieves and assigns different properties for the continent object.
  *
  * @author Yash Sheth
- * @version 1.0.0
+ * @version 2.0.0
  */
 public class Continent {
 
