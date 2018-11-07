@@ -33,7 +33,8 @@ public class PlayPath extends StartGame{
 	JComboBox maps = new JComboBox();
 	MapLoader map_loader=new MapLoader();
 	String browse_file_path;
-	String file_path="C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
+	//String file_path="C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
+	String file_path="/Users/samip/git/RiskTeam21_/RiskTeam21/src/app/team21/risk/maps/";
 	MapElements map_elements;
 	JButton btn_back = new JButton("Back"); 
 	JButton btn_home = new JButton("Home");
@@ -193,23 +194,25 @@ public class PlayPath extends StartGame{
 		
 		players = new JComboBox<Integer>();
 		int no_countries = map_elements.getCountries().size();
-		if(no_countries==2){
+		switch (no_countries) {
+		case 2:
 			players.addItem("2");
-		}
-		else if(no_countries==3){
+			break;
+		case 3:
 			players.addItem("2");
 			players.addItem("3");
-		}
-		else if(no_countries==4){
+			break;
+		case 4:
 			players.addItem("2");
 			players.addItem("3");
 			players.addItem("4");
-		}
-		else {
+			break;
+		default:
 			players.addItem("2");
 			players.addItem("3");
 			players.addItem("4");
 			players.addItem("5");
+			break;
 		}
 		
 		
@@ -228,9 +231,6 @@ public class PlayPath extends StartGame{
 				
 			}
 		});
-//		choose_player.add(choose_number_of_player);
-//		choose_player.add(players);
-//		choose_player.add(lets_go);
 		test.add(choose_number_of_player);
 		test.add(players);
 		test.add(lets_go);
