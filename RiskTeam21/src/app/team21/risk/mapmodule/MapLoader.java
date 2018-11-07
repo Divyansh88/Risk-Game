@@ -69,8 +69,6 @@ public class MapLoader {
 			while ((line = reader.readLine()) != null) {
 				if (line.startsWith("[")) {
 					String id = line.substring(line.indexOf("[") + 1, line.indexOf("]"));
-
-					// Parsing the [MAP] portion of the map file
 					if (id.equalsIgnoreCase("Map")) {
 						System.out.println("Map Tag Present");
 						String maps;
@@ -102,7 +100,6 @@ public class MapLoader {
 							}
 						}
 					}
-
 					// Parsing the [Territories] portion of the map file
 					if (id.equalsIgnoreCase("Territories")) {
 						System.out.println("Territories Tag Present");
@@ -138,7 +135,8 @@ public class MapLoader {
 			if (is_map_present && is_continent_present && is_territory_present && map_elements.isCorrectMap()) {
 				System.out.println("Valid File.\nMap Continents and Territories tags are present");
 
-			} else {
+			} 
+			else {
 				System.out.println("Invalid Map File.\nMap or Continents or Territories tags not present");
 				map_elements.setCorrectMap(false);
 				map_elements.setErrorMessage("Map or Continents or Territories tags not present");
@@ -242,7 +240,6 @@ public class MapLoader {
 					}
 				}
 				reader.mark(0);
-
 			}
 			reader.reset();
 		} catch (NumberFormatException | IOException e) {
@@ -263,7 +260,8 @@ public class MapLoader {
 			if (continent_list.contains(new Continent(c.getBelongsToContinent()))) {
 				if (continent_country_map.containsKey(new Continent(c.getBelongsToContinent()))) {
 					continent_country_map.get(new Continent(c.getBelongsToContinent())).add(c);
-				} else {
+				} 
+				else {
 					int index_continent = continent_list.indexOf(new Continent(c.getBelongsToContinent()));
 					country_list.add(c); 
 					continent_country_map.put(continent_list.get(index_continent), country_list);
@@ -280,9 +278,7 @@ public class MapLoader {
 	public static void checkControlValue(MapElements map_elements){
 		for(Continent continent: map_elements.getContinentList()) {
         	if(continent.getControlValue()<=0) {
-        		
         		map_elements.setCorrectMap(false);
-                
         		map_elements.setErrorMessage("There is invalid  control value of the continent-->"+continent.getContinentName());
                 break;
         	}
