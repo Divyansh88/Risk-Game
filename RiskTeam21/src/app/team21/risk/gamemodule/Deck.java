@@ -7,10 +7,13 @@ import java.util.List;
 import app.team21.risk.elements.Card;
 import app.team21.risk.elements.Country;
 
-/**hello bhailu
+
+/**
+ * Last Updated on : 06/11/2018, Tuesday 
  * Allows the creation of the Risk deck containing the 42 Risk cards.
- *
+ * 
  * @author Yash Sheth
+ * @version 2.0.0
  */
 public class Deck{
 
@@ -24,8 +27,8 @@ public class Deck{
     private Card drawCard;
 
    /**
-    *  Creates all cards, one for each territory. Each card has either
-     * a type of Infantry, Cavalry, or Artillery.
+    * Creates all cards, one for each territory. Each card has either a type of Infantry, Cavalry, or Artillery.
+    * 
     * @param countries list of country names
     */
     public Deck(List<Country> countries) {
@@ -53,7 +56,8 @@ public class Deck{
     }
 
     /**
-     * Removes a card from the deck and return it
+     * Removes a card from the deck and return it.
+     * 
      * @return card object
      */
     public Card draw() {
@@ -65,7 +69,8 @@ public class Deck{
     }
 
    /**
-    * Add a card to the deck
+    * Add a card to the deck.
+    * 
     * @param card name of the card which is to be added to deck
     */
     public void add(Card card) {
@@ -74,7 +79,7 @@ public class Deck{
     }
 
    /**
-    * Shuffle the deck of cards
+    * Shuffle the deck of cards.
     */
     public void shuffle() {
 
