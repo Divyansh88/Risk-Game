@@ -12,15 +12,15 @@ import app.team21.risk.elements.Country;
 
 
 /**
- * Last Updated on: 18-10-2018, Thursday
+ * Last Updated on: 06/11/2018, Tuesday 
  * This class file allows user to create and edit maps and save according to the file format of the map.
  * 
  * @author Yash Sheth
- * @version 1.0.0
+ * @version 2.0.0
  */
 public class MapEditor {
 	/**
-     * This method will add country in existing Map
+     * This method will add country in existing Map.
      *
      * @param country     the country that you want to add
      * @param map_elements     current map details
@@ -37,7 +37,7 @@ public class MapEditor {
     }
 
     /**
-     * This method will add neighbour to Country
+     * This method will add neighbour to Country.
      *
      * @param country_name country name where neighbours to be added
      * @param map_elements current map details
