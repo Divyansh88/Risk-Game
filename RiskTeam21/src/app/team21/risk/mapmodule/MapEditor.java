@@ -74,13 +74,15 @@ public class MapEditor {
      */
     public boolean validateContinent(MapElements map_element){
     	boolean result=true;
-    	for(Continent c:map_element.getContinentList())
-    		if(!(c.getMemberCountriesList().size()>0)){
+    	for(Continent c:map_element.getContinentList()) {
+			if(!(c.getMemberCountriesList().size()>0)){
     			result=false;
     			break;
-    		}
-    		else
-    			continue;
+    		} 
+			else {
+				continue;
+			}
+		}
     	return result;
     }
     
@@ -92,13 +94,15 @@ public class MapEditor {
      */
     public boolean validateCountry(MapElements map_element){
     	boolean result=true;
-    	for(Country c:map_element.getCountries())
-    		if(!(c.getNeighbourNodes().size()>0)){
+    	for(Country c:map_element.getCountries()) {
+			if(!(c.getNeighbourNodes().size()>0)){
     			result=false;
     			break;
-    		}
-    		else
-    			continue;
+    		} 
+			else {
+				continue;
+			}
+		}
     	return result;
     }
     
