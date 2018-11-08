@@ -1,7 +1,7 @@
 /**
  * 
  */
-package app.team21.risk.test;
+package app.team21.risk.test.maps;
 
 import static org.junit.Assert.*;
 
@@ -17,6 +17,7 @@ import app.team21.risk.elements.Player;
 import app.team21.risk.gamemodule.GamePlay;
 import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
+import app.team21.risk.test.utils.TestUtils;
 
 /**
  * @author Yash Sheth
@@ -28,7 +29,7 @@ public class TestReinforceArmies {
     private MapLoader loader;
     GamePlay game_play;
     private Player player1,player2;
-    String file_path="C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/World.map";
+    String file_path = TestUtils.FILE_PATH + "/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/World.map";
 	
     @Before
     public void init() {

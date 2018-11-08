@@ -1,7 +1,7 @@
 /**
  * 
  */
-package app.team21.risk.test;
+package app.team21.risk.test.maps;
 
 import static org.junit.Assert.*;
 
@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
+import app.team21.risk.test.utils.TestUtils;
 
 
 /**
@@ -25,7 +26,7 @@ public class TestBlankFields {
     public void init() {
     	loader = new MapLoader();
     	elements = MapElements.getInstance();
-    	filePath = "C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
+    	filePath = TestUtils.FILE_PATH + "/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
     }
     
     @Test

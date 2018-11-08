@@ -1,7 +1,7 @@
 /**
  * 
  */
-package app.team21.risk.test;
+package app.team21.risk.test.maps;
 
 import static org.junit.Assert.*;
 
@@ -17,6 +17,7 @@ import app.team21.risk.elements.Country;
 import app.team21.risk.mapmodule.MapEditor;
 import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
+import app.team21.risk.test.utils.TestUtils;
 
 /**
  * @author Harsh Vaghani and Yash Sheth
@@ -25,7 +26,7 @@ import app.team21.risk.mapmodule.MapLoader;
 public class TestValidateCountry {
 	private MapElements elements;
     private MapLoader loader;
-    private String file_path="C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/World.map";    
+    private String file_path = TestUtils.FILE_PATH + "/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/World.map";    
     private MapEditor editor;
     
 	@Before
