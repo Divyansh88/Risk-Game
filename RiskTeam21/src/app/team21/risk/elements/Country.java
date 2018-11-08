@@ -6,7 +6,7 @@ import java.util.List;
 import app.team21.risk.elements.Player;
 
 /**
- * Last Updated on : 06/11/2018, Tuesday
+ * Last Updated on : 08/11/2018, Thursday
  * Country Bean class to get and set properties related to country.
  *
  * @author Yash Sheth and Divyansh Thakar
@@ -74,8 +74,8 @@ public class Country{
      */
     @Override
     public boolean equals(Object o) {
-        String countryName = ((Country) o).getCountryName();
-        return countryName.equals(this.getCountryName());
+        String country_name = ((Country) o).getCountryName();
+        return country_name.equals(this.getCountryName());
     }
 
     /**
