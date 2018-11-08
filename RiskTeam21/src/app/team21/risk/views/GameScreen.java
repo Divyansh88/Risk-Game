@@ -35,8 +35,7 @@ public class GameScreen implements Observer {
 	action_panel;
 	JPanel reinforcement_panel, attack_panel, fortify_panel, mr_master_panel, status_panel, endturn_panel,
 	domination_master_panel, domination_panel, map_finder_panel, select_country_panel, result_panel;
-	JTextArea text_area_game_map, text_area_game_history, text_area_domination, text_area_result,
-	text_area_select_country;
+	JTextArea text_area_domination, text_area_result,text_area_select_country;
 	JScrollPane scroll_panel, scroll_panel1, scroll_panel2, scroll_panel3, scroll_panel4, scroll_panel5;
 	JComboBox combobox_armies, combobox_country, combobox_country2, combobox_mode;
 	DefaultListModel<String> country_display1, country_display2, turnin_cards_display;
@@ -44,6 +43,8 @@ public class GameScreen implements Observer {
 	CardLayout cl_ps = new CardLayout();
 	JLabel turn_label = new JLabel();
 	JLabel status_label = new JLabel();
+	JTextArea text_area_game_map= new JTextArea();
+	JTextArea text_area_game_history = new JTextArea();
 	public boolean must_turn_in = false;
 	public boolean view_visibility = false;
 	public MapElements map_elements;

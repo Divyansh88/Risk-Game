@@ -1,8 +1,6 @@
 
 package app.team21.risk.elements;
 
-import java.io.Serializable;
-
 /**
  * Last Updated on : 06/11/2018, Tuesday
  * This class will handle operations on  cards.

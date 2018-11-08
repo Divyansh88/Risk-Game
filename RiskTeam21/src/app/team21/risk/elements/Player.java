@@ -569,6 +569,7 @@ public class Player extends Observable {
 		}
 
 		if (fortify_successful) {
+			setCanAttack(false);
 			setCanFortify(false);
 			status_text = " Fortification Phase Completed";
 			history_text = "\n" + name + " fortified " + country_to.getCountryName() + " with " + armies
@@ -611,7 +612,7 @@ public class Player extends Observable {
 	}
 
 	/**
-	 * this method will check fortify is valid or not.
+	 * this method will check if fortify is valid or not.
 	 * 
 	 * @param c1 Country object 1
 	 * @param c2 Country object 2
