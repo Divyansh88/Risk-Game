@@ -18,11 +18,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Last Updated on: 18-10-2018, Thursday This class file handles main game
- * screen.
+ * Last Updated on: 07/11/2018, Wednesday  
+ * This class file handles main game screen.
  * 
  * @author Yash Sheth and Divyansh Thakar and Samip Thakkar
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 public class GameScreen implements Observer {
@@ -56,22 +56,14 @@ public class GameScreen implements Observer {
 	Deck deck;
 
 	/**
-	 * It is the main game screen
-	 */
-
-	/**
 	 * This method will create view of main game screen and updates the value of
 	 * different components.
 	 * 
-	 * @param map_elements
-	 *            elements of map
-	 * @param player_list
-	 *            list of players
-	 * @param turn_value
-	 *            turn value
+	 * @param map_elements elements of map
+	 * @param player_list list of players
+	 * @param turn_value turn value
 	 */
 	public void playerContinueButton(MapElements map_elements, List<Player> player_list, int turn_value) {
-
 		this.map_elements = map_elements;
 		this.player_list = player_list;
 		this.turn_value = turn_value;
@@ -242,40 +234,36 @@ public class GameScreen implements Observer {
 				if (current_player.isCanReinforce()) {
 					int reinforcement_army = GamePlay.getReinforcementArmies(current_player, map_elements);
 					ReinforcementButton(reinforcement_army + extra_armies, current_player, map_elements);
-				} else {
+				} else
 					status_label.setText("\nSorry. You cannot reinforce right now.");
-				}
 			}
 		});
 
 		btn_attack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (current_player.isCanAttack()) {
+				if (current_player.isCanAttack())
 					AttackButton(current_player, map_elements);
-				} else {
+				else
 					status_label.setText("\nSorry. You cannot attack right now. Reinforce First");
-				}
 			}
 		});
 
 		btn_fortify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (current_player.isCanFortify()) {
+				if (current_player.isCanFortify())
 					FortifyButton(current_player, map_elements);
-				} else {
+				else
 					status_label.setText("\nSorry. You cannot fortify right now.");
-				}
 			}
 		});
 
 		btn_end_turn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// if can endturn call method
-				if (current_player.isCanEndTurn()) {
+				if (current_player.isCanEndTurn())
 					EndTurnButton();
-				} else {
+				else
 					status_label.setText("\nSorry. You cannot End Turn right now.");
-				}
 			}
 		});
 
@@ -318,12 +306,9 @@ public class GameScreen implements Observer {
 	/**
 	 * This method view reinforcement screen in game screen.
 	 * 
-	 * @param reinforce_armies
-	 *            total reinforce armies
-	 * @param current_player
-	 *            current player
-	 * @param map_elements
-	 *            elements of map
+	 * @param reinforce_armies total reinforce armies
+	 * @param current_player current player
+	 * @param map_elements elements of map
 	 */
 	public void ReinforcementButton(int reinforce_armies, Player current_player, MapElements map_elements) {
 		this.current_player = current_player;
@@ -335,9 +320,8 @@ public class GameScreen implements Observer {
 		reinforcement_panel.add(lbl_select_army);
 
 		combobox_armies = new JComboBox<>();
-		for (int i = 1; i <= reinforce_armies; i++) {
+		for (int i = 1; i <= reinforce_armies; i++)
 			combobox_armies.addItem(i);
-		}
 		reinforcement_panel.add(combobox_armies);
 
 		lbl_select_country = new JLabel("Select country");
@@ -384,9 +368,8 @@ public class GameScreen implements Observer {
 					int armies_selected = Integer.valueOf(combobox_armies.getSelectedItem().toString());
 					String country_name = combobox_country.getSelectedItem().toString();
 					current_player.playerReinforces(armies_selected, map_elements, country_name, game_view);
-				} else {
+				} else
 					status_label.setText("Turn In Cards First. You have 5 or more cards.");
-				}
 			}
 		});
 		btn_cards.addActionListener(new ActionListener() {
@@ -395,9 +378,8 @@ public class GameScreen implements Observer {
 					view_visibility = true;
 					int reinforcement_army = GamePlay.getReinforcementArmies(current_player, map_elements);
 					ReinforcementButton(reinforcement_army + extra_armies, current_player, map_elements);
-				} else {
+				} else
 					status_label.setText("\nSorry. You cannot View Cards right now.");
-				}
 			}
 		});
 		btn_turnin_rp.addActionListener(new ActionListener() {
@@ -424,15 +406,14 @@ public class GameScreen implements Observer {
 					new_hand.removeAll(selected_turncards);
 
 					for (Card c : selected_turncards) {
-						if ((c.getType().equals("Infantry"))) {
+						if ((c.getType().equals("Infantry")))
 							count_infantry++;
-						} else if ((c.getType().equals("Cavalry"))) {
+						else if ((c.getType().equals("Cavalry")))
 							count_cavalry++;
-						} else if ((c.getType().equals("Artillery"))) {
+						else if ((c.getType().equals("Artillery")))
 							count_artillery++;
-						} else {
+						else
 							System.out.println("FALSE VALUE OF CARD");
-						}
 					}
 
 					if ((count_infantry == 1 && count_artillery == 1 && count_cavalry == 1) || count_infantry == 3
@@ -462,7 +443,10 @@ public class GameScreen implements Observer {
 	}
 
 	/**
-	 * This method view attack screen in game screen. (Coming soon)
+	 * This method view attack screen in game screen.
+	 * 
+	 * @param current_player current player
+	 * @param map_elements object
 	 */
 	public void AttackButton(Player current_player, MapElements map_elements) {
 		attack_panel.removeAll();
@@ -531,10 +515,8 @@ public class GameScreen implements Observer {
 	/**
 	 * This method view fortify screen in game screen.
 	 * 
-	 * @param current_player
-	 *            current player
-	 * @param map_elements
-	 *            elements
+	 * @param current_player current player
+	 * @param map_elements elements
 	 */
 	public void FortifyButton(Player current_player, MapElements map_elements) {
 		fortify_panel.removeAll();
@@ -646,10 +628,8 @@ public class GameScreen implements Observer {
 	/**
 	 * This method will bind country combobox.
 	 * 
-	 * @param combobox_country
-	 *            combobox of country
-	 * @param current_player
-	 *            current player
+	 * @param combobox_country combobox of country
+	 * @param current_player current player
 	 * @return combobox combobox of country
 	 */
 	public JComboBox<Object> bindCountryCombobox(JComboBox<Object> combobox_country, Player current_player) {
@@ -660,6 +640,13 @@ public class GameScreen implements Observer {
 		return combobox_country;
 	}
 
+	/**
+	 * This method will bind neighbour combobox.
+	 * 
+	 * @param combobox_country combobox of country 
+	 * @param selected_country combobox of selected country
+	 * @return combobox combobox of country
+	 */
 	public JComboBox<Object> bindNeighbourCombobox(JComboBox<Object> combobox_country, String selected_country) {
 
 		Country selected_from = null;
@@ -679,11 +666,21 @@ public class GameScreen implements Observer {
 		return combobox_country;
 	}
 
+	/**
+	 * This method will update view.
+	 * 
+	 * @param history_text game history text
+	 */
 	public void updateView(String history_text) {
 		text_area_game_history.append("\n" + history_text);
 		text_area_game_map.setText(GamePlay.updateMR(map_elements));
 	}
 
+	/**
+	 * This method will update status.
+	 * 
+	 * @param status_text status text
+	 */
 	public void updateStatus(String status_text) {
 		status_label.setText(status_text);
 	}
@@ -720,9 +717,8 @@ public class GameScreen implements Observer {
 							break;
 						}
 					}
-					if (continent_control) {
+					if (continent_control)
 						continents_captured += 1;
-					}
 				}
 				domination_details.append(Double.valueOf(df.format(domination_of_player)))
 				.append("% -- " + total_armies + " -- " + continents_captured + " continents").append("\n");
