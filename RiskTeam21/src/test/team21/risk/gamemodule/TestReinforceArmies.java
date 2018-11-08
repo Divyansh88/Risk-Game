@@ -28,7 +28,7 @@ public class TestReinforceArmies {
     private MapLoader loader;
     GamePlay game_play;
     private Player player1,player2;
-    String file_path="C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/World.map";
+    String file_path="C:/Users/yashe/git/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/World.map";
 	
     /**
      * This is method initializes important objects and variables used in the test.

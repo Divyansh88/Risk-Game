@@ -28,7 +28,7 @@ public class TestTerritoriesTag {
     public void init() {
     	loader = new MapLoader();
     	elements = MapElements.getInstance();
-    	filePath = "C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
+    	filePath = "C:/Users/yashe/git/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
     }
     
     /**

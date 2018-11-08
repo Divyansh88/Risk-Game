@@ -462,10 +462,11 @@ public class Player extends Observable {
 	 */
 	public void playerAttacks(MapElements map_elements, Country country_from, Country country_to, GameScreen game_view, String mode_string, Deck deck) {
 		int mode;
-		if (mode_string.equalsIgnoreCase("ALL OUT ATTACK"))
+		if (mode_string.equalsIgnoreCase("ALL OUT ATTACK")) {
 			mode = 1;
-		else
+		} else {
 			mode = 0;
+		}
 		if (can_attack) {
 			if (!country_to.belongs_to_player.equals(this)) {
 				if (country_from.getCurrentArmiesDeployed() > 1) {
@@ -622,17 +623,20 @@ public class Player extends Observable {
 	public boolean isFortifyValid(Country c1, Country c2, List<Country> unwanted, MapElements map_elements) {
 		c1=map_elements.getCountry(c1.getCountryName());
 		
-		if (c1.getNeighbourNodes().contains(c2) && c2.getNeighbourNodes().contains(c1) && c1.getBelongsToPlayer().equals(c2.getBelongsToPlayer()))
+		if (c1.getNeighbourNodes().contains(c2) && c2.getNeighbourNodes().contains(c1) && c1.getBelongsToPlayer().equals(c2.getBelongsToPlayer())) {
 			return true;
+		}
 
-		if (unwanted.contains(c1))
+		if (unwanted.contains(c1)) {
 			return false;
+		}
 		
 		unwanted.add(c1);
 
 		for (Country c : c1.getNeighbourNodes()) {
-			if (!unwanted.contains(c) && isFortifyValid(c, c2, unwanted, map_elements))
+			if (!unwanted.contains(c) && isFortifyValid(c, c2, unwanted, map_elements)) {
 				return true;
+			}
 		}
 		return false;
 
@@ -665,8 +669,9 @@ public class Player extends Observable {
 		}
 		game_view.updateView(country_from.getBelongsToPlayer().getName() + " moved " + move_armies + " armies to"
 				+ country_to.getCountryName() + "!");
-		if (!isCanGetCard())
+		if (!isCanGetCard()) {
 			can_get_card = true;
+		}
 		this.setUpdateMessage("domination");
 		setChanged();
 		notifyObservers();
@@ -759,8 +764,9 @@ public class Player extends Observable {
 		int dices = getMaxDiceAttacker(country);
 
 		Integer[] choices = new Integer[dices];
-		for (int i = 0; i < dices; i++)
+		for (int i = 0; i < dices; i++) {
 			choices[i] = i + 1;
+		}
 
 		return (Integer) JOptionPane.showInputDialog(null, "Attacker Select",
 				country.getBelongsToPlayer().getName() + "! How many dice will you roll?", JOptionPane.OK_OPTION,
@@ -794,8 +800,9 @@ public class Player extends Observable {
 		int dices = getMaxDiceDefender(country);
 
 		Integer[] choices = new Integer[dices];
-		for (int i = 0; i < dices; i++)
+		for (int i = 0; i < dices; i++) {
 			choices[i] = i + 1;
+		}
 
 		return (Integer) JOptionPane.showInputDialog(null, "Defender Select",
 				country.getBelongsToPlayer().getName() + "! How many dice will you roll?", JOptionPane.OK_OPTION,
@@ -823,8 +830,9 @@ public class Player extends Observable {
 	 */
 	public int showMoveArmiesDialogBox(Country country, GameScreen game_view) {
 		Integer[] choices = new Integer[country.getCurrentArmiesDeployed() - 1];
-		for (int i = 0; i < choices.length; i++)
+		for (int i = 0; i < choices.length; i++) {
 			choices[i] = i + 1;
+		}
 
 		return (Integer) JOptionPane.showInputDialog(null, "Select Armies",
 				country.getBelongsToPlayer().getName() + "! How many armies will you move?", JOptionPane.OK_OPTION,
