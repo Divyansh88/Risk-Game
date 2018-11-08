@@ -422,7 +422,7 @@ public class Player extends Observable {
 
 		if (armies_selected <= this.getReinforceArmies()) {
 			selected_country.addArmy(armies_selected);
-			this.subReinforceArmies(armies_selected);
+			subReinforceArmies(armies_selected);
 			reinforce_successful = true;
 			history_text = "\n" + name + " reinforces " + selected_country.getCountryName() + " with " + armies_selected
 					+ " armies.";
@@ -436,13 +436,13 @@ public class Player extends Observable {
 			game_view.ReinforcementButton(this.getReinforceArmies(), this, map_elements);
 		} else {
 			status_text = " Reinforcement Phase Completed";
-			this.setCanReinforce(false);
-			this.setCanShowCard(false);
-			this.setCanAttack(true);
-			this.setCanFortify(true);
-			this.setCanEndTurn(true);
-			this.setPhaseDetails("Its " + name + "'s turn and Attack phase.");
-			this.setUpdateMessage("phase");
+			setCanReinforce(false);
+			setCanShowCard(false);
+			setCanAttack(true);
+			setCanFortify(true);
+			setCanEndTurn(true);
+			setPhaseDetails("Its " + name + "'s turn and Attack phase.");
+			setUpdateMessage("phase");
 			setChanged();
 			notifyObservers(this);
 			game_view.updateStatus(status_text);
@@ -515,7 +515,7 @@ public class Player extends Observable {
 						defenderLostCountry(country_from, country_to, game_view);
 						game_view.AttackButton(this, map_elements);
 					}
-					if (this.getAssignedCountries().size() == game_view.map_elements.getCountries().size()) {
+					if (getAssignedCountries().size() == game_view.map_elements.getCountries().size()) {
 						game_view.updateView("" + this.getName() + " has won the game ! Congratulations ! ");
 						game_view.EndTurnButton();
 						JOptionPane.showMessageDialog(null, "Congratulations! " + this.getName() + " won the game.");
@@ -537,8 +537,8 @@ public class Player extends Observable {
 		} else {
 			game_view.updateStatus("You cannot attack anymore.");
 			status_text = " Attack Phase Completed";
-			this.setPhaseDetails(name + " can End the turn now.");
-			this.setUpdateMessage("phase");
+			setPhaseDetails(name + " can End the turn now.");
+			setUpdateMessage("phase");
 			setChanged();
 			notifyObservers(this);
 			game_view.updateStatus(status_text);
@@ -568,12 +568,13 @@ public class Player extends Observable {
 		}
 
 		if (fortify_successful) {
-			this.setCanFortify(false);
+			setCanAttack(false);
+			setCanFortify(false);
 			status_text = " Fortification Phase Completed";
 			history_text = "\n" + name + " fortified " + country_to.getCountryName() + " with " + armies
 					+ " armies from " + country_from.getCountryName();
-			this.setPhaseDetails(name + " can End the turn now.");
-			this.setUpdateMessage("phase");
+			setPhaseDetails(name + " can End the turn now.");
+			setUpdateMessage("phase");
 			setChanged();
 			notifyObservers(this);
 			game_view.updateView(history_text);
@@ -702,8 +703,8 @@ public class Player extends Observable {
 		}
 		if (!can_attack && !can_fortify) {
 			status_text = " Attack Phase Completed";
-			this.setPhaseDetails(name + " can End the turn now.");
-			this.setUpdateMessage("phase");
+			setPhaseDetails(name + " can End the turn now.");
+			setUpdateMessage("phase");
 			setChanged();
 			notifyObservers(this);
 			game_view.updateStatus(status_text);
