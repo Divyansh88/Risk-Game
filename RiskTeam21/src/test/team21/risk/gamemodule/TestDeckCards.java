@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test.team21.elements;
+package test.team21.risk.gamemodule;
 
 import static org.junit.Assert.*;
 
@@ -11,8 +11,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import app.team21.risk.elements.Dice;
 import app.team21.risk.elements.Player;
+import app.team21.risk.gamemodule.Deck;
 import app.team21.risk.gamemodule.GamePlay;
 import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
@@ -23,7 +23,8 @@ import app.team21.risk.views.GameScreen;
  * @author Yash Sheth
  *
  */
-public class TestExchangeArmies {
+public class TestDeckCards{
+
 	private MapElements elements;
     private MapLoader loader;
     private GamePlay game_play;
@@ -52,20 +53,13 @@ public class TestExchangeArmies {
 		
     }
     
-    @Test
-    public void testMaxDiceDefender(){
-    	player1.setTradedSet(5);
-    	int result=player1.getExchangeArmies();
-    	assertEquals(15,result);
-    	
-    	player1.setTradedSet(0);
-    	result=player1.getExchangeArmies();
-    	assertEquals(4,result);
-    	
-    	player1.setTradedSet(7);
-    	result=player1.getExchangeArmies();
-    	assertEquals(25,result);
-    }
-    
 
+	/**
+     * This method checks whether the deck cards has populated correctly
+     */
+    @Test
+    public void checkDeckCardsPopulated() {
+        Deck deck = new Deck(elements.getCountries());
+        assertEquals(elements.getCountries().size(), deck.deck.size());
+    }
 }

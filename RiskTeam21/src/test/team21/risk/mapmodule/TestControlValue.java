@@ -1,7 +1,8 @@
 /**
  * 
  */
-package test.team21.mapmodule;
+package test.team21.risk.mapmodule;
+
 
 import static org.junit.Assert.*;
 
@@ -15,7 +16,7 @@ import app.team21.risk.mapmodule.MapLoader;
  * @author Mahy Salama and Yash Sheth
  *
  */
-public class TestTerritoriesTag {
+public class TestControlValue{
 	private MapElements elements;//gamemap
     private MapLoader loader;//mapmodel
     private String filePath;
@@ -28,11 +29,10 @@ public class TestTerritoriesTag {
     }
     
     @Test
-    public void testTerritoriesTag() throws Exception {
+    public void testControlValue() throws Exception {
     	System.out.println("**************************************\n");
-		System.out.println("TestTerritoriesTag");
-    	elements = loader.readMapFile(filePath + "no_territory_tag.map");
+		System.out.println("TestControlValue");
+    	elements = loader.readMapFile(filePath + "test_control_values.map");
         assertEquals(false, elements.isCorrectMap());
     }
-
 }

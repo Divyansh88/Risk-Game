@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test.team21.gamemodule;
+package test.team21.risk.gamemodule;
 
 import static org.junit.Assert.*;
 

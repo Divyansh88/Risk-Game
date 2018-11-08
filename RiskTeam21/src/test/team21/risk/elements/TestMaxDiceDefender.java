@@ -1,8 +1,7 @@
 /**
  * 
  */
-package test.team21.elements;
-
+package test.team21.risk.elements;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -11,8 +10,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import app.team21.risk.elements.Dice;
 import app.team21.risk.elements.Player;
-import app.team21.risk.gamemodule.Deck;
 import app.team21.risk.gamemodule.GamePlay;
 import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
@@ -23,8 +22,7 @@ import app.team21.risk.views.GameScreen;
  * @author Yash Sheth
  *
  */
-public class TestDeckCards{
-
+public class TestMaxDiceDefender {
 	private MapElements elements;
     private MapLoader loader;
     private GamePlay game_play;
@@ -53,13 +51,16 @@ public class TestDeckCards{
 		
     }
     
-
-	/**
-     * This method checks whether the deck cards has populated correctly
-     */
     @Test
-    public void checkDeckCardsPopulated() {
-        Deck deck = new Deck(elements.getCountries());
-        assertEquals(elements.getCountries().size(), deck.deck.size());
+    public void testMaxDiceDefender(){
+    	player1.getAssignedCountries().get(0).setCurrentArmiesDeployed(1);
+    	int result=player1.getMaxDiceDefender(player1.getAssignedCountries().get(0));
+    	assertEquals(1,result);
+    	
+    	player1.getAssignedCountries().get(0).setCurrentArmiesDeployed(2);
+    	result=player1.getMaxDiceDefender(player1.getAssignedCountries().get(0));
+    	assertEquals(2,result);
     }
+    
+
 }

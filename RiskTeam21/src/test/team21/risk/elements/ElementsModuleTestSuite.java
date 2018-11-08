@@ -1,4 +1,4 @@
-package test.team21.elements;
+package test.team21.risk.elements;
 
 /**
  * @author Yash Sheth

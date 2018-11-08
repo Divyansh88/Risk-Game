@@ -1,8 +1,7 @@
 /**
  * 
  */
-package test.team21.elements;
-
+package test.team21.risk.elements;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import app.team21.risk.views.GameScreen;
  * @author Yash Sheth
  *
  */
-public class TestMaxDiceAttacker {
+public class TestExchangeArmies {
 	private MapElements elements;
     private MapLoader loader;
     private GamePlay game_play;
@@ -54,17 +53,17 @@ public class TestMaxDiceAttacker {
     
     @Test
     public void testMaxDiceDefender(){
-    	player1.getAssignedCountries().get(0).setCurrentArmiesDeployed(2);
-    	int result=player1.getMaxDiceAttacker(player1.getAssignedCountries().get(0));
-    	assertEquals(1,result);
+    	player1.setTradedSet(5);
+    	int result=player1.getExchangeArmies();
+    	assertEquals(15,result);
     	
-    	player1.getAssignedCountries().get(0).setCurrentArmiesDeployed(3);
-    	result=player1.getMaxDiceAttacker(player1.getAssignedCountries().get(0));
-    	assertEquals(2,result);
+    	player1.setTradedSet(0);
+    	result=player1.getExchangeArmies();
+    	assertEquals(4,result);
     	
-    	player1.getAssignedCountries().get(0).setCurrentArmiesDeployed(4);
-    	result=player1.getMaxDiceAttacker(player1.getAssignedCountries().get(0));
-    	assertEquals(3,result);
+    	player1.setTradedSet(7);
+    	result=player1.getExchangeArmies();
+    	assertEquals(25,result);
     }
     
 

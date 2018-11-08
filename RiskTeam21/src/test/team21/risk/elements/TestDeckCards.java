@@ -1,8 +1,7 @@
 /**
  * 
  */
-package test.team21.gamemodule;
-
+package test.team21.risk.elements;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;

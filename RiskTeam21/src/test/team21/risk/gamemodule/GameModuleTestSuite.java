@@ -1,4 +1,4 @@
-package test.team21.gamemodule;
+package test.team21.risk.gamemodule;
 
 /**
  * @author Yash Sheth

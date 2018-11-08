@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test.team21.mapmodule;
+package test.team21.risk.mapmodule;
 
 
 import static org.junit.Assert.*;

@@ -1,8 +1,7 @@
 /**
  * 
  */
-package test.team21.elements;
-
+package test.team21.risk.elements;
 import static org.junit.Assert.*;
 
 import org.junit.Test;

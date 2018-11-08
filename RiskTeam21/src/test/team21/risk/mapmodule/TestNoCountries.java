@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test.team21.mapmodule;
+package test.team21.risk.mapmodule;
 
 import static org.junit.Assert.*;
 
@@ -15,7 +15,7 @@ import app.team21.risk.mapmodule.MapLoader;
  * @author Yash Sheth
  *
  */
-public class TestNoContinents {
+public class TestNoCountries {
 
 	private MapElements elements;//gamemap
     private MapLoader loader;//mapmodel
@@ -29,10 +29,10 @@ public class TestNoContinents {
     }
     
     @Test
-    public void testNoContinents() throws Exception {
+    public void testNoCountries() throws Exception {
     	System.out.println("**************************************\n");
-		System.out.println("TestNoContinents");
-    	elements = loader.readMapFile(filePath + "no_continents.map");
+		System.out.println("TestNoCountries");
+    	elements = loader.readMapFile(filePath + "no_countries.map");
         assertEquals(false, elements.isCorrectMap());
     }
 

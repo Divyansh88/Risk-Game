@@ -1,4 +1,4 @@
-package test.team21.mapmodule;
+package test.team21.risk.mapmodule;
 
 /**
  * @author Yash Sheth
