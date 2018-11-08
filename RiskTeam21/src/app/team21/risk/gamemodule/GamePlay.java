@@ -13,7 +13,7 @@ import app.team21.risk.mapmodule.MapLoader;
 import app.team21.risk.views.GameScreen;
 
 /**
- * Last Updated on : 06/11/2018, Tuesday 
+ * Last Updated on : 08/11/2018, Thursday 
  * GamePlay class that contains all the game play logic.
  * 
  * @author Yash Sheth and Samip Thakkar
@@ -22,7 +22,7 @@ import app.team21.risk.views.GameScreen;
 public class GamePlay extends Observable{
 	
 	static Player current_player;
-	static int playerCount;
+	static int player_count;
 	static StringBuilder tb = new StringBuilder();
 	
 	
@@ -35,7 +35,7 @@ public class GamePlay extends Observable{
 	 */
 	public static String distributeCountries(List<Player> players,List<Country> countries){
 		tb.append("-----USER STARTS PUTTING ARMIES-----\n\n");
-		playerCount=players.size();
+		player_count=players.size();
 		Collections.shuffle(countries);
 		StringBuilder sb=new StringBuilder();
 		
@@ -125,8 +125,8 @@ public class GamePlay extends Observable{
 	 * @param player_list list of player
 	 */
 	public static void setInitialArmies(List<Player> player_list){
-		int armies=0;
-		int num_of_players=player_list.size();
+		int armies = 0;
+		int num_of_players = player_list.size();
 		
 		switch (num_of_players){
 		case 2:
@@ -164,17 +164,17 @@ public class GamePlay extends Observable{
      */
     public String placeInitialArmiesInRR(List<Player> player_list) {
         int j = 0;
-        int playersLeftForAssign = player_list.size();
-        while (playersLeftForAssign > 0){
-            if (player_list.get(j % playerCount).getInitialArmies() > 0) {
-                List<Country> playerCountryList = player_list.get(j % playerCount).getAssignedCountries();
-                Country randomCountry = playerCountryList.get(new Random().nextInt(playerCountryList.size()));
+        int players_left_for_assign = player_list.size();
+        while (players_left_for_assign > 0){
+            if (player_list.get(j % player_count).getInitialArmies() > 0) {
+                List<Country> player_countryList = player_list.get(j % player_count).getAssignedCountries();
+                Country randomCountry = player_countryList.get(new Random().nextInt(player_countryList.size()));
                 randomCountry.addArmy(1);
-                player_list.get(j % playerCount).setInitialArmies(player_list.get(j % playerCount).getInitialArmies()- 1);
-                tb.append(player_list.get(j % playerCount).getName() + " put 1 army on "+ randomCountry.getCountryName()+".\n");
+                player_list.get(j % player_count).setInitialArmies(player_list.get(j % player_count).getInitialArmies()- 1);
+                tb.append(player_list.get(j % player_count).getName() + " put 1 army on "+ randomCountry.getCountryName()+".\n");
             } 
             else{
-                playersLeftForAssign--;
+                players_left_for_assign--;
             }
             j++;
         }

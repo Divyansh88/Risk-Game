@@ -22,9 +22,9 @@ public class Deck{
     private String input;
     private String name;
 
-    private String[] typesArray;
+    private String[] types_array;
     public ArrayList<Card> deck;
-    private Card drawCard;
+    private Card draw_card;
 
    /**
     * Creates all cards, one for each territory. Each card has either a type of Infantry, Cavalry, or Artillery.
@@ -36,13 +36,13 @@ public class Deck{
         Collections.shuffle(countries);
 
         //Types of cards
-        typesArray = new String[]{"Infantry", "Cavalry", "Artillery"};
+        types_array = new String[]{"Infantry", "Cavalry", "Artillery"};
 
         deck = new ArrayList<Card>();
 
         for (i = 0; i < countries.size(); i++) {
             // Add new cards to deck
-            deck.add(new Card(typesArray[i % 3], countries.get(i)));
+            deck.add(new Card(types_array[i % 3], countries.get(i)));
            
         }
         Collections.shuffle(deck);
@@ -62,10 +62,10 @@ public class Deck{
      */
     public Card draw() {
 
-        drawCard = deck.get(0);
+        draw_card = deck.get(0);
         deck.remove(0);
 
-        return drawCard;
+        return draw_card;
     }
 
    /**
