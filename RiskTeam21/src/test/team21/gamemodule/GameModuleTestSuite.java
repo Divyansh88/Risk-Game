@@ -13,7 +13,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 
 	TestReinforceArmies.class, 
-	TestValidMap.class,  	
+	TestValidMap.class,
+	TestDeckCards.class
 })
 
 public class GameModuleTestSuite {
