@@ -1,6 +1,3 @@
-/**
- * 
- */
 package test.team21.risk.elements;
 import static org.junit.Assert.*;
 
@@ -10,8 +7,11 @@ import app.team21.risk.elements.Dice;
 
 
 /**
- * @author Yash Sheth
+ * Last Updated on : 06/11/2018, Tuesday
+ * This is a test class for roll dice.
  *
+ * @author Yash Sheth
+ * @version 2.0.0
  */
 public class TestRollDice {
 
