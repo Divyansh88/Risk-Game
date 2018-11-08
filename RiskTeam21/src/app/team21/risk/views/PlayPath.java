@@ -22,19 +22,18 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- * Last Updated on: 18-10-2018, Thursday 
+ * Last Updated on: 07/11/2018, Wednesday 
  * This class file handles play path screen.
  * 
  * @author Yash Sheth and Samip Thakkar
- * @version 1.0.0
+ * @version 2.0.0
  */
 public class PlayPath extends StartGame{
 	JPanel choose_player = new JPanel();
 	JComboBox maps = new JComboBox();
 	MapLoader map_loader=new MapLoader();
 	String browse_file_path;
-	//String file_path="C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
-	String file_path="/Users/samip/git/RiskTeam21_/RiskTeam21/src/app/team21/risk/maps/";
+	String file_path="C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
 	MapElements map_elements;
 	JButton btn_back = new JButton("Back"); 
 	JButton btn_home = new JButton("Home");
@@ -45,8 +44,6 @@ public class PlayPath extends StartGame{
 	 * This method will ask for select from existing maps or browse other maps to play the game.
 	 */
 	public void playButton(){
-		
-		
 		JButton map_selected, browse_map;
 		JPanel main_panel,choose_map;
 		main_panel= new JPanel();
@@ -147,15 +144,12 @@ public class PlayPath extends StartGame{
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-		
-		
 	}
 	
 	/**
 	 * This method will fill comboboxes.
 	 */
 	public void fillCombobox(){
-		
 		File dir = new File("C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/");
         FilenameFilter filter = new FilenameFilter()
         {
@@ -194,25 +188,23 @@ public class PlayPath extends StartGame{
 		
 		players = new JComboBox<Integer>();
 		int no_countries = map_elements.getCountries().size();
-		switch (no_countries) {
-		case 2:
+		if(no_countries==2){
 			players.addItem("2");
-			break;
-		case 3:
+		}
+		else if(no_countries==3){
 			players.addItem("2");
 			players.addItem("3");
-			break;
-		case 4:
+		}
+		else if(no_countries==4){
 			players.addItem("2");
 			players.addItem("3");
 			players.addItem("4");
-			break;
-		default:
+		}
+		else {
 			players.addItem("2");
 			players.addItem("3");
 			players.addItem("4");
 			players.addItem("5");
-			break;
 		}
 		
 		
@@ -231,6 +223,9 @@ public class PlayPath extends StartGame{
 				
 			}
 		});
+//		choose_player.add(choose_number_of_player);
+//		choose_player.add(players);
+//		choose_player.add(lets_go);
 		test.add(choose_number_of_player);
 		test.add(players);
 		test.add(lets_go);
@@ -260,7 +255,6 @@ public class PlayPath extends StartGame{
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-
 	}
 }
 
