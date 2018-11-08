@@ -31,9 +31,9 @@ public class GameScreen implements Observer {
 	JLabel lbl_game_history, lbl_select_army, lbl_select_country, lbl_choose_player, lbl_select_from_country,
 	lbl_select_to_country, lbl_game_map, lbl_domination_panel, lbl_map_finder, lbl_select_mode;
 	JTextField txt_armies;
-	JPanel master_panel, game_history_panel, mr_panel, turn_panel, second_master_panel, phase_screen_panel,
+	JPanel master_panel, map_representation_panel, gh_panel, turn_panel, second_master_panel, phase_screen_panel,
 	action_panel;
-	JPanel reinforcement_panel, attack_panel, fortify_panel, mr_master_panel, status_panel, endturn_panel,
+	JPanel reinforcement_panel, attack_panel, fortify_panel, game_history_panel, status_panel, endturn_panel,
 	domination_master_panel, domination_panel, map_finder_panel, select_country_panel, result_panel;
 	JTextArea text_area_domination, text_area_result,text_area_select_country;
 	JScrollPane scroll_panel, scroll_panel1, scroll_panel2, scroll_panel3, scroll_panel4, scroll_panel5;
@@ -95,9 +95,9 @@ public class GameScreen implements Observer {
 		master_panel = new JPanel();
 		master_panel.setPreferredSize(new Dimension(600, 600));
 		master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		game_history_panel = new JPanel();
-		game_history_panel.setPreferredSize(new Dimension(400, 600));
-		game_history_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		map_representation_panel = new JPanel();
+		map_representation_panel.setPreferredSize(new Dimension(400, 600));
+		map_representation_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		domination_master_panel = new JPanel();
 		domination_master_panel.setPreferredSize(new Dimension(300, 600));
@@ -184,12 +184,12 @@ public class GameScreen implements Observer {
 		status_panel.add(status_label);
 		status_panel.setPreferredSize(new Dimension(600, 30));
 		status_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		mr_master_panel = new JPanel();
-		mr_master_panel.setPreferredSize(new Dimension(600, 350));
-		mr_master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		mr_panel = new JPanel();
-		mr_panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		mr_panel.add(scroll_panel1);
+		game_history_panel = new JPanel();
+		game_history_panel.setPreferredSize(new Dimension(600, 350));
+		game_history_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		gh_panel = new JPanel();
+		gh_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		gh_panel.add(scroll_panel1);
 
 		phase_screen_panel.setPreferredSize(new Dimension(440, 260));
 		phase_screen_panel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -213,18 +213,18 @@ public class GameScreen implements Observer {
 		btn_end_turn.setVisible(true);
 
 		test.add(master_panel, BorderLayout.WEST);
-		test.add(game_history_panel, BorderLayout.EAST);
+		test.add(map_representation_panel, BorderLayout.EAST);
 		master_panel.add(turn_panel, BorderLayout.PAGE_START);
 		master_panel.add(second_master_panel, BorderLayout.NORTH);
 		master_panel.add(status_panel, BorderLayout.CENTER);
-		mr_master_panel.add(lbl_game_history, BorderLayout.PAGE_START);
-		mr_master_panel.add(mr_panel, BorderLayout.PAGE_END);
-		master_panel.add(mr_master_panel, BorderLayout.SOUTH);
+		game_history_panel.add(lbl_game_history, BorderLayout.PAGE_START);
+		game_history_panel.add(gh_panel, BorderLayout.PAGE_END);
+		master_panel.add(game_history_panel, BorderLayout.SOUTH);
 
 		second_master_panel.add(phase_screen_panel, BorderLayout.WEST);
 		second_master_panel.add(action_panel, BorderLayout.EAST);
-		game_history_panel.add(lbl_game_map, BorderLayout.NORTH);
-		game_history_panel.add(scroll_panel, BorderLayout.SOUTH);
+		map_representation_panel.add(lbl_game_map, BorderLayout.NORTH);
+		map_representation_panel.add(scroll_panel, BorderLayout.SOUTH);
 		action_panel.add(btn_reinforcement);
 		action_panel.add(btn_attack);
 		action_panel.add(btn_fortify);
@@ -245,7 +245,7 @@ public class GameScreen implements Observer {
 				if (current_player.isCanAttack())
 					AttackButton(current_player, map_elements);
 				else
-					status_label.setText("\nSorry. You cannot attack right now. Reinforce First");
+					status_label.setText("\nSorry. You cannot attack right now.");
 			}
 		});
 
