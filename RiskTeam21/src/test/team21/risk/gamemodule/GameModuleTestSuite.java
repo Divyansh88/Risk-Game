@@ -1,9 +1,5 @@
 package test.team21.risk.gamemodule;
 
-/**
- * @author Yash Sheth
- *
- */
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -17,6 +13,13 @@ import org.junit.runners.Suite;
 	TestDeckCards.class
 })
 
+/**
+ * Last Updated on : 06/11/2018, Tuesday
+ * This is a test suit class for gamemodule.
+ *
+ * @author Yash Sheth
+ * @version 2.0.0
+ */
 public class GameModuleTestSuite {
 
 }

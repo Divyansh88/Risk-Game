@@ -1,6 +1,3 @@
-/**
- * 
- */
 package test.team21.risk.gamemodule;
 
 import static org.junit.Assert.*;
@@ -19,8 +16,11 @@ import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
 
 /**
- * @author Yash Sheth
+ * Last Updated on : 06/11/2018, Tuesday
+ * This is a test class for reinforce armies.
  *
+ * @author Yash Sheth
+ * @version 2.0.0
  */
 public class TestReinforceArmies {
 
@@ -30,6 +30,10 @@ public class TestReinforceArmies {
     private Player player1,player2;
     String file_path="C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/World.map";
 	
+    /**
+     * This is method initializes important objects and variables used in the test.
+     * This method is called before test runs.
+     */
     @Before
     public void init() {
     	loader = new MapLoader();
@@ -60,6 +64,11 @@ public class TestReinforceArmies {
     	
     }
     
+    /**
+     * This method checks reinforcement of armies.
+     * 
+     * @throws Exception
+     */
     @Test
     public void testReinforceArmies() throws Exception {
         int result= game_play.getReinforcementArmies(player1, elements);

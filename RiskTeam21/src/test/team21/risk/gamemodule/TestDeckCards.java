@@ -1,6 +1,3 @@
-/**
- * 
- */
 package test.team21.risk.gamemodule;
 
 import static org.junit.Assert.*;
@@ -20,8 +17,11 @@ import app.team21.risk.views.GameScreen;
 
 
 /**
- * @author Yash Sheth
+ * Last Updated on : 06/11/2018, Tuesday
+ * This is a test class for deck card.
  *
+ * @author Yash Sheth
+ * @version 2.0.0
  */
 public class TestDeckCards{
 
@@ -32,6 +32,10 @@ public class TestDeckCards{
     Player player1,player2; 
     String file_path="C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/India.map";
     
+    /**
+     * This is method initializes important objects and variables used in the test.
+     * This method is called before test runs.
+     */
     @Before
     public void init() {
     	loader = new MapLoader();
@@ -55,7 +59,7 @@ public class TestDeckCards{
     
 
 	/**
-     * This method checks whether the deck cards has populated correctly
+     * This method checks whether the deck cards has populated correctly.
      */
     @Test
     public void checkDeckCardsPopulated() {
