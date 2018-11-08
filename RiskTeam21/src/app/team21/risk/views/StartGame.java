@@ -18,11 +18,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * Last Updated on: 18-10-2018, Thursday 
+ * Last Updated on: 07/11/2018, Wednesday 
  * This class file handles start game screen i.e. home screen.
  * 
  * @author Yash Sheth and Divyansh Thakar
- * @version 1.0.0
+ * @version 2.0.0
  */
 public class StartGame {
 	private static JFrame main_frame;
@@ -34,7 +34,9 @@ public class StartGame {
 		 * @param args default arguments
 		 */
 		public static void main(String [] args){
-			createStartScreen();	
+			
+			createStartScreen();
+			
 		}
 		
 		/**
@@ -98,13 +100,16 @@ public class StartGame {
 			
 			JPanel start_panel= new JPanel();
 			start_panel.setLayout(new BorderLayout());
-			start_panel.setLayout(new GridLayout());	
+			start_panel.setLayout(new GridLayout());
+			
 			start_panel.add(play_button,BorderLayout.CENTER);
 			start_panel.add(map_button,BorderLayout.CENTER);
 			start_panel.add(rules_button,BorderLayout.CENTER);
 			start_panel.add(quit_button,BorderLayout.CENTER);
+			
 			main_frame.getContentPane().setLayout(new GridBagLayout());
 			GridBagConstraints gbc = new GridBagConstraints();
+			
 			main_frame.add(start_panel,gbc);
 			main_frame.setVisible(true);
 			main_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -132,7 +137,8 @@ public class StartGame {
 		public  Frame getFrame(){
 			main_frame.getContentPane().removeAll();
 			main_frame.repaint();
-			return main_frame;		
+			return main_frame;
+			
 		}
 		
 		/**
