@@ -8,9 +8,9 @@ package test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import test.team21.elements.*;
-import test.team21.mapmodule.*;
-import test.team21.gamemodule.*;
+import test.team21.risk.elements.*;
+import test.team21.risk.mapmodule.*;
+import test.team21.risk.gamemodule.*;
 
 @RunWith(Suite.class)
 
