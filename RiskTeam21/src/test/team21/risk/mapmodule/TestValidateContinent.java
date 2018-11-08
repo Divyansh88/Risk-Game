@@ -1,6 +1,3 @@
-/**
- * 
- */
 package test.team21.risk.mapmodule;
 
 import static org.junit.Assert.*;
@@ -18,8 +15,11 @@ import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
 
 /**
- * @author Harsh Vahani and Yash Sheth
+ * Last Updated on : 06/11/2018, Tuesday
+ * This is a test class for valid continent.
  *
+ * @author Harsh Vaghani and Yash Sheth
+ * @version 2.0.0
  */
 public class TestValidateContinent {
 	private MapElements elements;
@@ -27,6 +27,10 @@ public class TestValidateContinent {
     private String file_path="C:/Users/yashe/OneDrive/Documents/GitHub/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/World.map";    
     private MapEditor editor;    
     
+    /**
+     * This is method initializes important objects and variables used in the test.
+     * This method is called before test runs.
+     */
     @Before
     public void init() {
     	loader = new MapLoader();
@@ -38,6 +42,11 @@ public class TestValidateContinent {
     	editor = new MapEditor();
     }
     
+    /**
+     * This method checks continent is valid continent or not.
+     * 
+     * @throws Exception
+     */
     @Test
     public void testValidMap() throws Exception {
     	System.out.println("**************************************\n");

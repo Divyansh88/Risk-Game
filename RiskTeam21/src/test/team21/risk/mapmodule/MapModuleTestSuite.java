@@ -1,10 +1,5 @@
 package test.team21.risk.mapmodule;
 
-/**
- * @author Yash Sheth
- *
- */
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -23,6 +18,13 @@ import org.junit.runners.Suite;
 	TestValidateCountry.class 	
 })
 
+/**
+ * Last Updated on : 06/11/2018, Tuesday
+ * This is a test suit class for mapmodule.
+ *
+ * @author Yash Sheth
+ * @version 2.0.0
+ */
 public class MapModuleTestSuite {
 
 }
