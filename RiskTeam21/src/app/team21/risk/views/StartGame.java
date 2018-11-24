@@ -90,7 +90,7 @@ public class StartGame {
 				public void actionPerformed(ActionEvent e) {
 					
 					try {
-						File myFile = new File("Risk.pdf");
+						File myFile = new File("RiskTeam21/Risk.pdf");
 				        Desktop.getDesktop().open(myFile);
 					} catch (IOException e1) {
 						e1.printStackTrace();

@@ -33,7 +33,7 @@ public class PlayPath extends StartGame{
 	JComboBox maps = new JComboBox();
 	MapLoader map_loader=new MapLoader();
 	String browse_file_path;
-	String file_path="C:/Users/yashe/git/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
+	String file_path="RiskTeam21/src/app/team21/risk/maps/";
 	MapElements map_elements;
 	JButton btn_back = new JButton("Back"); 
 	JButton btn_home = new JButton("Home");
@@ -150,7 +150,7 @@ public class PlayPath extends StartGame{
 	 * This method will fill comboboxes.
 	 */
 	public void fillCombobox(){
-		File dir = new File("C:/Users/yashe/git/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/");
+		File dir = new File("RiskTeam21/src/app/team21/risk/maps/");
         FilenameFilter filter = new FilenameFilter()
         {
         	public boolean accept(File dir, String name)

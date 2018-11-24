@@ -37,7 +37,7 @@ public class MapPath {
 	JScrollPane scroll_panel_mr,scroll_pane_neighbours;
 	JComboBox combobox_continents,combobox_countries,combobox_neighbours;
 	String browse_file_path;
-	String file_path = "C:/Users/yashe/git/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/";
+	String file_path = "RiskTeam21/src/app/team21/risk/maps/";
 	MapLoader map_loader = new MapLoader();
 	MapElements map_elements;
 	JButton btn_back = new JButton("Back"); 
@@ -662,7 +662,7 @@ public class MapPath {
 	 * This method will fill comboboxes.
 	 */
 	public void fillCombobox(){
-		File dir = new File("C:/Users/yashe/git/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/");
+		File dir = new File("RiskTeam21/src/app/team21/risk/maps/");
 	    FilenameFilter filter = new FilenameFilter()
 	    {
 	    	public boolean accept(File dir, String name)
