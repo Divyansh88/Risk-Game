@@ -131,22 +131,24 @@ public class MapLoader {
 				map_elements.setErrorMessage("Invalid number of components.");
 				return map_elements;
 			}
-
-			if (is_map_present && is_continent_present && is_territory_present && map_elements.isCorrectMap()) {
-				System.out.println("Valid File.\nMap Continents and Territories tags are present");
-
-			} 
-			else {
-				System.out.println("Invalid Map File.\nMap or Continents or Territories tags not present");
+			checkControlValue(map_elements);
+			if (!is_map_present && !is_continent_present && !is_territory_present) {
 				map_elements.setCorrectMap(false);
 				map_elements.setErrorMessage("Map or Continents or Territories tags not present");
+			}
+			
+			if(map_elements.isCorrectMap()){
+				System.out.println("Valid File.\nMap Continents and Territories tags are present");
+			}
+			else{
+				System.out.println("\n\nInvalid Map File.\n"+map_elements.getErrorMessage());
 				return map_elements;
 			}
 
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
-		checkControlValue(map_elements);
+		
 		return map_elements;
 	}
 
@@ -235,6 +237,7 @@ public class MapLoader {
 						continent_list.add(continents);	
 					}
 					else{
+						map_elements.setErrorMessage("Continent property empty.");
 						map_elements.setCorrectMap(false);
 						break;
 					}

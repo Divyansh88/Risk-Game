@@ -213,11 +213,12 @@ public class PlayPath extends StartGame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				List<Player> player_list = new ArrayList<Player>();
-				for(int i=1;i<=Integer.valueOf(players.getSelectedItem().toString());i++){
-					Player p= new Player("Player "+i);
+				for(int i=1;i<=Integer.valueOf(players.getSelectedItem().toString())-1;i++){
+					Player p= new Player("Player "+i,false,"Human");
 					player_list.add(p);
 				}
-				
+				Player p= new Player("Mr.BOT",true,"aggressive");
+				player_list.add(p);
 				GameScreen gs = new GameScreen();
 				gs.playerContinueButton(map_elements,player_list,1);
 				

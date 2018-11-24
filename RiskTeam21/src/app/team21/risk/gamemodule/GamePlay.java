@@ -74,7 +74,7 @@ public class GamePlay extends Observable{
 	 * @param turn_value turn value
 	 * @return current player
 	 */
-	public Player getCurrentPlayer(List<Player> player_list,int turn_value){
+	public static Player getCurrentPlayer(List<Player> player_list,int turn_value){
 		for(Player p:player_list){
 			if(turn_value==p.getTurnValue()){
 				current_player=p;

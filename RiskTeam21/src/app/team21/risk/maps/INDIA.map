@@ -5,12 +5,14 @@ name=INDIA
 [Continents]
 America=5
 India=7
+Africa=9
 
 [Territories]
-New York,55,70,America,Florida,Gujarat,British Columbia
+New York,55,70,America,Florida,Gujarat,British Columbia,Congo
 Gujarat,65,80,India,New York,Maharashtra,Punjab
 Punjab,75,90,India,Gujarat,British Columbia
 British Columbia,85,100,America,Punjab,Arizona,New York
 Maharashtra,95,110,India,Gujarat,Florida
 Florida,105,120,America,New York,Maharashtra,Arizona
 Arizona,115,130,America,Florida,British Columbia
+Congo,125,140,Africa,New York

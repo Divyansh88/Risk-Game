@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.team21.risk.elements.*;
+
 /**
  * Last Updated on: 06/11/2018, Tuesday 
  * This class contains methods for validation and updation of map representation
@@ -305,5 +306,4 @@ public class MapElements {
 		}
 		return	sb.toString();
 	}
-
 }

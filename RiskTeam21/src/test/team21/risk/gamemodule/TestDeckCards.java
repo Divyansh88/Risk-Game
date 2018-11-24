@@ -41,8 +41,8 @@ public class TestDeckCards{
     	loader = new MapLoader();
     	elements = loader.readMapFile(file_path);
     	
-    	player1 = new Player("Player 1");
-    	player2 = new Player("Player 2");
+    	player1 = new Player("Player 1",false,"human");
+    	player2 = new Player("Player 2",false,"human");
     	
     	game_play = new GamePlay();
     	game_view = new GameScreen();

@@ -51,10 +51,24 @@ public class GameScreen implements Observer {
 	public List<Player> player_list;
 	public int extra_armies;
 	GamePlay game_play;
-	Player current_player;
+	public Player current_player;
 	int turn_value;
-	GameScreen view;
-	Deck deck;
+	public GameScreen view;
+	public Deck deck;
+
+	/**
+	 * @return the player_list
+	 */
+	public List<Player> getPlayerList() {
+		return player_list;
+	}
+
+	/**
+	 * @param player_list the player_list to set
+	 */
+	public void setPlayerList(List<Player> player_list) {
+		this.player_list = player_list;
+	}
 
 	/**
 	 * This method will create view of main game screen and updates the value of
@@ -305,7 +319,7 @@ public class GameScreen implements Observer {
 		current_player = game_play.getCurrentPlayer(player_list, turn_value);
 		current_player.addObserver(this);
 		view = this;
-		current_player.startTurn(player_list, map_elements, view);
+		current_player.startTurn(current_player,player_list, map_elements, view);
 	}
 
 	/**
@@ -612,7 +626,7 @@ public class GameScreen implements Observer {
 
 		endturn_panel.revalidate();
 		endturn_panel.repaint();
-
+		view=this;
 		btn_endturn_ep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (current_player.isCanGetCard()) {
@@ -628,7 +642,8 @@ public class GameScreen implements Observer {
 				turn_value = GamePlay.endTurn(current_player, player_list);
 				current_player = game_play.getCurrentPlayer(player_list, turn_value);
 				current_player.addObserver(view);
-				current_player.startTurn(player_list, map_elements, view);
+				current_player.startTurn(current_player,player_list, map_elements, view);
+//				current_player.endTurn(view);
 			}
 		});
 
@@ -706,15 +721,16 @@ public class GameScreen implements Observer {
 
 			for (Player p : player_list) {
 				double domination_of_player = p.getAssignedCountries().size() / totalNumberOfCountries;
-				int total_armies = 0;
+//				int total_armies = 0;
 				int continents_captured = 0;
 				domination_of_player *= 100;
 				p.setDomination(Double.valueOf(df.format(domination_of_player)));
 				domination_details.append(p.getName()).append(" ").append("\n");
-				for (Country c : p.getAssignedCountries()) {
-					total_armies += c.getCurrentArmiesDeployed();
-					//System.out.println(c.getCountryName()+c.getBelongsToPlayer().getName());
-				}
+//				for (Country c : p.getAssignedCountries()) {
+//					total_armies += c.getCurrentArmiesDeployed();
+//					//System.out.println(c.getCountryName()+c.getBelongsToPlayer().getName());
+//				}
+				int total_armies=p.getTotalArmies();//refactored
 				for (Continent c : map_elements.getContinentList()) {
 					List<Country> co = c.getMemberCountriesList();
 					boolean continent_control = true;
