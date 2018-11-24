@@ -45,7 +45,7 @@ public class StartGame {
 		public static void createStartScreen(){
 			
 			main_frame = new JFrame("Risk");
-			JButton play_button,map_button,rules_button,quit_button;
+			JButton play_button,map_button,rules_button,quit_button,tournament_button;
 			
 			play_button = new JButton("Play");
 			play_button.addActionListener(new ActionListener() {
@@ -67,6 +67,18 @@ public class StartGame {
 				
 					MapPath mp = new MapPath();
 					mp.mapButton();
+					
+				}
+			});
+			
+			tournament_button = new JButton("Tournament");
+			tournament_button.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					TournamentPath tp = new TournamentPath();
+					tp.tournamentButton();
 					
 				}
 			});
@@ -104,6 +116,7 @@ public class StartGame {
 			
 			start_panel.add(play_button,BorderLayout.CENTER);
 			start_panel.add(map_button,BorderLayout.CENTER);
+			start_panel.add(tournament_button,BorderLayout.CENTER);
 			start_panel.add(rules_button,BorderLayout.CENTER);
 			start_panel.add(quit_button,BorderLayout.CENTER);
 			
