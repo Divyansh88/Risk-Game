@@ -9,10 +9,14 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import app.team21.risk.mapmodule.MapElements;
 
 /**
  * @author Divyansh
@@ -27,6 +31,9 @@ public class TournamentPath {
 	JComboBox cb_player1,cb_player2,cb_player3,cb_player4,cb_games;
 	String[] types = {"Human","Aggressive","Benevolent","Random","Cheater"};
 	String[] games = {"1","2","3","4","5"};
+	String browse_file_path;
+	String file_path = "src/app/team21/risk/maps/";
+	MapElements map_elements;
 
 	public void tournamentButton() {
 		JPanel test = new JPanel();
@@ -79,10 +86,90 @@ public class TournamentPath {
 		player_type_panel.add(cb_player4);
 		
 		btn_map1 = new JButton("Map 1");
+		btn_map1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+			  	 
+	  	        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
+	  	        FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP file", "map");
+	  	        fileChooser.setFileFilter(filter);
+	  	        fileChooser.setAcceptAllFileFilterUsed(false);
+	  	 
+	  	        int bopen = fileChooser.showOpenDialog(null); //open the dialog box
+	  	        browse_file_path=fileChooser.getSelectedFile().toString();
+	  	        System.out.println(browse_file_path);
+			}
+		});
 		btn_map2 = new JButton("Map 2");
+		btn_map2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+			  	 
+	  	        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
+	  	        FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP file", "map");
+	  	        fileChooser.setFileFilter(filter);
+	  	        fileChooser.setAcceptAllFileFilterUsed(false);
+	  	 
+	  	        int bopen = fileChooser.showOpenDialog(null); //open the dialog box
+	  	        browse_file_path=fileChooser.getSelectedFile().toString();
+	  	        System.out.println(browse_file_path);
+			}
+		});
 		btn_map3 = new JButton("Map 3");
+		btn_map3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+			  	 
+	  	        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
+	  	        FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP file", "map");
+	  	        fileChooser.setFileFilter(filter);
+	  	        fileChooser.setAcceptAllFileFilterUsed(false);
+	  	 
+	  	        int bopen = fileChooser.showOpenDialog(null); //open the dialog box
+	  	        browse_file_path=fileChooser.getSelectedFile().toString();
+	  	        System.out.println(browse_file_path);
+			}
+		});
 		btn_map4 = new JButton("Map 4");
+		btn_map4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+			  	 
+	  	        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
+	  	        FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP file", "map");
+	  	        fileChooser.setFileFilter(filter);
+	  	        fileChooser.setAcceptAllFileFilterUsed(false);
+	  	 
+	  	        int bopen = fileChooser.showOpenDialog(null); //open the dialog box
+	  	        browse_file_path=fileChooser.getSelectedFile().toString();
+	  	        System.out.println(browse_file_path);
+			}
+		});
 		btn_map5 = new JButton("Map 5");
+		btn_map5.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+			  	 
+	  	        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
+	  	        FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP file", "map");
+	  	        fileChooser.setFileFilter(filter);
+	  	        fileChooser.setAcceptAllFileFilterUsed(false);
+	  	 
+	  	        int bopen = fileChooser.showOpenDialog(null); //open the dialog box
+	  	        browse_file_path=fileChooser.getSelectedFile().toString();
+	  	        System.out.println(browse_file_path);
+			}
+		});
 		
 		maps_panel.add(btn_map1);
 		maps_panel.add(btn_map2);
@@ -132,5 +219,4 @@ public class TournamentPath {
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 	}
-	
 }
