@@ -22,10 +22,10 @@ public class AggressiveBot implements PlayerStrategy {
     public int attacker_losses;
     public int defender_losses;
     public int attacker_dice;
-    public int defenderDice;
+    public int defender_dice;
 
-    public Integer[] attackerRolls;
-    public Integer[] defenderRolls;
+    public Integer[] attacker_rolls;
+    public Integer[] defender_rolls;
 
     public Random rng;
     
@@ -46,7 +46,7 @@ public class AggressiveBot implements PlayerStrategy {
         game_view.updateView("\n===Attack phase for aggressive player type begins===");
         current_player.updatePhaseDetails("Repaint");
         current_player.updatePhaseDetails("==Attack Phase==");
-        while (checkPlayerTurnCanContinue(countryA,countryB)) {
+        while (checkBotCanContinue(countryA,countryB)) {
 
             dice = new Dice();
 
@@ -54,7 +54,7 @@ public class AggressiveBot implements PlayerStrategy {
             attacker_losses = 0;
             defender_losses = 0;
             attacker_dice = 1;
-            defenderDice = 1;
+            defender_dice = 1;
 
             // Attacker chooses how many dice to roll
             rng = new Random();
@@ -69,49 +69,50 @@ public class AggressiveBot implements PlayerStrategy {
                 if(countryB.getBelongsToPlayer().isBot()){
                     rng = new Random();
                     if (countryB.getCurrentArmiesDeployed() <= 1) {
-                        defenderDice = 1;
+                        defender_dice = 1;
                     } else {
-                        defenderDice = rng.nextInt(1) + 1;
+                        defender_dice = rng.nextInt(1) + 1;
                     }
                 }
                 else {
-                    defenderDice = showDefenderDiceDialogBox(game_view, current_player);
+                    defender_dice = showDefenderDiceDialogBox(game_view, current_player);
                 }
             } catch (Exception e) {
                 // Error: defender inputs invalid number of dice
-                defenderDice = 1;
+                defender_dice = 1;
                 game_view.updateView("By default defender rolls 1 dice !");
             }
-            attackerRolls = Dice.rollDice(attacker_dice).getDiceResult();
-            defenderRolls = Dice.rollDice(defenderDice).getDiceResult();
+            attacker_rolls = Dice.rollDice(attacker_dice).getDiceResult();
+            defender_rolls = Dice.rollDice(defender_dice).getDiceResult();
 
-            System.out.println("\n"+countryA.getBelongsToPlayer().getName()+" (attacker) threw  dice(s) : ");
-            game_view.updateView("\n"+countryA.getBelongsToPlayer().getName()+" (attacker) threw  dice(s) : ");
-            for (int attackerRoll : attackerRolls) {
-                game_view.updateView(" " + attackerRoll + " ");
-            }
-            game_view.updateView("\n"+countryB.getBelongsToPlayer().getName()+" (defender) threw  dice(s) : ");
-            for (int defenderRoll : defenderRolls) {
-                game_view.updateView(" " + defenderRoll + " ");
-            }
+            StringBuilder sb = new StringBuilder();
+			sb.append(countryA.getBelongsToPlayer().getName() + " - Mr.Attacker Rolled ");
+			sb.append(System.getProperty("line.separator"));
+			for (int a : attacker_rolls) {
+				sb.append(a);
+				sb.append(System.getProperty("line.separator"));
+			}
+			sb.append(System.getProperty("line.separator"));
+			sb.append(countryB.getBelongsToPlayer().getName() + " - Mr.Defender Rolled ");
+			sb.append(System.getProperty("line.separator"));
+			for (int a : defender_rolls) {
+				sb.append(a);
+				sb.append(System.getProperty("line.separator"));
+			}
+
+			game_view.updateView(sb.toString());
             // Rolls arrays have been ordered in descending order. Index 0 = highest pair
-            compareDiceResultsAndCalculateLosses();
-            game_view.updateView("\n\n<COMBAT REPORT>");
-            System.out.println("before combat report");
-            updateArmiesBasedOnDiceResult(attacker_losses, defender_losses);
+            calculateLosses();
+            countryA.subtractArmy(attacker_losses);
+            countryB.subtractArmy(defender_losses);
 
-            game_view.updateView(countryA.getBelongsToPlayer().getName()+" (attacker) losses : " + attacker_losses + " army.");
-            game_view.updateView(countryB.getBelongsToPlayer().getName()+" (defender) losses : " + defender_losses + " army.");
-            game_view.updateView(countryA.getBelongsToPlayer().getName()+"'s (attacker) " +countryA.getCountryName() + " has now " + countryA.getCurrentArmiesDeployed());
-            game_view.updateView(countryB.getBelongsToPlayer().getName()+"'s (defender)"+ countryB.getCountryName() + " has now " + countryB.getCurrentArmiesDeployed());
-            game_view.updateView("\n\n");
-            current_player.updatePhaseDetails("<Based On Dice Results> \n");
-            current_player.updatePhaseDetails("Attacker Losses : " + attacker_losses + " army." + "\n" + "Defender Losses : " + defender_losses + " army.");
+            game_view.updateView(countryA.getCountryName() + " lost " + attacker_losses + " armies.");
+			game_view.updateView(countryB.getCountryName() + " lost " + defender_losses + " armies.");
 
             // If defending country loses all armies
             if (countryB.getCurrentArmiesDeployed() < 1) {
                 game_view.updateView(countryA.getBelongsToPlayer().getName() + " has defeated all of " + countryB.getBelongsToPlayer().getName() + "'s armies in " + country2 + " and has occupied the country!");
-                defendingPlayerLostCountry(countryA, countryB, current_player,game_view);
+                defenderLostCountry(countryA, countryB, current_player,game_view);
             }
 
             //If player conquered all the country and have won the game
@@ -133,7 +134,7 @@ public class AggressiveBot implements PlayerStrategy {
      * 
      */
     private int showDefenderDiceDialogBox(GameScreen game_view, Player current_player) {
-        Integer[] selectOptions = new Integer[getMaxNumberOfDicesForDefender(countryB)];
+        Integer[] selectOptions = new Integer[current_player.getMaxDiceDefender(countryB)];
         for (int i = 0; i < selectOptions.length; i++) {
             selectOptions[i] = i + 1;
         }
@@ -145,24 +146,13 @@ public class AggressiveBot implements PlayerStrategy {
     }
     
     /**
-     * Number of dice roll for defender depending on the armies
-     * @param country object of Country class
-     * @return number of dices that can be rolled
-     * 
-     */
-    private int getMaxNumberOfDicesForDefender(Country country) {
-        return country.getCurrentArmiesDeployed() >= 2 ? 2 : 1;
-    }
-    
-    /**
      * Checks if player can still continue to attack depending on the armies left
      * @param countryA object of country class
      * @param countryB object of country class
      * @return boolean value true or false
      * 
      */
-    private boolean checkPlayerTurnCanContinue(Country countryA, Country countryB) {
-       System.out.println("INSIDE checkplayercancontinue");
+    private boolean checkBotCanContinue(Country countryA, Country countryB) {
     	if(countryA.getCurrentArmiesDeployed() > 1 && !countryB.getBelongsToPlayer().getName().equals(countryA.getBelongsToPlayer().getName())){
             System.out.println("TRUE");
     		return true;
@@ -178,7 +168,7 @@ public class AggressiveBot implements PlayerStrategy {
      * @param current_player object of player class
      * 
      */
-    private void defendingPlayerLostCountry(Country countryA, Country countryB, Player current_player,GameScreen game_view) {
+    private void defenderLostCountry(Country countryA, Country countryB, Player current_player,GameScreen game_view) {
 
         // Remove country from defender's list of occupied territories and adds to attacker's list
         countryB.getBelongsToPlayer().assigned_countries.remove(countryB);
@@ -209,35 +199,25 @@ public class AggressiveBot implements PlayerStrategy {
      * and calculates the army loss for them
      * 
      */
-    private void compareDiceResultsAndCalculateLosses() {
+    private void calculateLosses() {
         // Calculate losses
-        if (attackerRolls[0] > defenderRolls[0]) {
+        if (attacker_rolls[0] > defender_rolls[0]) {
             defender_losses++;
-        } else if (attackerRolls[0] < defenderRolls[0] || Objects.equals(attackerRolls[0], defenderRolls[0])) {
+        } else if (attacker_rolls[0] < defender_rolls[0] || Objects.equals(attacker_rolls[0], defender_rolls[0])) {
             attacker_losses++;
         }
         // Index 1 = second highest pair
-        if (attacker_dice > 1 && defenderDice > 1) {
+        if (attacker_dice > 1 && defender_dice > 1) {
 
-            if (attackerRolls[1] > defenderRolls[1]) {
+            if (attacker_rolls[1] > defender_rolls[1]) {
                 defender_losses++;
 
-            } else if (attackerRolls[1] < defenderRolls[1] || Objects.equals(attackerRolls[1], defenderRolls[1])) {
+            } else if (attacker_rolls[1] < defender_rolls[1] || Objects.equals(attacker_rolls[1], defender_rolls[1])) {
                 attacker_losses++;
             }
         }
     }
     
-    /**
-     * Update armies of the players based on the dice results
-     * @param attacker_losses number of armies lost by attacker
-     * @param defender_losses number of armies lost by defender
-     * 
-     */
-    private void updateArmiesBasedOnDiceResult(int attacker_losses, int defender_losses) {
-        countryA.subtractArmy(attacker_losses);
-        countryB.subtractArmy(defender_losses);
-    }
     
     /**
      * Overrides fortify phase for aggressive bot
