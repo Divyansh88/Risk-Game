@@ -19,6 +19,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -33,12 +34,15 @@ public class PlayPath extends StartGame{
 	JComboBox maps = new JComboBox();
 	MapLoader map_loader=new MapLoader();
 	String browse_file_path;
-	String file_path="RiskTeam21/src/app/team21/risk/maps/";
+	String file_path="src/app/team21/risk/maps/";
 	MapElements map_elements;
 	JButton btn_back = new JButton("Back"); 
 	JButton btn_home = new JButton("Home");
 	JLabel lbl_map_status;
 	JComboBox players;
+	JTextField tf_player1,tf_player2,tf_player3,tf_player4,tf_player5;
+	JComboBox cb_player1,cb_player2,cb_player3,cb_player4,cb_player5;
+	String[] types = {"Human","Aggressive","Benevolent","Random","Cheater"};
 	
 	/**
 	 * This method will ask for select from existing maps or browse other maps to play the game.
@@ -150,7 +154,7 @@ public class PlayPath extends StartGame{
 	 * This method will fill comboboxes.
 	 */
 	public void fillCombobox(){
-		File dir = new File("RiskTeam21/src/app/team21/risk/maps/");
+		File dir = new File("src/app/team21/risk/maps/");
         FilenameFilter filter = new FilenameFilter()
         {
         	public boolean accept(File dir, String name)
@@ -184,7 +188,7 @@ public class PlayPath extends StartGame{
 		test=sg.getPanel();
 		
 		JLabel choose_number_of_player = new JLabel("Choose number of players :");
-		JButton lets_go = new JButton("Let's go");
+		JButton ok = new JButton("Ok");
 		
 		players = new JComboBox<Integer>();
 		int no_countries = map_elements.getCountries().size();
@@ -208,6 +212,108 @@ public class PlayPath extends StartGame{
 		}
 		
 		
+		ok.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				playerTypes();
+				
+			}
+		});
+//		choose_player.add(choose_number_of_player);
+//		choose_player.add(players);
+//		choose_player.add(lets_go);
+		test.add(choose_number_of_player);
+		test.add(players);
+		test.add(ok);
+		JFrame jf = new JFrame();
+		jf=(JFrame) sg.getFrame();
+		jf.add(test);
+		jf.add(btn_back);
+		btn_back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sg.close();
+				playButton();
+				
+			}
+		});
+		jf.add(btn_home);
+		btn_home.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sg.close();
+				sg.createStartScreen();
+				
+			}
+		});
+		jf.setVisible(true);
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+	}
+	
+	public void playerTypes() {
+		JPanel test = new JPanel();
+		StartGame sg= new StartGame();
+		
+		test=sg.getPanel();
+		
+		tf_player1 = new JTextField("Player1 Name");
+		tf_player2 = new JTextField("Player2 Name");
+		tf_player3 = new JTextField("Player3 Name");
+		tf_player4 = new JTextField("Player4 Name");
+		tf_player5 = new JTextField("Player5 Name");
+		
+		cb_player1 = new JComboBox(types);
+		cb_player2 = new JComboBox(types);
+		cb_player3 = new JComboBox(types);
+		cb_player4 = new JComboBox(types);
+		cb_player5 = new JComboBox(types);
+		
+		int no_players = Integer.valueOf(players.getSelectedItem().toString());
+		System.out.println("items"+no_players);
+		if(no_players==2) {
+			test.add(tf_player1);
+			test.add(cb_player1);
+			test.add(tf_player2);
+			test.add(cb_player2);
+		}
+		if(no_players==3) {
+			test.add(tf_player1);
+			test.add(cb_player1);
+			test.add(tf_player2);
+			test.add(cb_player2);
+			test.add(tf_player3);
+			test.add(cb_player3);
+		}
+		if(no_players==4) {
+			test.add(tf_player1);
+			test.add(cb_player1);
+			test.add(tf_player2);
+			test.add(cb_player2);
+			test.add(tf_player3);
+			test.add(cb_player3);
+			test.add(tf_player4);
+			test.add(cb_player4);
+		}
+		if(no_players==5) {
+			test.add(tf_player1);
+			test.add(cb_player1);
+			test.add(tf_player2);
+			test.add(cb_player2);
+			test.add(tf_player3);
+			test.add(cb_player3);
+			test.add(tf_player4);
+			test.add(cb_player4);
+			test.add(tf_player5);
+			test.add(cb_player5);
+		}
+		
+		JButton lets_go = new JButton("Let's go");
+		
 		lets_go.addActionListener(new ActionListener() {
 			
 			@Override
@@ -224,11 +330,7 @@ public class PlayPath extends StartGame{
 				
 			}
 		});
-//		choose_player.add(choose_number_of_player);
-//		choose_player.add(players);
-//		choose_player.add(lets_go);
-		test.add(choose_number_of_player);
-		test.add(players);
+		
 		test.add(lets_go);
 		JFrame jf = new JFrame();
 		jf=(JFrame) sg.getFrame();
@@ -239,7 +341,7 @@ public class PlayPath extends StartGame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				sg.close();
-				playButton();
+				selectPlayers();
 				
 			}
 		});

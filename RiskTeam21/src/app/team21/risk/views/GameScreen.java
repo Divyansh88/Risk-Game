@@ -307,11 +307,39 @@ public class GameScreen implements Observer {
 
 			}
 		});
+		
+		JMenuBar menubar = new JMenuBar();
+		JMenu file = new JMenu("File");
+		menubar.add(file);
+		JMenuItem save_game = new JMenuItem("Save Game");
+		file.add(save_game);
+		save_game.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// add save code here
+				
+			}
+		});
+		
+		JMenuItem load_game = new JMenuItem("Load Game");
+		file.add(load_game);
+		load_game.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// add load code here
+				
+			}
+		});
 
 		JFrame jf = new JFrame();
 		jf = (JFrame) sg.getFrame();
 		jf.add(test);
 		jf.add(domination_master_panel);
+		
+		jf.setJMenuBar(menubar);
+		
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);

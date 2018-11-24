@@ -3,6 +3,8 @@ package app.team21.risk.views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -19,7 +21,7 @@ import javax.swing.JTextField;
 public class TournamentPath {
 	
 	JPanel tournament_master_panel,player_maps_master_panel,player_type_panel,maps_panel,number_of_turn_panel;
-	JButton btn_map1,btn_map2,btn_map3,btn_map4,btn_map5,btn_start_game;
+	JButton btn_map1,btn_map2,btn_map3,btn_map4,btn_map5,btn_start_game,btn_back,btn_home;
 	JLabel lbl_number_of_turns,lbl_number_of_games,lbl_tournament_mode;
 	JTextField tf_player1,tf_player2,tf_player3,tf_player4,tf_turn_value;
 	JComboBox cb_player1,cb_player2,cb_player3,cb_player4,cb_games;
@@ -104,6 +106,28 @@ public class TournamentPath {
 		jf=(JFrame) sg.getFrame();
 		jf.add(test);	
 		jf.add(tournament_master_panel);
+		btn_back = new JButton("Back");
+		btn_home = new JButton("Home");
+		jf.add(btn_back);
+		btn_back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sg.close();
+				sg.createStartScreen();
+				
+			}
+		});
+		jf.add(btn_home);
+		btn_home.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sg.close();
+				sg.createStartScreen();
+				
+			}
+		});
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
