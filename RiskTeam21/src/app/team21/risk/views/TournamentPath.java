@@ -23,7 +23,7 @@ import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
 
 /**
- * @author Divyansh
+ * @author Yash Sheth, Divyansh Thakar
  *
  */
 public class TournamentPath {
