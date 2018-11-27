@@ -1,11 +1,13 @@
 package app.team21.risk.gamemodule;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import app.team21.risk.elements.Card;
 import app.team21.risk.elements.Country;
+
 
 
 /**
@@ -15,7 +17,7 @@ import app.team21.risk.elements.Country;
  * @author Yash Sheth
  * @version 2.0.0
  */
-public class Deck{
+public class Deck implements Serializable{
 
     private int i;
 

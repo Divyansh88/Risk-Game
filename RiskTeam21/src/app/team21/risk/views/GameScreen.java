@@ -11,6 +11,8 @@ import app.team21.risk.views.StartGame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,12 @@ import java.util.Observer;
  */
 
 public class GameScreen implements Observer {
+	private FileSelectDialog file_select_dialog;
+    private File selected_file;
+    private boolean load_file=false;
+    
+
+
 	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn, btn_endturn_ep,
 	btn_attack_ap, btn_turnin_rp, btn_cards;
 	JLabel lbl_game_history, lbl_select_army, lbl_select_country, lbl_choose_player, lbl_select_from_country,
@@ -50,11 +58,12 @@ public class GameScreen implements Observer {
 	public MapElements map_elements;
 	public List<Player> player_list;
 	public int extra_armies;
-	GamePlay game_play;
 	public Player current_player;
 	int turn_value;
 	public GameScreen view;
 	public Deck deck;
+	public boolean tournament_mode=false;
+	public String result="DRAW";
 
 	/**
 	 * @return the player_list
@@ -69,7 +78,19 @@ public class GameScreen implements Observer {
 	public void setPlayerList(List<Player> player_list) {
 		this.player_list = player_list;
 	}
+	/**
+	 * @return the load_file
+	 */
+	public boolean isLoadFile() {
+		return load_file;
+	}
 
+	/**
+	 * @param load_file the load_file to set
+	 */
+	public void setLoadFile(boolean load_file) {
+		this.load_file = load_file;
+	}
 	/**
 	 * This method will create view of main game screen and updates the value of
 	 * different components.
@@ -79,21 +100,11 @@ public class GameScreen implements Observer {
 	 * @param turn_value turn value
 	 */
 	public void playerContinueButton(MapElements map_elements, List<Player> player_list, int turn_value) {
-		this.map_elements = map_elements;
-		this.player_list = player_list;
-		this.turn_value = turn_value;
-		deck = new Deck(map_elements.getCountries());
-
-		game_play = new GamePlay();
-
-		String first_print = GamePlay.distributeCountries(player_list, map_elements.getCountries());
-		GamePlay.setInitialArmies(player_list);
-		String second_print = game_play.placeInitialArmiesInRR(player_list);
-		String mr = GamePlay.updateMR(map_elements);
 
 		JPanel test = new JPanel();
 		StartGame sg = new StartGame();
 		test = sg.getPanel();
+		
 		phase_screen_panel = new JPanel();
 		reinforcement_panel = new JPanel();
 		attack_panel = new JPanel();
@@ -178,14 +189,13 @@ public class GameScreen implements Observer {
 		lbl_game_map = new JLabel("Game Map");
 		scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll_panel.setLocation(0, 0);
-		text_area_game_map.setText(mr);
-
+		
 		text_area_game_history = new JTextArea(19, 50);
 		text_area_game_history.setEditable(false);
 		scroll_panel1 = new JScrollPane(text_area_game_history);
 		lbl_game_history = new JLabel("Game History");
 		scroll_panel1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		text_area_game_history.setText(first_print + second_print + "\n\n");
+		
 
 		turn_panel = new JPanel();
 		turn_panel.add(turn_label);
@@ -317,8 +327,12 @@ public class GameScreen implements Observer {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// add save code here
 				
+				try {
+					saveGame();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		
@@ -328,28 +342,97 @@ public class GameScreen implements Observer {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// add load code here
+				file_select_dialog=new FileSelectDialog();
+				int result = file_select_dialog.showOpenDialog(file_select_dialog);
+		        if (result == JFileChooser.APPROVE_OPTION) {
+		            selected_file = file_select_dialog.getSelectedFile();
+		            loadGame(selected_file.getAbsolutePath());
+		        }
+		    }
+
 				
-			}
+			
 		});
+		if(!tournament_mode){
+			JFrame jf = new JFrame();
+			jf = (JFrame) sg.getFrame();
+			jf.add(test);
+			jf.add(domination_master_panel);
 
-		JFrame jf = new JFrame();
-		jf = (JFrame) sg.getFrame();
-		jf.add(test);
-		jf.add(domination_master_panel);
-		
-		jf.setJMenuBar(menubar);
-		
-		jf.setVisible(true);
-		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+			jf.setJMenuBar(menubar);
 
-		current_player = game_play.getCurrentPlayer(player_list, turn_value);
-		current_player.addObserver(this);
-		view = this;
-		current_player.startTurn(current_player,player_list, map_elements, view);
+			jf.setVisible(true);
+			jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+		}else{
+			JFrame jf = new JFrame();
+			jf.add(test);
+			jf.add(domination_master_panel);
+
+			jf.setJMenuBar(menubar);
+
+			jf.setVisible(true);
+			jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+			
+		}
+
+		if(!load_file){
+			this.map_elements = map_elements;
+			this.player_list = player_list;
+			this.turn_value = turn_value;
+			deck = new Deck(map_elements.getCountries());
+
+			for(Country c:map_elements.getCountries())
+				c.setCurrentArmiesDeployed(0);
+			
+			String first_print = GamePlay.distributeCountries(player_list, map_elements.getCountries());
+			
+			GamePlay.setInitialArmies(player_list);
+			String second_print = GamePlay.placeInitialArmiesInRR(player_list);
+			String mr = GamePlay.updateMR(map_elements);
+			text_area_game_map.setText(mr);
+			text_area_game_history.setText(first_print + second_print + "\n\n");
+			
+			current_player = GamePlay.getCurrentPlayer(player_list, turn_value);
+			current_player.addObserver(this);
+			view = this;
+			current_player.startTurn(current_player,player_list, map_elements, view);
+		}else{
+			current_player.load_game=true;
+			current_player.addObserver(this);
+			view = this;
+			text_area_game_history.setText(map_elements.getMapHistoryText()+"\n+++++++++++++++++++++++++++++++++++++\nLOADED FROM SAVED FILE\n+++++++++++++++++++++++++++++++++++++\n");
+			current_player.startTurn(current_player,player_list, map_elements, view);
+		}
 	}
-
+	/**
+     * This method saves the game to the file
+     * @throws Exception it throws if there are any exceptions found
+     */
+    public  void saveGame() throws Exception{
+        map_elements.setCurrentPlayer(current_player);
+        map_elements.setDeck(deck);
+        map_elements.setplayer_list(player_list);
+        map_elements.setMapHistoryText(text_area_game_history.getText());
+        GamePlay.saveGame(map_elements,this);
+    }
+    
+    /**
+     * This method will load game from the saved game instance
+     * @param file name of the file where instance is saved
+     */
+    public void loadGame(String file) {
+    	GameScreen gs=new GameScreen();
+    	MapElements map_elements=GamePlay.loadGame(file);
+        gs.current_player=map_elements.getCurrentPlayer();
+        gs.deck = map_elements.getDeck();
+        gs.setPlayerList(map_elements.getplayer_list());
+        gs.setLoadFile(true);
+        gs.map_elements=map_elements;
+        gs.playerContinueButton(map_elements,player_list,current_player.getTurnValue());
+    }
+    
 	/**
 	 * This method view reinforcement screen in game screen.
 	 * 
@@ -666,9 +749,9 @@ public class GameScreen implements Observer {
 					current_player.setCanGetCard(false);
 				}
 				view_visibility = false;
-				updateView("\n" + current_player.getName() + " ended the turn.\n*************************");
+				updateView("\n"+current_player.getName() + " ended the turn.\n**************************");
 				turn_value = GamePlay.endTurn(current_player, player_list);
-				current_player = game_play.getCurrentPlayer(player_list, turn_value);
+				current_player = GamePlay.getCurrentPlayer(player_list, turn_value);
 				current_player.addObserver(view);
 				current_player.startTurn(current_player,player_list, map_elements, view);
 //				current_player.endTurn(view);

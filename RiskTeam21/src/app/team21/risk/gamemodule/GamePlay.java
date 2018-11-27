@@ -1,6 +1,16 @@
 package app.team21.risk.gamemodule;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Random;
@@ -12,6 +22,7 @@ import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
 import app.team21.risk.views.GameScreen;
 
+
 /**
  * Last Updated on : 08/11/2018, Thursday 
  * GamePlay class that contains all the game play logic.
@@ -19,10 +30,12 @@ import app.team21.risk.views.GameScreen;
  * @author Yash Sheth and Samip Thakkar
  * @version 2.0.0
  */
-public class GamePlay extends Observable{
+public class GamePlay extends Observable implements Serializable{
 	
 	static Player current_player;
 	static int player_count;
+	static int save_file_counter=1;
+	
 	static StringBuilder tb = new StringBuilder();
 	
 	
@@ -162,7 +175,7 @@ public class GamePlay extends Observable{
      * @param player_list list of players
      * @return string value
      */
-    public String placeInitialArmiesInRR(List<Player> player_list) {
+    public static String placeInitialArmiesInRR(List<Player> player_list) {
         int j = 0;
         int players_left_for_assign = player_list.size();
         while (players_left_for_assign > 0){
@@ -236,4 +249,92 @@ public class GamePlay extends Observable{
 		}
 		return armies;
 	}	
+	
+	/**
+     * This method will save the game .
+     * @param gameMap MapElements object at the point of saving the game
+     * @return true if function able to save the game else false
+     */
+    public static boolean saveGame(MapElements gameMap,GameScreen game_view) {
+    	
+    	FileOutputStream fout = null;
+		ObjectOutputStream oos = null;
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date today;
+        String fileName="";
+		try {
+			today = formatter.parse(formatter.format(new Date()));
+			fileName=today.toString().replaceAll("00:00:00"," ").replaceAll("\\s+","").concat("_"+String.valueOf(save_file_counter++));
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+       
+		try {
+            fout = new FileOutputStream(fileName+".ser");
+			oos = new ObjectOutputStream(fout);
+			game_view.updateStatus("Saved Game to "+fileName+".ser file");
+			oos.writeObject(gameMap);
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+
+		} finally {
+			if (fout != null) {
+				try {
+					fout.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			if (oos != null) {
+				try {
+					oos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+     return true;
+    }
+    /**
+     * This method will load the saved game
+     * @param fileName fileName that user gave while saving the map 
+     * @return true if function able to save the game else false
+     */
+    public static MapElements loadGame(String fileName) {
+    	FileInputStream fin = null;
+		ObjectInputStream ois = null;
+        MapElements gameMap = null;
+		try {
+			fin = new FileInputStream(fileName);
+			ois = new ObjectInputStream(fin);
+			gameMap = (MapElements) ois.readObject();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+
+			if (fin != null) {
+				try {
+					fin.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+           if (ois != null) {
+				try {
+					ois.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+		return gameMap;
+
+    }
+
 }

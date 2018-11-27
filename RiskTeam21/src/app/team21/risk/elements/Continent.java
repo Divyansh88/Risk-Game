@@ -2,6 +2,7 @@ package app.team21.risk.elements;
 
 import app.team21.risk.elements.Country;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,13 @@ import java.util.List;
  * @author Yash Sheth
  * @version 2.0.0
  */
-public class Continent {
+public class Continent implements Serializable{
 
-    public String continent_name;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public String continent_name;
     public List<Country> member_countries_list = new ArrayList<Country>();
     public int control_value;
 

@@ -78,7 +78,7 @@ public class StartGame {
 				public void actionPerformed(ActionEvent e) {
 					
 					TournamentPath tp = new TournamentPath();
-					tp.tournamentButton();
+					tp.selectPlayers();
 					
 				}
 			});

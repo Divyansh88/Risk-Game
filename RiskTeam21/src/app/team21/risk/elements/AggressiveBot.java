@@ -6,6 +6,7 @@ import javax.swing.plaf.basic.BasicIconFactory;
 import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.views.GameScreen;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Random;
 
@@ -14,9 +15,13 @@ import java.util.Random;
  * @author Yash Sheth
  *
  */
-public class AggressiveBot implements PlayerStrategy {
-    public Country countryA;
-    public Country countryB;
+public class AggressiveBot implements PlayerStrategy,Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public Country country_from;
+    public Country country_to;
     public Dice dice;
 
     public int attacker_losses;
@@ -41,12 +46,10 @@ public class AggressiveBot implements PlayerStrategy {
      */
     @Override
     public void attack(String country1, String country2, GameScreen game_view, Player current_player,MapElements map_elements) {
-        countryA = map_elements.getCountry(country1);
-        countryB = map_elements.getCountry(country2);
-        game_view.updateView("\n===Attack phase for aggressive player type begins===");
-        current_player.updatePhaseDetails("Repaint");
-        current_player.updatePhaseDetails("==Attack Phase==");
-        while (checkBotCanContinue(countryA,countryB)) {
+        country_from = map_elements.getCountry(country1);
+        country_to = map_elements.getCountry(country2);
+        game_view.updateView("Attack Phase Begins\n"+country1+" is attacking "+country2);
+        while (checkBotCanContinue(country_from,country_to)) {
 
             dice = new Dice();
 
@@ -58,7 +61,7 @@ public class AggressiveBot implements PlayerStrategy {
 
             // Attacker chooses how many dice to roll
             rng = new Random();
-            if (countryA.getCurrentArmiesDeployed() <= 3) {
+            if (country_from.getCurrentArmiesDeployed() <= 3) {
                 attacker_dice = 1;
             } else {
                 attacker_dice = rng.nextInt(2) + 1;
@@ -66,12 +69,12 @@ public class AggressiveBot implements PlayerStrategy {
 
             try {
                 // Defender chooses how many dice to roll after attacker
-                if(countryB.getBelongsToPlayer().isBot()){
+                if(country_to.getBelongsToPlayer().isBot()){
                     rng = new Random();
-                    if (countryB.getCurrentArmiesDeployed() <= 1) {
+                    if (country_to.getCurrentArmiesDeployed() <= 1) {
                         defender_dice = 1;
                     } else {
-                        defender_dice = rng.nextInt(1) + 1;
+                        defender_dice = rng.nextInt(current_player.getMaxDiceDefender(country_to)) + 1;
                     }
                 }
                 else {
@@ -86,14 +89,14 @@ public class AggressiveBot implements PlayerStrategy {
             defender_rolls = Dice.rollDice(defender_dice).getDiceResult();
 
             StringBuilder sb = new StringBuilder();
-			sb.append(countryA.getBelongsToPlayer().getName() + " - Mr.Attacker Rolled ");
+			sb.append(country_from.getBelongsToPlayer().getName() + " - Mr.Attacker Rolled ");
 			sb.append(System.getProperty("line.separator"));
 			for (int a : attacker_rolls) {
 				sb.append(a);
 				sb.append(System.getProperty("line.separator"));
 			}
 			sb.append(System.getProperty("line.separator"));
-			sb.append(countryB.getBelongsToPlayer().getName() + " - Mr.Defender Rolled ");
+			sb.append(country_to.getBelongsToPlayer().getName() + " - Mr.Defender Rolled ");
 			sb.append(System.getProperty("line.separator"));
 			for (int a : defender_rolls) {
 				sb.append(a);
@@ -103,16 +106,16 @@ public class AggressiveBot implements PlayerStrategy {
 			game_view.updateView(sb.toString());
             // Rolls arrays have been ordered in descending order. Index 0 = highest pair
             calculateLosses();
-            countryA.subtractArmy(attacker_losses);
-            countryB.subtractArmy(defender_losses);
+            country_from.subtractArmy(attacker_losses);
+            country_to.subtractArmy(defender_losses);
 
-            game_view.updateView(countryA.getCountryName() + " lost " + attacker_losses + " armies.");
-			game_view.updateView(countryB.getCountryName() + " lost " + defender_losses + " armies.");
+            game_view.updateView(country_from.getCountryName() + " lost " + attacker_losses + " armies.");
+			game_view.updateView(country_to.getCountryName() + " lost " + defender_losses + " armies.");
 
             // If defending country loses all armies
-            if (countryB.getCurrentArmiesDeployed() < 1) {
-                game_view.updateView(countryA.getBelongsToPlayer().getName() + " has defeated all of " + countryB.getBelongsToPlayer().getName() + "'s armies in " + country2 + " and has occupied the country!");
-                defenderLostCountry(countryA, countryB, current_player,game_view);
+            if (country_to.getCurrentArmiesDeployed() < 1) {
+                game_view.updateView(country_from.getBelongsToPlayer().getName() + " has defeated all of " + country_to.getBelongsToPlayer().getName() + "'s armies in " + country2 + " and has occupied the country!");
+                defenderLostCountry(country_from, country_to, current_player,game_view);
             }
 
             //If player conquered all the country and have won the game
@@ -134,61 +137,59 @@ public class AggressiveBot implements PlayerStrategy {
      * 
      */
     private int showDefenderDiceDialogBox(GameScreen game_view, Player current_player) {
-        Integer[] selectOptions = new Integer[current_player.getMaxDiceDefender(countryB)];
+        Integer[] selectOptions = new Integer[current_player.getMaxDiceDefender(country_to)];
         for (int i = 0; i < selectOptions.length; i++) {
             selectOptions[i] = i + 1;
         }
-        current_player.updatePhaseDetails(countryB.getBelongsToPlayer().getName()+" is Defending ");
+        current_player.updatePhaseDetails(country_to.getBelongsToPlayer().getName()+" is Defending ");
         return (Integer) JOptionPane.showInputDialog(null,
-                countryB.getBelongsToPlayer().getName() + ", you are defending " + countryB.getCountryName() + " from " + countryA.getBelongsToPlayer().getName() + "! How many dice will you roll?",
+                country_to.getBelongsToPlayer().getName() + ", you are defending " + country_to.getCountryName() + " from " + country_from.getBelongsToPlayer().getName() + "! How many dice will you roll?",
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
                 selectOptions[0]);
     }
     
     /**
      * Checks if player can still continue to attack depending on the armies left
-     * @param countryA object of country class
-     * @param countryB object of country class
+     * @param country_from object of country class
+     * @param country_to object of country class
      * @return boolean value true or false
      * 
      */
-    private boolean checkBotCanContinue(Country countryA, Country countryB) {
-    	if(countryA.getCurrentArmiesDeployed() > 1 && !countryB.getBelongsToPlayer().getName().equals(countryA.getBelongsToPlayer().getName())){
-            System.out.println("TRUE");
-    		return true;
-            
+    private boolean checkBotCanContinue(Country country_from, Country country_to) {
+    	if(country_from.getCurrentArmiesDeployed() > 1 && !country_to.getBelongsToPlayer().getName().equals(country_from.getBelongsToPlayer().getName())){
+    		return true;            
         }
         return false;
     }
     
     /**
      * Checks for result after the attack phase is over
-     * @param countryA object of country class
-     * @param countryB object of country class
+     * @param country_from object of country class
+     * @param country_to object of country class
      * @param current_player object of player class
      * 
      */
-    private void defenderLostCountry(Country countryA, Country countryB, Player current_player,GameScreen game_view) {
+    private void defenderLostCountry(Country country_from, Country country_to, Player current_player,GameScreen game_view) {
 
         // Remove country from defender's list of occupied territories and adds to attacker's list
-        countryB.getBelongsToPlayer().assigned_countries.remove(countryB);
-        countryA.getBelongsToPlayer().assigned_countries.add(countryB);
+        country_to.getBelongsToPlayer().assigned_countries.remove(country_to);
+        country_from.getBelongsToPlayer().assigned_countries.add(country_to);
 
         // Check if defender is eliminated from game
-        if (countryB.getBelongsToPlayer().getAssignedCountries().size() == 0) {
-            current_player.playerEliminated(countryA, countryB,game_view);
+        if (country_to.getBelongsToPlayer().getAssignedCountries().size() == 0) {
+            current_player.playerEliminated(country_from, country_to,game_view);
         }
         // Set country player to attacker
-        countryB.setBelongsToPlayer(countryA.getBelongsToPlayer());
-        current_player.updatePhaseDetails("\n"+countryB.getCountryName()+" has been captured ! ");
+        country_to.setBelongsToPlayer(country_from.getBelongsToPlayer());
+        current_player.updatePhaseDetails("\n"+country_to.getCountryName()+" has been captured ! ");
 
         //The attacking player must then place a number of armies
         //in the conquered country which is greater or equal than the number of dice that was used in the attack that
         //resulted in conquering the country
         
 
-        countryA.subtractArmy(1);
-        countryB.addArmy(1);
+        country_from.subtractArmy(1);
+        country_to.addArmy(1);
         current_player.setCanGetCard(true);
         //current_player.addObserver(new PlayerView());
         current_player.updateDominationDetails();
@@ -231,19 +232,14 @@ public class AggressiveBot implements PlayerStrategy {
     @Override
     public void fortify(String country1, String country2, GameScreen game_view, Player current_player,MapElements map_elements) {
 
-        countryA = map_elements.getCountry(country1);
-        countryB = map_elements.getCountry(country2);
+        country_from = map_elements.getCountry(country1);
+        country_to = map_elements.getCountry(country2);
 
         // Player inputs how many armies to move from country A to country B
-        current_player.updatePhaseDetails("Repaint");
-        current_player.updatePhaseDetails("===Fortification phase===");
-
-        int armies = countryA.getCurrentArmiesDeployed() - 1;
-        countryA.subtractArmy(armies);
-        countryB.addArmy(armies);
-        current_player.updatePhaseDetails(current_player.getName()+" moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
-        game_view.updateView(current_player.getName()+" moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
-        current_player.updatePhaseDetails("===Fortification ends===");
+        int armies = country_from.getCurrentArmiesDeployed() - 1;
+        country_from.subtractArmy(armies);
+        country_to.addArmy(armies);
+        game_view.updateView(current_player.getName()+" moved "+armies+" army from "+country_from.getCountryName()+" to " + country_to.getCountryName());
     }
     
     /**
@@ -256,18 +252,16 @@ public class AggressiveBot implements PlayerStrategy {
      */
     @Override
     public void reinforce(String country, GameScreen game_view, Player current_player,MapElements map_elements) {
-        countryA = map_elements.getCountry(country);
-        System.out.println("COUNTRYA"+countryA.getCurrentArmiesDeployed()+" "+countryA.getBelongsToPlayer().getName());
-        game_view.updateView("\n===Reinforcement phase for Aggressive type player begins===");
+        country_from = map_elements.getCountry(country);
+        
         game_view.updateView(current_player.getName() + " gets " + current_player.getReinforceArmies() + " armies");
         try {
         	int armies=current_player.getReinforceArmies();
             if (armies > 0) {
                 current_player.subReinforceArmies(armies);
-                countryA.addArmy(armies);
-                game_view.updateView(current_player.getName() + " has chosen to reinforce " + countryA.getCountryName() + " with " + armies + " armies.");
+                country_from.addArmy(armies);
+                game_view.updateView(current_player.getName() + " has chosen to reinforce " + country_from.getCountryName() + " with " + armies + " armies.");
                 if (current_player.getReinforceArmies() == 0) {
-                    game_view.updateView("===Reinforcement phase for Aggressive type player ends===\n");
                     current_player.updatePhaseDetails("Reinforcement Phase ends");
                 }
             }

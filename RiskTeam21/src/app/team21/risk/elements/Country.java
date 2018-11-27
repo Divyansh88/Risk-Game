@@ -1,6 +1,7 @@
 package app.team21.risk.elements;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 import app.team21.risk.elements.Player;
@@ -12,8 +13,12 @@ import app.team21.risk.elements.Player;
  * @author Yash Sheth and Divyansh Thakar
  * @version 2.0.0
  */
-public class Country{
-    public String country_name;
+public class Country implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public String country_name;
     public int x_cordinate;
     public int y_cordinate;
     public String belongs_to_continent;// to Represent county belongs to which continent

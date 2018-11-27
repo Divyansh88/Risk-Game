@@ -1,6 +1,8 @@
 
 package app.team21.risk.elements;
 
+import java.io.Serializable;
+
 /**
  * Last Updated on : 06/11/2018, Tuesday
  * This class will handle operations on  cards.
@@ -8,9 +10,13 @@ package app.team21.risk.elements;
  * @author Yash Sheth
  * @version 2.0.0
  */
-public final class Card{
+public final class Card implements Serializable{
 
-    private final String type;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final String type;
     private final Country country;
 
     /**

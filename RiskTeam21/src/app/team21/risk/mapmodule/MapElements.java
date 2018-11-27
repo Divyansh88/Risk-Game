@@ -1,10 +1,12 @@
 package app.team21.risk.mapmodule;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import app.team21.risk.elements.*;
+import app.team21.risk.gamemodule.Deck;
 
 /**
  * Last Updated on: 06/11/2018, Tuesday 
@@ -13,8 +15,12 @@ import app.team21.risk.elements.*;
  * @author Yash Sheth
  * @version 2.0.0
  */
-public class MapElements {
+public class MapElements implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static MapElements map_elements;
 	public HashMap<String, String> map_details=new HashMap<String, String>();
 	public List<Continent> continent_list=new ArrayList<Continent>();
@@ -25,11 +31,16 @@ public class MapElements {
 	public String error_message;
 	public Player current_player;
 	public String phase_details;
+	public Deck deck;
+	public String map_history_text="";
+
+	
+
 
 	/**
     * Default Constructor
     */
-	private MapElements() {
+	public MapElements() {
 		
 	}
 
@@ -116,6 +127,20 @@ public class MapElements {
 	public void setCorrectMap(boolean is_correct_map) {
 		this.is_correct_map = is_correct_map;
 	}
+	
+	/**
+	 * @return the map_history_text
+	 */
+	public String getMapHistoryText() {
+		return map_history_text;
+	}
+
+	/**
+	 * @param map_history_text the map_history_text to set
+	 */
+	public void setMapHistoryText(String map_history_text) {
+		this.map_history_text = map_history_text;
+	}
 
 	/**
 	 * getter method for players who selected the map to play on.
@@ -134,6 +159,20 @@ public class MapElements {
 	public void setErrorMessage(String error_message) {
 		this.error_message += "\n"+error_message;
 
+	}
+
+	/**
+	 * @return the deck
+	 */
+	public Deck getDeck() {
+		return deck;
+	}
+
+	/**
+	 * @param deck the deck to set
+	 */
+	public void setDeck(Deck deck) {
+		this.deck = deck;
 	}
 
 	/**

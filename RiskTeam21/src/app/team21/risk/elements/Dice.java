@@ -1,6 +1,7 @@
 
 package app.team21.risk.elements;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
@@ -13,8 +14,12 @@ import java.util.Random;
  * @author Yash Sheth
  * @version 2.0.0
  */
-public class Dice {
-    int number_of_dice; //number of Dice user wants to roll
+public class Dice implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	int number_of_dice; //number of Dice user wants to roll
     Integer[] dice_result; //the dice result example : first dice roll result will be stored in dice_result[0]
     public boolean is_dice_rolled; // check if dice rolled
 

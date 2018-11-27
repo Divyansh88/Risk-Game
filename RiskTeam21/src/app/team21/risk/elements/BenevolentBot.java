@@ -1,18 +1,24 @@
 package app.team21.risk.elements;
 
+import java.io.Serializable;
+
 import app.team21.risk.gamemodule.GamePlay;
 import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.views.GameScreen;
 
 /**
  * This class implements the strategy for Benevolent bot
- * @author Akshay Shah
+ * @author Yash Sheth
  *
  */
-public class BenevolentBot implements PlayerStrategy {
+public class BenevolentBot implements PlayerStrategy,Serializable {
 
-    public Country countryA;
-    public Country countryB;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public Country country_from;
+    public Country country_to;
     
     /**
      * Overrides the attack phase for benevolent bot
@@ -39,22 +45,15 @@ public class BenevolentBot implements PlayerStrategy {
      */
     @Override
     public void fortify(String country1, String country2, GameScreen gameView, Player current_player,MapElements map_elements) {
-        countryA = map_elements.getCountry(country1);
-        countryB = map_elements.getCountry(country2);
-
+        country_from = map_elements.getCountry(country1);
+        country_to = map_elements.getCountry(country2);
         // Player inputs how many armies to move from country A to country B
-        current_player.updatePhaseDetails("Repaint");
-        current_player.updatePhaseDetails("===Fortification phase===");
-
-        int armies = countryA.getCurrentArmiesDeployed() - 1;
-
-        countryA.subtractArmy(armies);
-        countryB.addArmy(armies);
-        gameView.updateView("Benevolent moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
-        current_player.updatePhaseDetails("You moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
-        current_player.updatePhaseDetails("===Fortification ends===");
-
+        int armies = country_from.getCurrentArmiesDeployed() - 1;
+        country_from.subtractArmy(armies);
+        country_to.addArmy(armies);
+        gameView.updateView("Benevolent moved "+armies+" army from "+country_from.getCountryName()+" to " + country_to.getCountryName());
     }
+    
     /**
      * Overrides the reinforcement phase for benevolent bot
      * from the PlayerStrategy interface
@@ -68,22 +67,20 @@ public class BenevolentBot implements PlayerStrategy {
 		
     	for (Country c : map_elements.getCountries()) {
 			if (c.getCountryName().equals(country_name)) {
-				countryA = c;
+				country_from = c;
 				break;
 			}
 		}
     	int armies=GamePlay.getReinforcementArmies(current_player, map_elements);
-        gameView.updateView("\n===Reinforcement phase for Benevolent type player begins===");
         gameView.updateView(current_player.getName() + " gets " + armies+ " armies");
         
         try {
             if (armies > 0) {   
                 current_player.subReinforceArmies(armies);
-                countryA.addArmy(armies);
-                gameView.updateView(current_player.getName() + " has chosen to reinforce " + countryA.getCountryName() + " with " + armies + " armies.");
+                country_from.addArmy(armies);
+                gameView.updateView(current_player.getName() + " has chosen to reinforce " + country_from.getCountryName() + " with " + armies + " armies.");
                 if (current_player.getTotalArmies() == 0) {
                     gameView.updateView("You do not have any armies left to reinforce");
-                    gameView.updateView("===Reinforcement phase for Benevolent type player ends===\n");
                     current_player.updatePhaseDetails("\nReinforcement Phase ends");
                 }
                 current_player.updateDominationDetails();

@@ -34,7 +34,7 @@ public class PlayPath extends StartGame{
 	JComboBox maps = new JComboBox();
 	MapLoader map_loader=new MapLoader();
 	String browse_file_path;
-	String file_path="src/app/team21/risk/maps/";
+	String file_path="RiskTeam21/src/app/team21/risk/maps/";
 	MapElements map_elements;
 	JButton btn_back = new JButton("Back"); 
 	JButton btn_home = new JButton("Home");
@@ -154,7 +154,7 @@ public class PlayPath extends StartGame{
 	 * This method will fill comboboxes.
 	 */
 	public void fillCombobox(){
-		File dir = new File("src/app/team21/risk/maps/");
+		File dir = new File("RiskTeam21/src/app/team21/risk/maps/");
         FilenameFilter filter = new FilenameFilter()
         {
         	public boolean accept(File dir, String name)
@@ -281,7 +281,7 @@ public class PlayPath extends StartGame{
 			test.add(tf_player2);
 			test.add(cb_player2);
 		}
-		if(no_players==3) {
+		else if(no_players==3) {
 			test.add(tf_player1);
 			test.add(cb_player1);
 			test.add(tf_player2);
@@ -289,7 +289,7 @@ public class PlayPath extends StartGame{
 			test.add(tf_player3);
 			test.add(cb_player3);
 		}
-		if(no_players==4) {
+		else if(no_players==4) {
 			test.add(tf_player1);
 			test.add(cb_player1);
 			test.add(tf_player2);
@@ -299,7 +299,7 @@ public class PlayPath extends StartGame{
 			test.add(tf_player4);
 			test.add(cb_player4);
 		}
-		if(no_players==5) {
+		else if(no_players==5) {
 			test.add(tf_player1);
 			test.add(cb_player1);
 			test.add(tf_player2);
@@ -311,6 +311,9 @@ public class PlayPath extends StartGame{
 			test.add(tf_player5);
 			test.add(cb_player5);
 		}
+		else{
+			System.out.println("ERROR");
+		}
 		
 		JButton lets_go = new JButton("Let's go");
 		
@@ -319,12 +322,130 @@ public class PlayPath extends StartGame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				List<Player> player_list = new ArrayList<Player>();
-				for(int i=1;i<=Integer.valueOf(players.getSelectedItem().toString())-1;i++){
-					Player p= new Player("Player "+i,false,"Human");
-					player_list.add(p);
+				
+				if(no_players==2) {
+					String type=cb_player1.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player1.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player1.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}	
+					type=cb_player2.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player2.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player2.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}	
 				}
-				Player p= new Player("Mr.BOT",true,"aggressive");
-				player_list.add(p);
+				else if(no_players==3) {
+					String type=cb_player1.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player1.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player1.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}	
+					type=cb_player2.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player2.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player2.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}
+					type=cb_player3.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player3.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player3.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}
+				}
+				else if(no_players==4) {
+					String type=cb_player1.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player1.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player1.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}	
+					type=cb_player2.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player2.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player2.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}
+					type=cb_player3.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player3.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player3.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}
+					type=cb_player4.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player4.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player4.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}
+				}
+				else if(no_players==5) {
+					String type=cb_player1.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player1.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player1.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}	
+					type=cb_player2.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player2.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player2.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}
+					type=cb_player3.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player3.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player3.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}
+					type=cb_player4.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player4.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player4.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}
+					type=cb_player5.getSelectedItem().toString();
+					if(type.equals("Human")){
+						Player p=new Player(tf_player5.getText(),false,"Human");
+						player_list.add(p);
+					}else{
+						Player p=new Player(tf_player5.getText(),true,type.toLowerCase());
+						player_list.add(p);
+					}
+				}
+				else{
+					System.out.println("ERROR");
+				}
 				GameScreen gs = new GameScreen();
 				gs.playerContinueButton(map_elements,player_list,1);
 				
