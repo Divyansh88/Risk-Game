@@ -235,10 +235,11 @@ public class MapPath {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(map_elements.getContinentList().size()>0)
-					addCountry();				
-				else
+				if(map_elements.getContinentList().size()>0) {
+					addCountry();
+				} else {
 					lbl_state.setText("Create a continent first.");
+				}
 			}
 		});
 		
@@ -246,10 +247,11 @@ public class MapPath {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(map_elements.getCountries().size()>1)
+				if(map_elements.getCountries().size()>1) {
 					addNeighbour();
-				else
+				} else {
 					lbl_state.setText("Create more countries.");
+				}
 			}
 		});
 		btn_save = new JButton("Save");
@@ -417,8 +419,9 @@ public class MapPath {
 					map_elements.setCountryNeighboursMap(new_country_neighbour_map);
 					text_area_mr.setText(map_elements.updateMR());
 					lbl_state.setText("Country Added Successfully");
-					if(map_elements.getCountries().size()>1)
-						addNeighbour(); 
+					if(map_elements.getCountries().size()>1) {
+						addNeighbour();
+					} 
 					
 				}
 				else{
@@ -599,10 +602,11 @@ public class MapPath {
 			public void actionPerformed(ActionEvent e) {
 				String selected_map = maps.getSelectedItem().toString();
 				file_name=selected_map;
-				if(selected_map.equals(short_name))
+				if(selected_map.equals(short_name)) {
 					map_elements=map_loader.readMapFile(browse_file_path);
-				else
+				} else {
 					map_elements=map_loader.readMapFile(file_path+selected_map);
+				}
 				
 				if(map_elements.isCorrectMap()){
 					

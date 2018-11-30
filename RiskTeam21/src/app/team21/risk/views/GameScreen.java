@@ -348,10 +348,7 @@ public class GameScreen implements Observer {
 		            selected_file = file_select_dialog.getSelectedFile();
 		            loadGame(selected_file.getAbsolutePath());
 		        }
-		    }
-
-				
-			
+			}			
 		});
 		if(!tournament_mode){
 			JFrame jf = new JFrame();
@@ -364,7 +361,8 @@ public class GameScreen implements Observer {
 			jf.setVisible(true);
 			jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-		}else{
+		}
+		else{
 			JFrame jf = new JFrame();
 			jf.add(test);
 			jf.add(master_panel, BorderLayout.WEST);
@@ -403,7 +401,8 @@ public class GameScreen implements Observer {
 			current_player.addObserver(this);
 			view = this;
 			current_player.startTurn(current_player,player_list, map_elements, view);
-		}else{
+		}
+		else{
 			current_player.load_game=true;
 			current_player.addObserver(this);
 			view = this;
@@ -842,11 +841,6 @@ public class GameScreen implements Observer {
 				domination_of_player *= 100;
 				p.setDomination(Double.valueOf(df.format(domination_of_player)));
 				domination_details.append(p.getName()).append(" ").append("\n");
-//				for (Country c : p.getAssignedCountries()) {
-//					total_armies += c.getCurrentArmiesDeployed();
-//					//System.out.println(c.getCountryName()+c.getBelongsToPlayer().getName());
-//				}
-				//refactored
 				int total_armies=p.getTotalArmies();
 				for (Continent c : map_elements.getContinentList()) {
 					List<Country> co = c.getMemberCountriesList();

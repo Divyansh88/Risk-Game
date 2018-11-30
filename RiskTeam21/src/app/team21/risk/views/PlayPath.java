@@ -196,23 +196,25 @@ public class PlayPath extends StartGame{
 		
 		players = new JComboBox<Integer>();
 		int no_countries = map_elements.getCountries().size();
-		if(no_countries==2){
+		switch (no_countries) {
+		case 2:
 			players.addItem("2");
-		}
-		else if(no_countries==3){
+			break;
+		case 3:
 			players.addItem("2");
 			players.addItem("3");
-		}
-		else if(no_countries==4){
+			break;
+		case 4:
 			players.addItem("2");
 			players.addItem("3");
 			players.addItem("4");
-		}
-		else {
+			break;
+		default:
 			players.addItem("2");
 			players.addItem("3");
 			players.addItem("4");
 			players.addItem("5");
+			break;
 		}
 		
 		
@@ -279,21 +281,22 @@ public class PlayPath extends StartGame{
 		
 		int no_players = Integer.valueOf(players.getSelectedItem().toString());
 		System.out.println("items"+no_players);
-		if(no_players==2) {
+		switch (no_players) {
+		case 2:
 			test.add(tf_player1);
 			test.add(cb_player1);
 			test.add(tf_player2);
 			test.add(cb_player2);
-		}
-		else if(no_players==3) {
+			break;
+		case 3:
 			test.add(tf_player1);
 			test.add(cb_player1);
 			test.add(tf_player2);
 			test.add(cb_player2);
 			test.add(tf_player3);
 			test.add(cb_player3);
-		}
-		else if(no_players==4) {
+			break;
+		case 4:
 			test.add(tf_player1);
 			test.add(cb_player1);
 			test.add(tf_player2);
@@ -302,8 +305,8 @@ public class PlayPath extends StartGame{
 			test.add(cb_player3);
 			test.add(tf_player4);
 			test.add(cb_player4);
-		}
-		else if(no_players==5) {
+			break;
+		case 5:
 			test.add(tf_player1);
 			test.add(cb_player1);
 			test.add(tf_player2);
@@ -314,9 +317,10 @@ public class PlayPath extends StartGame{
 			test.add(cb_player4);
 			test.add(tf_player5);
 			test.add(cb_player5);
-		}
-		else{
+			break;
+		default:
 			System.out.println("ERROR");
+			break;
 		}
 		
 		JButton lets_go = new JButton("Let's go");
