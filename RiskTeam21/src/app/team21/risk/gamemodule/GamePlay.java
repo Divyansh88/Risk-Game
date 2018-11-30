@@ -36,7 +36,7 @@ public class GamePlay extends Observable implements Serializable{
 	static int player_count;
 	static int save_file_counter=1;
 	
-	static StringBuilder tb = new StringBuilder();
+	
 	
 	
 	/**
@@ -47,6 +47,7 @@ public class GamePlay extends Observable implements Serializable{
 	 * @return string value
 	 */
 	public static String distributeCountries(List<Player> players,List<Country> countries){
+		StringBuilder tb = new StringBuilder();
 		tb.append("-----USER STARTS PUTTING ARMIES-----\n\n");
 		player_count=players.size();
 		Collections.shuffle(countries);
@@ -176,8 +177,10 @@ public class GamePlay extends Observable implements Serializable{
      * @return string value
      */
     public static String placeInitialArmiesInRR(List<Player> player_list) {
-        int j = 0;
+    	StringBuilder tb = new StringBuilder();
+    	int j = 0;
         int players_left_for_assign = player_list.size();
+        player_count=player_list.size();
         while (players_left_for_assign > 0){
             if (player_list.get(j % player_count).getInitialArmies() > 0) {
                 List<Country> player_countryList = player_list.get(j % player_count).getAssignedCountries();

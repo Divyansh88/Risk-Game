@@ -15,6 +15,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -28,19 +30,21 @@ import app.team21.risk.mapmodule.MapLoader;
  */
 public class TournamentPath {
 
-	JPanel tournament_master_panel,player_maps_master_panel,player_type_panel,maps_panel,number_of_turn_panel;
+	JPanel tournament_master_panel,player_maps_master_panel,player_type_panel,maps_panel,number_of_turn_panel,result_panel;
 	JButton btn_map1,btn_map2,btn_map3,btn_map4,btn_map5,btn_start_game,btn_back,btn_home;
-	JLabel lbl_number_of_turns,lbl_number_of_games,lbl_tournament_mode;
+	JLabel lbl_number_of_turns,lbl_number_of_games,lbl_tournament_mode,lbl_result;
 	JTextField tf_player1,tf_player2,tf_player3,tf_player4,tf_turn_value;
 	JComboBox cb_player1,cb_player2,cb_player3,cb_player4,cb_games;
 	String[] types = {"Aggressive","Benevolent","Random","Cheater"};
 	String[] games = {"1","2","3","4","5"};
+	JTextArea text_area_result= new JTextArea();
 	String browse_file_path1="no_path",browse_file_path2="no_path",browse_file_path3="no_path",browse_file_path4="no_path",browse_file_path5="no_path";
 	String file_path = "src/app/team21/risk/maps/";
 	MapElements map_elements;
 	List<MapElements> mapper=new ArrayList<MapElements>();
 	List<String> map_names=new ArrayList<String>();
 	JComboBox players;
+	JScrollPane scroll_panel;
 	List<Player> final_player_list=new ArrayList<Player>();
 
 	/**
@@ -62,7 +66,7 @@ public class TournamentPath {
 		test=sg.getPanel();
 
 		tournament_master_panel = new JPanel();
-		tournament_master_panel.setPreferredSize(new Dimension(600, 300));
+		tournament_master_panel.setPreferredSize(new Dimension(600, 600));
 		tournament_master_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		player_maps_master_panel = new JPanel();
@@ -82,9 +86,24 @@ public class TournamentPath {
 		number_of_turn_panel.setPreferredSize(new Dimension(600, 60));
 		number_of_turn_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbl_tournament_mode = new JLabel("Tournament Mode");
+		
+		result_panel=new JPanel();
+		result_panel.setPreferredSize(new Dimension(600, 300));
+		result_panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		lbl_result=new JLabel("Tournament Result");
+		text_area_result.setPreferredSize(new Dimension(500, 250));
+		text_area_result.setBorder(BorderFactory.createLineBorder(Color.black));
+		text_area_result.setEditable(false);
+		scroll_panel = new JScrollPane(text_area_result);
+		scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll_panel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		result_panel.add(lbl_result,BorderLayout.NORTH);
+		result_panel.add(scroll_panel,BorderLayout.SOUTH);
+		
 		tournament_master_panel.add(lbl_tournament_mode, BorderLayout.PAGE_START);
 		tournament_master_panel.add(player_maps_master_panel, BorderLayout.NORTH);
-		tournament_master_panel.add(number_of_turn_panel, BorderLayout.SOUTH);
+		tournament_master_panel.add(number_of_turn_panel, BorderLayout.CENTER);
+		tournament_master_panel.add(result_panel, BorderLayout.SOUTH);
 
 		tf_player1 = new JTextField("Player1 Name");
 		tf_player2 = new JTextField("Player2 Name");
@@ -258,12 +277,14 @@ public class TournamentPath {
 		lbl_number_of_games = new JLabel("Select number of games");
 		cb_games = new JComboBox(games);
 		btn_start_game = new JButton("Start game");
-
+		
+		
 		number_of_turn_panel.add(lbl_number_of_turns);
 		number_of_turn_panel.add(tf_turn_value);
 		number_of_turn_panel.add(lbl_number_of_games);
 		number_of_turn_panel.add(cb_games);
 		number_of_turn_panel.add(btn_start_game);
+		
 
 		btn_start_game.addActionListener(new ActionListener() {
 
@@ -339,24 +360,25 @@ public class TournamentPath {
 				int games=Integer.valueOf(cb_games.getSelectedItem().toString());
 				StringBuilder sb=new StringBuilder();
 				
+				int turns=Integer.valueOf(tf_turn_value.getText().toString());
 				
 				for(int i=0;i<mapper.size();i++){
-					sb.append("\n"+map_names.get(i));
+					sb.append("\n"+map_names.get(i)+"\n");
 					for(int j=1;j<=games;j++){
-						sb.append("| GAME "+j);
+						sb.append("\nGAME "+j);
 						for(Player p:getFinal_player_list()){
-							p.resetData(10);
+							p.resetData(turns);
 						}
 						player_list=new ArrayList<Player>(getFinal_player_list());
 						MapElements map=mapper.get(i);
 						GameScreen gs=new GameScreen();
 						gs.tournament_mode=true;
 						gs.playerContinueButton(map,player_list, 1);
-						
 						sb.append(" "+gs.result);
 					}
 				}
-				System.out.println("\n\n\nRESULT\n"+sb.toString());
+				text_area_result.setText("\n\n"+sb.toString());
+				System.out.println(""+sb.toString());
 			}
 		});
 
@@ -373,7 +395,6 @@ public class TournamentPath {
 			public void actionPerformed(ActionEvent e) {
 				sg.close();
 				sg.createStartScreen();
-
 			}
 		});
 		jf.add(btn_home);
@@ -383,7 +404,6 @@ public class TournamentPath {
 			public void actionPerformed(ActionEvent e) {
 				sg.close();
 				sg.createStartScreen();
-
 			}
 		});
 		jf.setVisible(true);
@@ -406,9 +426,6 @@ public class TournamentPath {
 		players.addItem("2");
 		players.addItem("3");
 		players.addItem("4");
-
-
-
 
 		ok.addActionListener(new ActionListener() {
 

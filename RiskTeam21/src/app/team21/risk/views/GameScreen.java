@@ -367,7 +367,9 @@ public class GameScreen implements Observer {
 		}else{
 			JFrame jf = new JFrame();
 			jf.add(test);
-			jf.add(domination_master_panel);
+			jf.add(master_panel, BorderLayout.WEST);
+			jf.add(map_representation_panel, BorderLayout.CENTER);
+			jf.add(domination_master_panel, BorderLayout.EAST);
 
 			jf.setJMenuBar(menubar);
 
@@ -386,15 +388,18 @@ public class GameScreen implements Observer {
 			for(Country c:map_elements.getCountries())
 				c.setCurrentArmiesDeployed(0);
 			
-			String first_print = GamePlay.distributeCountries(player_list, map_elements.getCountries());
+			String first_print = GamePlay.distributeCountries(this.player_list, this.map_elements.getCountries());
 			
-			GamePlay.setInitialArmies(player_list);
-			String second_print = GamePlay.placeInitialArmiesInRR(player_list);
-			String mr = GamePlay.updateMR(map_elements);
+			GamePlay.setInitialArmies(this.player_list);
+			
+			String second_print = GamePlay.placeInitialArmiesInRR(this.player_list);
+			
+			String mr = GamePlay.updateMR(this.map_elements);
 			text_area_game_map.setText(mr);
 			text_area_game_history.setText(first_print + second_print + "\n\n");
 			
-			current_player = GamePlay.getCurrentPlayer(player_list, turn_value);
+			
+			current_player = GamePlay.getCurrentPlayer(this.player_list, this.turn_value);
 			current_player.addObserver(this);
 			view = this;
 			current_player.startTurn(current_player,player_list, map_elements, view);
@@ -841,7 +846,8 @@ public class GameScreen implements Observer {
 //					total_armies += c.getCurrentArmiesDeployed();
 //					//System.out.println(c.getCountryName()+c.getBelongsToPlayer().getName());
 //				}
-				int total_armies=p.getTotalArmies();//refactored
+				//refactored
+				int total_armies=p.getTotalArmies();
 				for (Continent c : map_elements.getContinentList()) {
 					List<Country> co = c.getMemberCountriesList();
 					boolean continent_control = true;

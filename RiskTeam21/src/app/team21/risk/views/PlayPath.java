@@ -76,9 +76,11 @@ public class PlayPath extends StartGame{
 	  	        int bopen = fileChooser.showOpenDialog(null); //open the dialog box
 	  	        if (bopen == JFileChooser.APPROVE_OPTION) {
 	  	        	browse_file_path=fileChooser.getSelectedFile().toString();
-	  	        	map_elements=map_loader.readMapFile(browse_file_path);
-	  	        	if(map_elements.isCorrectMap()){
-						selectPlayers();
+//	  	        	map_elements=new MapElements();
+//	  	        	map_loader.readMapFile(browse_file_path);
+	  	        	if(MapLoader.readMapFile(browse_file_path).isCorrectMap()){
+	  	        		map_elements=MapLoader.readMapFile(browse_file_path);
+	  	        		selectPlayers();
 						cl.show(main_panel, "choose_player");
 					}
 					else{
@@ -94,13 +96,15 @@ public class PlayPath extends StartGame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String selected_map = maps.getSelectedItem().toString();
-				map_elements=map_loader.readMapFile(file_path+selected_map);
-				if(map_elements.isCorrectMap()){
+				System.out.println("SELECTED MAP"+selected_map);
+				
+				if(MapLoader.readMapFile(file_path+selected_map).isCorrectMap()){
+					map_elements=MapLoader.readMapFile(file_path+selected_map);
 					selectPlayers();
 					cl.show(main_panel, "choose_player");
 				}
 				else{
-					//Label dialog for incorrect map file
+					
 				}
 			}
 		});

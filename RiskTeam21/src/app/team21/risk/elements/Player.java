@@ -97,6 +97,11 @@ public class Player extends Observable implements Serializable{
 		can_attack = false;
 		can_fortify = false;
 		can_end_turn = false;
+		cards=new ArrayList<Card>();
+		has_player_won=false;
+		has_bot_won=false;
+		can_get_card=false;
+		traded_set=0;
 		this.turns=turns;
 	}
 	/**
@@ -1167,7 +1172,7 @@ public class Player extends Observable implements Serializable{
 			setCanReinforce(false);
 			setCanFortify(false);
 			setCanEndTurn(false);
-			game_view.result=name+" "+type;
+			game_view.result=name+" - "+type.toUpperCase();
 			game_view.updateView("" + getName() + " has won the game ! Congratulations ! ");
 			game_view.updateStatus("" + getName() + " has won the game ! Congratulations ! ");
 		}
