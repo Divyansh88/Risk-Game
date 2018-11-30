@@ -56,7 +56,7 @@ public class Continent implements Serializable{
     @Override
     public boolean equals(Object continent_object) {
         String continent_name = ((Continent) continent_object).getContinentName();
-        return continent_name.equals(this.getContinentName());
+        return continent_name.equals(getContinentName());
     }
 
     /**

@@ -80,7 +80,7 @@ public class Country implements Serializable{
     @Override
     public boolean equals(Object o) {
         String country_name = ((Country) o).getCountryName();
-        return country_name.equals(this.getCountryName());
+        return country_name.equals(getCountryName());
     }
 
     /**

@@ -529,21 +529,10 @@ public class Player extends Observable implements Serializable{
 			setCanGetCard(false);
 			setCanShowCard(true);
 			int armies = GamePlay.getReinforcementArmies(this, map_elements);
-			this.setReinforceArmies(armies);
-
-			// this.setPhaseDetails("Its " + name + "'s turn and Reinforcement
-			// phase.");
-			// this.setUpdateMessage("phase");
-			// setChanged();
-			// notifyObservers();
-			// refactored
+			setReinforceArmies(armies);
 			updatePhaseDetails("Its " + name + "'s turn and Reinforcement phase.");
-			// this.setUpdateMessage("domination");
-			// setChanged();
-			// notifyObservers();
-			// refactored
 			updateDominationDetails();
-			this.setUpdateMessage("cards");
+			setUpdateMessage("cards");
 			setChanged();
 			notifyObservers();
 			game_view.updateStatus("");
@@ -561,7 +550,7 @@ public class Player extends Observable implements Serializable{
 			if(isCanReinforce()){
 				updatePhaseDetails("Its " + name + "'s turn and Reinforcement phase.");
 				updateDominationDetails();
-				this.setUpdateMessage("cards");
+				setUpdateMessage("cards");
 				setChanged();
 				notifyObservers();
 				game_view.updateStatus("");
@@ -620,7 +609,7 @@ public class Player extends Observable implements Serializable{
 			GameScreen game_view) {
 
 		boolean reinforce_successful = false;
-		this.setCanShowCard(true);
+		setCanShowCard(true);
 		Country selected_country = null;
 		for (Country c : map_elements.getCountries()) {
 			if (c.getCountryName().equals(country_name)) {
@@ -629,7 +618,7 @@ public class Player extends Observable implements Serializable{
 			}
 		}
 
-		if (armies_selected <= this.getReinforceArmies()) {
+		if (armies_selected <= getReinforceArmies()) {
 			selected_country.addArmy(armies_selected);
 			subReinforceArmies(armies_selected);
 			reinforce_successful = true;
@@ -640,8 +629,8 @@ public class Player extends Observable implements Serializable{
 			game_view.updateStatus("Not Enough Armies");
 		}
 
-		if (this.getReinforceArmies() > 0 && reinforce_successful) {
-			game_view.ReinforcementButton(this.getReinforceArmies(), this, map_elements);
+		if (getReinforceArmies() > 0 && reinforce_successful) {
+			game_view.ReinforcementButton(getReinforceArmies(), this, map_elements);
 		} else {
 			setCanReinforce(false);
 			setCanShowCard(false);
@@ -737,9 +726,9 @@ public class Player extends Observable implements Serializable{
 						setCanReinforce(false);
 						setCanFortify(false);
 						setCanEndTurn(false);
-						game_view.updateView("" + this.getName() + " has won the game ! Congratulations ! ");
+						game_view.updateView("" + getName() + " has won the game ! Congratulations ! ");
 						// game_view.EndTurnButton();
-						JOptionPane.showMessageDialog(null, "Congratulations! " + this.getName() + " won the game.");
+						JOptionPane.showMessageDialog(null, "Congratulations! " + getName() + " won the game.");
 						StartGame.createStartScreen();
 					} else {
 						checkCanContinue(game_view);
@@ -906,7 +895,7 @@ public class Player extends Observable implements Serializable{
 		if (!isCanGetCard()) {
 			can_get_card = true;
 		}
-		this.setUpdateMessage("domination");
+		setUpdateMessage("domination");
 		setChanged();
 		notifyObservers();
 	}
@@ -936,7 +925,7 @@ public class Player extends Observable implements Serializable{
 	public void checkCanContinue(GameScreen game_view) {
 		can_attack = false;
 		can_fortify = false;
-		for (Country c : this.getAssignedCountries()) {
+		for (Country c : getAssignedCountries()) {
 
 			if (c.getCurrentArmiesDeployed() > 1) {
 				can_attack = true;
@@ -1221,7 +1210,7 @@ public class Player extends Observable implements Serializable{
 	 * Sets the strategy to cheater bot and update its logger
 	 */
 	private void cheaterBotTurn(Player current_player, MapElements map_elements, GameScreen game_view) {
-		this.setStrategy(new CheaterBot());
+		setStrategy(new CheaterBot());
 
 		if (getAssignedCountries() != null) {
 
@@ -1306,7 +1295,7 @@ public class Player extends Observable implements Serializable{
 	 * Sets the strategy to random bot and update its logger
 	 */
 	private void randomBotTurn(Player current_player, MapElements map_elements, GameScreen game_view) {
-		this.setStrategy(new RandomBot());
+		setStrategy(new RandomBot());
 		Random rng = new Random();
 		Country randomCountry = getAssignedCountries().get(rng.nextInt(getAssignedCountries().size()));
 
@@ -1379,7 +1368,7 @@ public class Player extends Observable implements Serializable{
 	 * Sets the strategy to benevolent bot and update its logger
 	 */
 	private void benevolentBotTurn(Player current_player, MapElements map_elements, GameScreen game_view) {
-		this.setStrategy(new BenevolentBot());
+		setStrategy(new BenevolentBot());
 		Random rng = new Random();
 		Country weakest_country = getWeakestCountry();
 
@@ -1443,7 +1432,7 @@ public class Player extends Observable implements Serializable{
 	 * Sets the strategy to aggressive bot and update its logger
 	 */
 	private void aggressiveBotTurn(Player current_player, MapElements map_elements, GameScreen game_view) {
-		this.setStrategy(new AggressiveBot());
+		setStrategy(new AggressiveBot());
 		Random rng = new Random();
 		Country strongest_country = getStrongestCountry();
 
