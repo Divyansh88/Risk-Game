@@ -14,9 +14,6 @@ import app.team21.risk.elements.Player;
  * @version 2.0.0
  */
 public class Country implements Serializable{
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public String country_name;
     public int x_cordinate;
@@ -94,7 +91,7 @@ public class Country implements Serializable{
     /**
      * getter method for player who own the country.
      *
-     * @return belongsToPlayer owner of the country (player object)
+     * @return belongs_to_player owner of the country (player object)
      */
     public Player getBelongsToPlayer() {
         return belongs_to_player;

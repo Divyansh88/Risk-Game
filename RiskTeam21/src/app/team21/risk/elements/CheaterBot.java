@@ -6,27 +6,25 @@ import java.io.Serializable;
 import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.views.GameScreen;
 /**
- * This class implements the strategy for Cheater bot
- * @author Yash Sheth
- *
+ * Last Updated on: 29/11/2018, Thursday 
+ * This class implements the strategy for cheater bot player.
+ * 
+ * @author Yash Sheth 
+ * @version 3.0.0
  */
 public class CheaterBot implements PlayerStrategy,Serializable {
-
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public Country country_from;
     public Country country_to;
     
     /**
-     * Overrides the attack phase for Cheater bot
-     * from the PlayerStrategy interface
+     * Overrides the attack phase for Cheater bot from the PlayerStrategy interface.
+     * 
      * @param country1 name of the attacker's country
      * @param country2 name of the defender's country
-     * @param game_view object of GameView class
+     * @param game_view object of GameScreen class
      * @param current_player object of Player class
-     * 
+     * @param map_elements map elements
      */
     @Override
     public void attack(String country1, String country2, GameScreen game_view, Player current_player,MapElements map_elements) {
@@ -44,13 +42,13 @@ public class CheaterBot implements PlayerStrategy,Serializable {
         }
     }
     /**
-     * Overrides the fortify phase for Cheater bot
-     * from the PlayerStrategy interface
+     * Overrides the fortify phase for Cheater bot from the PlayerStrategy interface.
+     * 
      * @param country1 name of the attacker's country
      * @param country2 name of the defender's country
-     * @param game_view object of GameView class
+     * @param game_view object of GameScreen class
      * @param current_player object of Player class
-     * 
+     * @param map_elements map elements
      */
     @Override
     public void fortify(String country1, String country2, GameScreen game_view, Player current_player,MapElements map_elements) {
@@ -62,12 +60,12 @@ public class CheaterBot implements PlayerStrategy,Serializable {
         }
     }
     /**
-     * Overrides the reinforce phase for Cheater bot
-     * from the PlayerStrategy interface
+     * Overrides the reinforce phase for Cheater bot from the PlayerStrategy interface.
+     * 
      * @param country name of the attacker's country
      * @param game_view object of GameView class
      * @param current_player object of Player class
-     * 
+     * @param map_elements map elements
      */
     @Override
     public void reinforce(String country, GameScreen game_view, Player current_player,MapElements map_elements) throws NullPointerException {
@@ -80,10 +78,11 @@ public class CheaterBot implements PlayerStrategy,Serializable {
     }
     /**
      * Checks if the defending player has lost countries.
+     * 
      * @param country_from object of Country class
      * @param country_to object of Country class
      * @param current_player object of Player class
-     * 
+     * @param game_view object of GameView class
      */
     private void defendingPlayerLostCountry(Country country_from, Country country_to, Player current_player,GameScreen game_view) {
 

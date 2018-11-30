@@ -20,19 +20,17 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Last Updated on: 07/11/2018, Wednesday  
+ * Last Updated on: 29/11/2018, Thursday  
  * This class file handles main game screen.
  * 
  * @author Yash Sheth and Divyansh Thakar and Samip Thakkar
- * @version 2.0.0
+ * @version 3.0.0
  */
 
 public class GameScreen implements Observer {
 	private FileSelectDialog file_select_dialog;
     private File selected_file;
     private boolean load_file=false;
-    
-
 
 	JButton btn_reinforcement, btn_attack, btn_fortify, btn_continue_rp, btn_ok_fp, btn_end_turn, btn_endturn_ep,
 	btn_attack_ap, btn_turnin_rp, btn_cards;
@@ -66,6 +64,8 @@ public class GameScreen implements Observer {
 	public String result="DRAW";
 
 	/**
+	 * This method will give player list.
+	 * 
 	 * @return the player_list
 	 */
 	public List<Player> getPlayerList() {
@@ -73,12 +73,16 @@ public class GameScreen implements Observer {
 	}
 
 	/**
+	 * This method will set player list.
+	 * 
 	 * @param player_list the player_list to set
 	 */
 	public void setPlayerList(List<Player> player_list) {
 		this.player_list = player_list;
 	}
 	/**
+	 * This method will check is file load.
+	 * 
 	 * @return the load_file
 	 */
 	public boolean isLoadFile() {
@@ -86,14 +90,15 @@ public class GameScreen implements Observer {
 	}
 
 	/**
+	 * This method set load file.
+	 * 
 	 * @param load_file the load_file to set
 	 */
 	public void setLoadFile(boolean load_file) {
 		this.load_file = load_file;
 	}
 	/**
-	 * This method will create view of main game screen and updates the value of
-	 * different components.
+	 * This method will create view of main game screen and updates the value of different components.
 	 * 
 	 * @param map_elements elements of map
 	 * @param player_list list of players
@@ -410,8 +415,10 @@ public class GameScreen implements Observer {
 			current_player.startTurn(current_player,player_list, map_elements, view);
 		}
 	}
+	
 	/**
-     * This method saves the game to the file
+     * This method saves the game to the file.
+     * 
      * @throws Exception it throws if there are any exceptions found
      */
     public  void saveGame() throws Exception{
@@ -423,7 +430,8 @@ public class GameScreen implements Observer {
     }
     
     /**
-     * This method will load game from the saved game instance
+     * This method will load game from the saved game instance.
+     * 
      * @param file name of the file where instance is saved
      */
     public void loadGame(String file) {

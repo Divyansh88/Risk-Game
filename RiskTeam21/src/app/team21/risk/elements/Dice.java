@@ -15,9 +15,6 @@ import java.util.Random;
  * @version 2.0.0
  */
 public class Dice implements Serializable {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	int number_of_dice; //number of Dice user wants to roll
     Integer[] dice_result; //the dice result example : first dice roll result will be stored in dice_result[0]

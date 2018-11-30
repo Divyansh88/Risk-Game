@@ -17,16 +17,13 @@ import app.team21.risk.views.GameScreen;
 import app.team21.risk.views.StartGame;
 
 /**
- * Last Updated on : 06/11/2018, Tuesday Player class that retrieves and assigns
- * different properties for the Player object.
+ * Last Updated on: 29/11/2018, Thursday 
+ * Player class that retrieves and assigns different properties for the Player object.
  * 
  * @author Yash Sheth
- * @version 2.0.0
+ * @version 3.0.0
  */
 public class Player extends Observable implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public String name;
 	public String history_text;
@@ -91,6 +88,11 @@ public class Player extends Observable implements Serializable{
 		this.type = type;
 	}
 
+	/**
+	 * This method will reset the data.
+	 * 
+	 * @param turns turns the data
+	 */
 	public void resetData(int turns){
 		assigned_countries = new ArrayList<Country>();
 		can_reinforce = false;
@@ -997,8 +999,7 @@ public class Player extends Observable implements Serializable{
 			// Check if at-least 2 armies are there on the attacking country.
 			if (!current_player.getName().equals(countryB.getBelongsToPlayer().getName())
 					&& current_player.getName().equals(countryA.getBelongsToPlayer().getName())) {
-				// Check if another country is occupied by an opponent and not
-				// by the currentPlayer.
+				// Check if another country is occupied by an opponent and not by the currentPlayer.
 
 			} else {
 				if (!current_player.is_tournament_mode) {
@@ -1173,8 +1174,7 @@ public class Player extends Observable implements Serializable{
 	}
 
 	/**
-	 * This method will execute the reinforce method from the PlayerStrategy
-	 * interface
+	 * This method will execute the reinforce method from the PlayerStrategy interface.
 	 * 
 	 * @param country
 	 *            name of the country where the armies need to reinforced
@@ -1189,8 +1189,7 @@ public class Player extends Observable implements Serializable{
 	}
 
 	/**
-	 * This method will execute the fortification method from the PlayerStrategy
-	 * interface
+	 * This method will execute the fortification method from the PlayerStrategy interface.
 	 * 
 	 * @param country1
 	 *            name of the attacker's country
@@ -1208,6 +1207,10 @@ public class Player extends Observable implements Serializable{
 
 	/**
 	 * Sets the strategy to cheater bot and update its logger
+	 * 
+	 * @param current_player current player
+	 * @param map_elements map elements
+	 * @param game_view object of GameScreen class
 	 */
 	private void cheaterBotTurn(Player current_player, MapElements map_elements, GameScreen game_view) {
 		setStrategy(new CheaterBot());
@@ -1264,8 +1267,7 @@ public class Player extends Observable implements Serializable{
 	}
 
 	/**
-	 * This method will check if attacker can attack to selected defender's
-	 * country
+	 * This method will check if attacker can attack to selected defender's country.
 	 * 
 	 * @param currentPlayer
 	 *            attacker
@@ -1292,7 +1294,11 @@ public class Player extends Observable implements Serializable{
 	}
 
 	/**
-	 * Sets the strategy to random bot and update its logger
+	 * Sets the strategy to random bot and update its logger.
+	 * 
+	 * @param current_player current player
+	 * @param map_elementsmap elements
+	 * @param game_view object of GameScreen class
 	 */
 	private void randomBotTurn(Player current_player, MapElements map_elements, GameScreen game_view) {
 		setStrategy(new RandomBot());
@@ -1365,7 +1371,11 @@ public class Player extends Observable implements Serializable{
 	}
 
 	/**
-	 * Sets the strategy to benevolent bot and update its logger
+	 * Sets the strategy to benevolent bot and update its logger.
+	 * 
+	 * @param current_player current player
+	 * @param map_elementsmap elements
+	 * @param game_view object of GameScreen class
 	 */
 	private void benevolentBotTurn(Player current_player, MapElements map_elements, GameScreen game_view) {
 		setStrategy(new BenevolentBot());
@@ -1429,7 +1439,11 @@ public class Player extends Observable implements Serializable{
 	}
 
 	/**
-	 * Sets the strategy to aggressive bot and update its logger
+	 * Sets the strategy to aggressive bot and update its logger.
+	 * 
+	 * @param current_player current player
+	 * @param map_elementsmap elements
+	 * @param game_view object of GameScreen class
 	 */
 	private void aggressiveBotTurn(Player current_player, MapElements map_elements, GameScreen game_view) {
 		setStrategy(new AggressiveBot());
@@ -1502,10 +1516,8 @@ public class Player extends Observable implements Serializable{
 	}
 
 	/**
-	 * This method will return strongest country of player
+	 * This method will return strongest country of player.
 	 * 
-	 * @param player
-	 *            player object
 	 * @return strongest country
 	 */
 	public Country getStrongestCountry() {
@@ -1529,11 +1541,9 @@ public class Player extends Observable implements Serializable{
 	}
 
 	/**
-	 * This method will return weakest country of player
+	 * This method will return weakest country of player.
 	 * 
-	 * @param player
-	 *            player object
-	 * @return strongest country
+	 * @return weakest country
 	 */
 	public Country getWeakestCountry() {
 		List<Country> player_countries = getAssignedCountries();

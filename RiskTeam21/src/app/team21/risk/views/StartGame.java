@@ -18,11 +18,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * Last Updated on: 07/11/2018, Wednesday 
+ * Last Updated on: 26/11/2018, Monday
  * This class file handles start game screen i.e. home screen.
  * 
  * @author Yash Sheth and Divyansh Thakar
- * @version 2.0.0
+ * @version 3.0.0
  */
 public class StartGame {
 	private static JFrame main_frame;

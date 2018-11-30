@@ -19,16 +19,12 @@ import app.team21.risk.elements.Country;
  * @version 2.0.0
  *
  */
-
 public class MapLoader {
-
 	static HashMap<String, String> map_details;
 	static List<Continent> continent_list;
 	static List<Country> country_list;
 	static HashMap<Continent, List<Country>> continent_country_map;
 	static HashMap<Country, List<Country>> country_neighbour_map;
-
-
 
 	/**
 	 * this map helps you to read the map file.
@@ -54,7 +50,7 @@ public class MapLoader {
 				map_elements.setCorrectMap(false);
 				map_elements.setErrorMessage(validation_message);
 				return map_elements;
-
+				
 			}
 
 			String line;

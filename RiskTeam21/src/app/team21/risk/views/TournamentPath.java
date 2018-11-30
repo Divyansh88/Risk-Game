@@ -25,11 +25,13 @@ import app.team21.risk.mapmodule.MapElements;
 import app.team21.risk.mapmodule.MapLoader;
 
 /**
- * @author Yash Sheth, Divyansh Thakar
- *
+ * Last Updated on: 26/11/2018, Monday
+ * This class file handles tournament mode related activities.
+ * 
+ * @author Yash Sheth and Divyansh Thakar
+ * @version 3.0.0
  */
 public class TournamentPath {
-
 	JPanel tournament_master_panel,player_maps_master_panel,player_type_panel,maps_panel,number_of_turn_panel,result_panel;
 	JButton btn_map1,btn_map2,btn_map3,btn_map4,btn_map5,btn_start_game,btn_back,btn_home;
 	JLabel lbl_number_of_turns,lbl_number_of_games,lbl_tournament_mode,lbl_result;
@@ -48,17 +50,26 @@ public class TournamentPath {
 	List<Player> final_player_list=new ArrayList<Player>();
 
 	/**
+	 * This method will get final player list.
+	 * 
 	 * @return the final_player_list
 	 */
-	public List<Player> getFinal_player_list() {
+	public List<Player> getFinalPlayerList() {
 		return final_player_list;
 	}
+	
 	/**
+	 * This method will set final player list.
+	 * 
 	 * @param final_player_list the final_player_list to set
 	 */
-	public void setFinal_player_list(List<Player> final_player_list) {
+	public void setFinalPlayerList(List<Player> final_player_list) {
 		this.final_player_list = final_player_list;
 	}
+	
+	/**
+	 * This method will ask about various tournament details.
+	 */
 	public void tournamentButton() {
 		JPanel test = new JPanel();
 		StartGame sg= new StartGame(); 
@@ -355,7 +366,7 @@ public class TournamentPath {
 				}else{
 					System.out.println("INVALID");
 				}
-				setFinal_player_list(player_list);
+				setFinalPlayerList(player_list);
 				
 				int games=Integer.valueOf(cb_games.getSelectedItem().toString());
 				StringBuilder sb=new StringBuilder();
@@ -366,10 +377,10 @@ public class TournamentPath {
 					sb.append("\n"+map_names.get(i)+"\n");
 					for(int j=1;j<=games;j++){
 						sb.append("\nGAME "+j);
-						for(Player p:getFinal_player_list()){
+						for(Player p:getFinalPlayerList()){
 							p.resetData(turns);
 						}
-						player_list=new ArrayList<Player>(getFinal_player_list());
+						player_list=new ArrayList<Player>(getFinalPlayerList());
 						MapElements map=mapper.get(i);
 						GameScreen gs=new GameScreen();
 						gs.tournament_mode=true;

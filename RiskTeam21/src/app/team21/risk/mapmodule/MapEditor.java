@@ -22,9 +22,9 @@ public class MapEditor {
 	/**
      * This method will add country in existing Map.
      *
-     * @param country     the country that you want to add
-     * @param map_elements     current map details
-     * @param neighbour_list  List of neighbour_country
+     * @param country the country that you want to add
+     * @param map_elements current map details
+     * @param neighbour_list list of neighbour_country
      */
     public void addCountry(Country country, MapElements map_elements, List<Country> neighbour_list) {
         if (country != null && !neighbour_list.isEmpty()) {

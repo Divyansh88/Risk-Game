@@ -23,11 +23,11 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- * Last Updated on: 07/11/2018, Wednesday 
+ * Last Updated on: 26/11/2018, Monday 
  * This class file handles play path screen.
  * 
  * @author Yash Sheth and Samip Thakkar
- * @version 2.0.0
+ * @version 3.0.0
  */
 public class PlayPath extends StartGame{
 	JPanel choose_player = new JPanel();
@@ -217,7 +217,6 @@ public class PlayPath extends StartGame{
 			break;
 		}
 		
-		
 		ok.addActionListener(new ActionListener() {
 			
 			@Override
@@ -261,6 +260,9 @@ public class PlayPath extends StartGame{
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 	}
 	
+	/**
+	 * This method will ask to select player type.
+	 */
 	public void playerTypes() {
 		JPanel test = new JPanel();
 		StartGame sg= new StartGame();

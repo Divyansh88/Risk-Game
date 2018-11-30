@@ -24,20 +24,17 @@ import app.team21.risk.views.GameScreen;
 
 
 /**
- * Last Updated on : 08/11/2018, Thursday 
+ * Last Updated on : 29/11/2018, Thursday 
  * GamePlay class that contains all the game play logic.
  * 
  * @author Yash Sheth and Samip Thakkar
- * @version 2.0.0
+ * @version 3.0.0
  */
 public class GamePlay extends Observable implements Serializable{
 	
 	static Player current_player;
 	static int player_count;
 	static int save_file_counter=1;
-	
-	
-	
 	
 	/**
 	 * this method will distribute countries to players.
@@ -254,29 +251,31 @@ public class GamePlay extends Observable implements Serializable{
 	}	
 	
 	/**
-     * This method will save the game .
-     * @param gameMap MapElements object at the point of saving the game
+     * This method will save the game.
+     * 
+     * @param game_map MapElements object at the point of saving the game
+     * @param game_view object of GameScreen class
      * @return true if function able to save the game else false
      */
-    public static boolean saveGame(MapElements gameMap,GameScreen game_view) {
+    public static boolean saveGame(MapElements game_map,GameScreen game_view) {
     	
     	FileOutputStream fout = null;
 		ObjectOutputStream oos = null;
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date today;
-        String fileName="";
+        String file_name="";
 		try {
 			today = formatter.parse(formatter.format(new Date()));
-			fileName=today.toString().replaceAll("00:00:00"," ").replaceAll("\\s+","").concat("_"+String.valueOf(save_file_counter++));
+			file_name=today.toString().replaceAll("00:00:00"," ").replaceAll("\\s+","").concat("_"+String.valueOf(save_file_counter++));
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
        
 		try {
-            fout = new FileOutputStream(fileName+".ser");
+            fout = new FileOutputStream(file_name+".ser");
 			oos = new ObjectOutputStream(fout);
-			game_view.updateStatus("Saved Game to "+fileName+".ser file");
-			oos.writeObject(gameMap);
+			game_view.updateStatus("Saved Game to "+file_name+".ser file");
+			oos.writeObject(game_map);
 
 		} catch (Exception ex) {
 
@@ -304,17 +303,17 @@ public class GamePlay extends Observable implements Serializable{
     }
     /**
      * This method will load the saved game
-     * @param fileName fileName that user gave while saving the map 
+     * @param file_name file name that user gave while saving the map 
      * @return true if function able to save the game else false
      */
-    public static MapElements loadGame(String fileName) {
+    public static MapElements loadGame(String file_name) {
     	FileInputStream fin = null;
 		ObjectInputStream ois = null;
-        MapElements gameMap = null;
+        MapElements game_map = null;
 		try {
-			fin = new FileInputStream(fileName);
+			fin = new FileInputStream(file_name);
 			ois = new ObjectInputStream(fin);
-			gameMap = (MapElements) ois.readObject();
+			game_map = (MapElements) ois.readObject();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -336,7 +335,7 @@ public class GamePlay extends Observable implements Serializable{
 			}
 
 		}
-		return gameMap;
+		return game_map;
 
     }
 

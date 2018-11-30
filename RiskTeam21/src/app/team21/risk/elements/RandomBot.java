@@ -10,16 +10,15 @@ import app.team21.risk.views.GameScreen;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Random;
-/**
- * This class implements the strategy of Random bot player
- * @author mudraparikh
- *
- */
-public class RandomBot implements PlayerStrategy ,Serializable{
 
-    /**
-	 * 
-	 */
+/**
+ * Last Updated on: 29/11/2018, Thursday 
+ * This class implements the strategy of Random bot player.
+ * 
+ * @author Yash Sheth
+ * @version 3.0.0
+ */
+public class RandomBot implements PlayerStrategy ,Serializable {
 	private static final long serialVersionUID = 1L;
 	public Country country_from;
     public Country country_to;
@@ -37,13 +36,13 @@ public class RandomBot implements PlayerStrategy ,Serializable{
     public Random rng;
     
     /**
-     * Overrides the attack phase for Random bot
-     * from he PlayerStrategy interface
+     * Overrides the attack phase for Random bot from he PlayerStrategy interface.
+     * 
      * @param country1 name of the attacker's country
      * @param country2 name of the defender's country
-     * @param gameView object of GameView class
+     * @param game_view object of GameScreen class
      * @param current_player object of Player class
-     * 
+     * @param map_elements map elements
      */
     @Override
     public void attack(String country1, String country2, GameScreen game_view, Player current_player,MapElements map_elements) {
@@ -128,12 +127,14 @@ public class RandomBot implements PlayerStrategy ,Serializable{
         }
 
     }
+    
     /**
-     * Checks if the defending player has lost armies
+     * Checks if the defending player has lost armies.
+     * 
      * @param country_from object of Country class
      * @param country_to object of Country class
      * @param current_player object of Player class
-     * 
+     * @param game_view object of GameScreen class
      */
     private void defendingPlayerLostCountry(Country country_from, Country country_to, Player current_player, GameScreen game_view) {
         // Remove country from defender's list of occupied territories and adds to attacker's list
@@ -159,20 +160,20 @@ public class RandomBot implements PlayerStrategy ,Serializable{
         //current_player.addObserver(new PlayerView());
         current_player.updateDominationDetails();
     }
+    
     /**
-     * Updates the armies of the attacker/defender based on the dice roll result
+     * Updates the armies of the attacker/defender based on the dice roll result.
+     * 
      * @param attacker_losses number of armies lost by attacker
      * @param defender_losses number of armies lost by defender
-     * 
      */
     private void updateArmiesBasedOnDiceResult(int attacker_losses, int defender_losses) {
         country_from.subtractArmy(attacker_losses);
         country_to.subtractArmy(defender_losses);
     }
+    
     /**
-     * Compares the dice results for attacker and defender
-     * and calculates the army loss for them
-     * 
+     * Compares the dice results for attacker and defender and calculates the army loss for them.
      */
     private void compareDiceResultsAndCalculateLosses() {
         // Calculate losses
@@ -192,9 +193,11 @@ public class RandomBot implements PlayerStrategy ,Serializable{
             }
         }
     }
+    
     /**
-     * Displays the dialogBox for dice roll of defender
-     * @param gameView object of GameView class
+     * Displays the dialogBox for dice roll of defender.
+     * 
+     * @param game_view object of GameScreen class
      * @param current_player  object of Player class
      * @return JOptionPane message
      */
@@ -209,16 +212,20 @@ public class RandomBot implements PlayerStrategy ,Serializable{
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
                 selectOptions[0]);
     }
+    
     /**
-     * Number of dice roll for defender depending on the armies
+     * Number of dice roll for defender depending on the armies.
+     * 
      * @param country object of Country class
      * @return number of dices that can be rolled
      */
     private int getMaxNumberOfDicesForDefender(Country country) {
         return country.getCurrentArmiesDeployed() >= 2 ? 2 : 1;
     }
+    
     /**
-     * Checks if player can still continue to attack depending on the armies left
+     * Checks if player can still continue to attack depending on the armies left.
+     * 
      * @param country_from object of Country class
      * @param country_to object of Country class
      * @return boolean value true or false
@@ -230,13 +237,13 @@ public class RandomBot implements PlayerStrategy ,Serializable{
         return false;
     }
     /**
-     * Overrides fortify phase for Random bot
-     * from the PlayerStrategy interface
+     * Overrides fortify phase for Random bot from the PlayerStrategy interface.
+     * 
      * @param country1 name of the attacker's country
      * @param country2 name of the defender's country
-     * @param gameView object of GameView class
+     * @param game_view object of game_view class
      * @param current_player object of Player class
-     * 
+     * @param map_elements map elements
      */
     @Override
     public void fortify(String country1, String country2, GameScreen game_view, Player current_player,MapElements map_elements) {
@@ -256,11 +263,12 @@ public class RandomBot implements PlayerStrategy ,Serializable{
         current_player.updatePhaseDetails(current_player.getName()+" moved "+armies+" army from "+country_from.getCountryName()+" to " + country_to.getCountryName());
     }
     /**
-     * Overrides reinforcement phase for Random bot
-     * from the PlayerStrategy interface
+     * Overrides reinforcement phase for Random bot from the PlayerStrategy interface.
+     * 
      * @param country name of country where armies are to be reinforced
-     * @param gameView object of GameView class
+     * @param game_view object of GameScreen class
      * @param current_player object of Player class
+     * @param map_elements map elements
      */
     @Override
     public void reinforce(String country, GameScreen game_view, Player current_player,MapElements map_elements) {

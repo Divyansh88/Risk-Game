@@ -16,10 +16,6 @@ import app.team21.risk.gamemodule.Deck;
  * @version 2.0.0
  */
 public class MapElements implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static MapElements map_elements;
 	public HashMap<String, String> map_details=new HashMap<String, String>();
@@ -33,9 +29,6 @@ public class MapElements implements Serializable {
 	public String phase_details;
 	public Deck deck;
 	public String map_history_text="";
-
-	
-
 
 	/**
     * Default Constructor

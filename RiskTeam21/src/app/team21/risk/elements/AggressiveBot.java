@@ -11,14 +11,13 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
- * This class implements the strategy for aggressive bot player
- * @author Yash Sheth
- *
+ * Last Updated on: 29/11/2018, Thursday 
+ * This class implements the strategy for aggressive bot player.
+ * 
+ * @author Yash Sheth 
+ * @version 3.0.0
  */
 public class AggressiveBot implements PlayerStrategy,Serializable {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public Country country_from;
     public Country country_to;
@@ -35,14 +34,13 @@ public class AggressiveBot implements PlayerStrategy,Serializable {
     public Random rng;
     
     /**
-     * Overrides attack phase for aggressive bot player
-     * from the PlayerStrategy interface
+     * Overrides attack phase for aggressive bot player from the PlayerStrategy interface.
      * 
      * @param country1 name of the attacker's country
      * @param country2 name of the defender's country
-     * @param gameView object of GameView class
+     * @param game_view object of GameScreen class
      * @param current_player object of the Player class
-     * 
+     * @param map_elements map elements
      */
     @Override
     public void attack(String country1, String country2, GameScreen game_view, Player current_player,MapElements map_elements) {
@@ -130,11 +128,11 @@ public class AggressiveBot implements PlayerStrategy,Serializable {
     }
     
     /**
-     * Displays the dialogBox for dice roll of defender
-     * @param gameView object of GameView class
+     * Displays the dialogBox for dice roll of defender.
+     * 
+     * @param game_view object of GameScreen class
      * @param current_player object of player class
      * @return JOptionPane message
-     * 
      */
     private int showDefenderDiceDialogBox(GameScreen game_view, Player current_player) {
         Integer[] selectOptions = new Integer[current_player.getMaxDiceDefender(country_to)];
@@ -149,11 +147,11 @@ public class AggressiveBot implements PlayerStrategy,Serializable {
     }
     
     /**
-     * Checks if player can still continue to attack depending on the armies left
-     * @param country_from object of country class
-     * @param country_to object of country class
-     * @return boolean value true or false
+     * Checks if player can still continue to attack depending on the armies left.
      * 
+     * @param country_from object of Country class
+     * @param country_to object of Country class
+     * @return boolean value true or false
      */
     private boolean checkBotCanContinue(Country country_from, Country country_to) {
     	if(country_from.getCurrentArmiesDeployed() > 1 && !country_to.getBelongsToPlayer().getName().equals(country_from.getBelongsToPlayer().getName())){
@@ -163,11 +161,11 @@ public class AggressiveBot implements PlayerStrategy,Serializable {
     }
     
     /**
-     * Checks for result after the attack phase is over
-     * @param country_from object of country class
-     * @param country_to object of country class
-     * @param current_player object of player class
+     * Checks for result after the attack phase is over.
      * 
+     * @param country_from object of Country class
+     * @param country_to object of Country class
+     * @param current_player object of player class
      */
     private void defenderLostCountry(Country country_from, Country country_to, Player current_player,GameScreen game_view) {
 
@@ -196,9 +194,7 @@ public class AggressiveBot implements PlayerStrategy,Serializable {
     }
     
     /**
-     * Compares the dice results for attacker and defender
-     * and calculates the army loss for them
-     * 
+     * Compares the dice results for attacker and defender and calculates the army loss for them.
      */
     private void calculateLosses() {
         // Calculate losses
@@ -221,13 +217,13 @@ public class AggressiveBot implements PlayerStrategy,Serializable {
     
     
     /**
-     * Overrides fortify phase for aggressive bot
-     * from the PlayerStrategy Interface
+     * Overrides fortify phase for aggressive bot from the PlayerStrategy Interface.
+     * 
      * @param country1 name of the attacker's country
      * @param country2 name of the defender's country
-     * @param gameView object of GameView class
+     * @param game_view object of GameScreen
      * @param current_player object of player class
-     * 
+     * @param map_elements map elements
      */
     @Override
     public void fortify(String country1, String country2, GameScreen game_view, Player current_player,MapElements map_elements) {
@@ -243,12 +239,12 @@ public class AggressiveBot implements PlayerStrategy,Serializable {
     }
     
     /**
-     * Overrides reinforcement phase for aggressive bot
-     * from the PlaerStrategy Interface
-     * @param country name of country where armies are to be reinforced
-     * @param gameView object of GameView class
-     * @param current_player object of Player class
+     * Overrides reinforcement phase for aggressive bot from the PlayerStrategy Interface.
      * 
+     * @param country name of country where armies are to be reinforced
+     * @param game_view object of GameScreen class
+     * @param current_player object of Player class
+     * @param map_elements map elements
      */
     @Override
     public void reinforce(String country, GameScreen game_view, Player current_player,MapElements map_elements) {

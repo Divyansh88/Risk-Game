@@ -5,14 +5,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 
 /**
- * File Select Dialog class to select the map file
- *
- * @author prashantp95
+ * Last Updated on: 29/11/2018, Thursday 
+ * File Select Dialog class to select the map file.
+ * 
+ * @author Yash Sheth
+ * @version 3.0.0
  */
 public class FileSelectDialog extends JFileChooser {
 
     /**
-     * This constructor allows to select the map file and load the file location
+     * This constructor allows to select the map file and load the file location.
      */
     public FileSelectDialog() {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Map FILES", "map");

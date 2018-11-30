@@ -8,8 +8,6 @@ import java.util.List;
 import app.team21.risk.elements.Card;
 import app.team21.risk.elements.Country;
 
-
-
 /**
  * Last Updated on : 06/11/2018, Tuesday 
  * Allows the creation of the Risk deck containing the 42 Risk cards.
@@ -17,8 +15,7 @@ import app.team21.risk.elements.Country;
  * @author Yash Sheth
  * @version 2.0.0
  */
-public class Deck implements Serializable{
-
+public class Deck implements Serializable {
     private int i;
 
     private String input;
@@ -34,7 +31,6 @@ public class Deck implements Serializable{
     * @param countries list of country names
     */
     public Deck(List<Country> countries) {
-
         Collections.shuffle(countries);
 
         //Types of cards
@@ -63,7 +59,6 @@ public class Deck implements Serializable{
      * @return card object
      */
     public Card draw() {
-
         draw_card = deck.get(0);
         deck.remove(0);
 
@@ -76,7 +71,6 @@ public class Deck implements Serializable{
     * @param card name of the card which is to be added to deck
     */
     public void add(Card card) {
-
         deck.add(card);
     }
 
@@ -84,7 +78,6 @@ public class Deck implements Serializable{
     * Shuffle the deck of cards.
     */
     public void shuffle() {
-
         Collections.shuffle(deck);
     }
 }
