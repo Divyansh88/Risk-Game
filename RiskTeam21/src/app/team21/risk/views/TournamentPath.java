@@ -47,6 +47,7 @@ public class TournamentPath {
 	List<String> map_names=new ArrayList<String>();
 	JComboBox players;
 	JScrollPane scroll_panel;
+	public int no_players;
 	List<Player> final_player_list=new ArrayList<Player>();
 
 	/**
@@ -126,7 +127,7 @@ public class TournamentPath {
 		cb_player3 = new JComboBox(types);
 		cb_player4 = new JComboBox(types);
 
-		int no_players = Integer.valueOf(players.getSelectedItem().toString());
+		no_players = Integer.valueOf(players.getSelectedItem().toString());
 		System.out.println("items"+no_players);
 		if(no_players==2) {
 			player_type_panel.add(tf_player1);
@@ -301,95 +302,7 @@ public class TournamentPath {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				List<Player> player_list = new ArrayList<Player>();
-
-				if(no_players==2) {
-
-					String type=cb_player1.getSelectedItem().toString();
-					Player p=new Player(tf_player1.getText(),true,type.toLowerCase());
-					p.setTournamentMode(true);
-					p.turns=10;
-					player_list.add(p);
-
-					type=cb_player2.getSelectedItem().toString();
-					p=new Player(tf_player2.getText(),true,type.toLowerCase());
-					p.setTournamentMode(true);
-					p.turns=10;
-					player_list.add(p);
-
-				}
-				else if(no_players==3) {
-					String type=cb_player1.getSelectedItem().toString();
-					Player p=new Player(tf_player1.getText(),true,type.toLowerCase());
-					p.setTournamentMode(true);
-					p.turns=10;
-					player_list.add(p);
-					
-					type=cb_player2.getSelectedItem().toString();
-					p=new Player(tf_player2.getText(),true,type.toLowerCase());
-					p.setTournamentMode(true);
-					p.turns=10;
-					player_list.add(p);
-					
-					type=cb_player3.getSelectedItem().toString();
-					p=new Player(tf_player3.getText(),true,type.toLowerCase());
-					p.setTournamentMode(true);
-					p.turns=10;
-					player_list.add(p);
-
-				}
-				else if(no_players==4) {
-					String type=cb_player1.getSelectedItem().toString();
-					Player p=new Player(tf_player1.getText(),true,type.toLowerCase());
-					p.setTournamentMode(true);
-					p.turns=10;
-					player_list.add(p);
-					
-					type=cb_player2.getSelectedItem().toString();
-					p=new Player(tf_player2.getText(),true,type.toLowerCase());
-					p.setTournamentMode(true);
-					p.turns=10;
-					player_list.add(p);
-					
-					type=cb_player3.getSelectedItem().toString();
-					p=new Player(tf_player3.getText(),true,type.toLowerCase());
-					p.setTournamentMode(true);
-					p.turns=10;
-					player_list.add(p);
-					
-					type=cb_player4.getSelectedItem().toString();
-					p=new Player(tf_player4.getText(),true,type.toLowerCase());
-					p.setTournamentMode(true);
-					p.turns=10;
-					player_list.add(p);
-
-				}else{
-					System.out.println("INVALID");
-				}
-				setFinalPlayerList(player_list);
-				
-				int games=Integer.valueOf(cb_games.getSelectedItem().toString());
-				StringBuilder sb=new StringBuilder();
-				
-				int turns=Integer.valueOf(tf_turn_value.getText().toString());
-				
-				for(int i=0;i<mapper.size();i++){
-					sb.append("\n"+map_names.get(i)+"\n");
-					for(int j=1;j<=games;j++){
-						sb.append("\nGAME "+j);
-						for(Player p:getFinalPlayerList()){
-							p.resetData(turns);
-						}
-						player_list=new ArrayList<Player>(getFinalPlayerList());
-						MapElements map=mapper.get(i);
-						GameScreen gs=new GameScreen();
-						gs.tournament_mode=true;
-						gs.playerContinueButton(map,player_list, 1);
-						sb.append(" "+gs.result);
-					}
-				}
-				text_area_result.setText("\n\n"+sb.toString());
-				System.out.println(""+sb.toString());
+				playTournament();
 			}
 		});
 
@@ -458,5 +371,97 @@ public class TournamentPath {
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+	}
+	
+	public void playTournament(){
+		List<Player> player_list = new ArrayList<Player>();
+
+		if(no_players==2) {
+
+			String type=cb_player1.getSelectedItem().toString();
+			Player p=new Player(tf_player1.getText(),true,type.toLowerCase());
+			p.setTournamentMode(true);
+			p.turns=10;
+			player_list.add(p);
+
+			type=cb_player2.getSelectedItem().toString();
+			p=new Player(tf_player2.getText(),true,type.toLowerCase());
+			p.setTournamentMode(true);
+			p.turns=10;
+			player_list.add(p);
+
+		}
+		else if(no_players==3) {
+			String type=cb_player1.getSelectedItem().toString();
+			Player p=new Player(tf_player1.getText(),true,type.toLowerCase());
+			p.setTournamentMode(true);
+			p.turns=10;
+			player_list.add(p);
+			
+			type=cb_player2.getSelectedItem().toString();
+			p=new Player(tf_player2.getText(),true,type.toLowerCase());
+			p.setTournamentMode(true);
+			p.turns=10;
+			player_list.add(p);
+			
+			type=cb_player3.getSelectedItem().toString();
+			p=new Player(tf_player3.getText(),true,type.toLowerCase());
+			p.setTournamentMode(true);
+			p.turns=10;
+			player_list.add(p);
+
+		}
+		else if(no_players==4) {
+			String type=cb_player1.getSelectedItem().toString();
+			Player p=new Player(tf_player1.getText(),true,type.toLowerCase());
+			p.setTournamentMode(true);
+			p.turns=10;
+			player_list.add(p);
+			
+			type=cb_player2.getSelectedItem().toString();
+			p=new Player(tf_player2.getText(),true,type.toLowerCase());
+			p.setTournamentMode(true);
+			p.turns=10;
+			player_list.add(p);
+			
+			type=cb_player3.getSelectedItem().toString();
+			p=new Player(tf_player3.getText(),true,type.toLowerCase());
+			p.setTournamentMode(true);
+			p.turns=10;
+			player_list.add(p);
+			
+			type=cb_player4.getSelectedItem().toString();
+			p=new Player(tf_player4.getText(),true,type.toLowerCase());
+			p.setTournamentMode(true);
+			p.turns=10;
+			player_list.add(p);
+
+		}else{
+			System.out.println("INVALID");
+		}
+		setFinalPlayerList(player_list);
+		
+		int games=Integer.valueOf(cb_games.getSelectedItem().toString());
+		StringBuilder sb=new StringBuilder();
+		
+		int turns=Integer.valueOf(tf_turn_value.getText().toString());
+		
+		for(int i=0;i<mapper.size();i++){
+			sb.append("\n"+map_names.get(i)+"\n");
+			for(int j=1;j<=games;j++){
+				sb.append("\nGAME "+j);
+				for(Player p:getFinalPlayerList()){
+					p.resetData(turns);
+				}
+				player_list=new ArrayList<Player>(getFinalPlayerList());
+				MapElements map=mapper.get(i);
+				GameScreen gs=new GameScreen();
+				gs.tournament_mode=true;
+				gs.playerContinueButton(map,player_list, 1);
+				sb.append(" "+gs.result);
+			}
+		}
+		text_area_result.setText("\n\n"+sb.toString());
+		System.out.println(""+sb.toString());
 	}
 }

@@ -24,7 +24,7 @@ public class MapElements implements Serializable {
 	public HashMap<Country, List<Country>> country_neighbour_map=new HashMap<Country, List<Country>>();
 	public List<Player> player_list = new ArrayList<Player>();
 	public boolean is_correct_map = true;
-	public String error_message;
+	public String error_message="";
 	public Player current_player;
 	public String phase_details;
 	public Deck deck;
@@ -82,6 +82,16 @@ public class MapElements implements Serializable {
 	 */
 	public static MapElements getInstance() {
 		return getInstance(null);
+	}
+	
+	public void resetData(){
+		map_details=new HashMap<String, String>();
+		continent_list=new ArrayList<Continent>();
+		continent_country_map=new HashMap<Continent, List<Country>>();
+		country_neighbour_map=new HashMap<Country, List<Country>>();
+		player_list = new ArrayList<Player>();
+		is_correct_map = true;
+		error_message="";
 	}
 
 	/**
@@ -246,7 +256,7 @@ public class MapElements implements Serializable {
 	 *
 	 * @return player_list player details
 	 */
-	public List<Player> getplayer_list() {
+	public List<Player> getPlayerList() {
 		return player_list;
 	}
 
@@ -255,7 +265,7 @@ public class MapElements implements Serializable {
 	 *
 	 * @param player_list details of players
 	 */
-	public void setplayer_list(List<Player> player_list) {
+	public void setPlayerList(List<Player> player_list) {
 		this.player_list = player_list;
 	}
 

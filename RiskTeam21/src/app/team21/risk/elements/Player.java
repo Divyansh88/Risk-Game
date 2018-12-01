@@ -994,26 +994,28 @@ public class Player extends Observable implements Serializable{
 	 *            defender's country
 	 * @return true if attacker can attack else false
 	 */
-	protected boolean isAttackValid(Player current_player, Country countryA, Country countryB, GameScreen game_view) {
+	public boolean isAttackValid(Player current_player, Country countryA, Country countryB, GameScreen game_view) {
 		if (countryA.getCurrentArmiesDeployed() > 1 && !current_player.hasBotWon()) {
 			// Check if at-least 2 armies are there on the attacking country.
 			if (!current_player.getName().equals(countryB.getBelongsToPlayer().getName())
 					&& current_player.getName().equals(countryA.getBelongsToPlayer().getName())) {
 				// Check if another country is occupied by an opponent and not by the currentPlayer.
-
+					return true;
 			} else {
 				if (!current_player.is_tournament_mode) {
 					game_view.updateView("You cannot attack your own country.");
+					
 				}
+				return false;
 			}
 		} else {
 			if (!has_bot_won) {
 				game_view.updateView("You must have more than 1 army on " + countryA.getCountryName()
 						+ " if you wish to attack from it.");
 			}
-
+			return false;
 		}
-		return false;
+		
 	}
 
 	/**
@@ -1200,8 +1202,7 @@ public class Player extends Observable implements Serializable{
 	 * @param model
 	 *            object of Player class
 	 */
-	public void executeFortification(String country1, String country2, GameScreen game_view, Player model,
-			MapElements map_elements) {
+	public void executeFortification(String country1, String country2, GameScreen game_view, Player model,MapElements map_elements) {
 		this.strategy.fortify(country1, country2, game_view, model, map_elements);
 	}
 

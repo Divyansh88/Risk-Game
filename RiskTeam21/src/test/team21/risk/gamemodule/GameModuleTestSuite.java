@@ -10,7 +10,10 @@ import org.junit.runners.Suite;
 
 	TestReinforceArmies.class, 
 	TestValidMap.class,
-	TestDeckCards.class
+	TestDeckCards.class,
+	TestSaveGame.class,
+	TestLoadGame.class,
+	
 })
 
 /**

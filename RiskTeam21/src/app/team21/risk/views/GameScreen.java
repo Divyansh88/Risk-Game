@@ -424,7 +424,7 @@ public class GameScreen implements Observer {
     public  void saveGame() throws Exception{
         map_elements.setCurrentPlayer(current_player);
         map_elements.setDeck(deck);
-        map_elements.setplayer_list(player_list);
+        map_elements.setPlayerList(player_list);
         map_elements.setMapHistoryText(text_area_game_history.getText());
         GamePlay.saveGame(map_elements,this);
     }
@@ -439,7 +439,7 @@ public class GameScreen implements Observer {
     	MapElements map_elements=GamePlay.loadGame(file);
         gs.current_player=map_elements.getCurrentPlayer();
         gs.deck = map_elements.getDeck();
-        gs.setPlayerList(map_elements.getplayer_list());
+        gs.setPlayerList(map_elements.getPlayerList());
         gs.setLoadFile(true);
         gs.map_elements=map_elements;
         gs.playerContinueButton(map_elements,player_list,current_player.getTurnValue());

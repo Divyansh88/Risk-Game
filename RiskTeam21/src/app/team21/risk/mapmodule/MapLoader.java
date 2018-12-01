@@ -40,8 +40,11 @@ public class MapLoader {
 		boolean is_continent_present = false;// to check [Continent] is available
 											// in file or not
 		boolean is_territory_present = false;// to check [Territory] is
-												// available in file or not
+			
+		
+		// available in file or not
 		MapElements map_elements = MapElements.getInstance();
+		map_elements.resetData();
 
 		try {
 			File file = new File(file_path);
@@ -108,7 +111,7 @@ public class MapLoader {
 							for (Country c : country_list) {
 								country_neighbour_map.put(c, c.getNeighbourNodes());
 							}
-							for (Continent continent : map_elements.getInstance().getContinentList()) {
+							for (Continent continent : map_elements.getContinentList()) {
 								continent.setMemberCountriesList(
 								continent_country_map.get(new Continent(continent.getContinentName())));
 								new_continent_list.add(continent);
@@ -131,7 +134,7 @@ public class MapLoader {
 			checkControlValue(map_elements);
 			if(!checkUnconnectedContinent(map_elements)){
 				map_elements.setCorrectMap(false);
-				System.out.println("Inalid Map File. Unconnected Continent Found.");
+				System.out.println("Invalid Map File. Unconnected Continent Found.");
 			}
 			
 			
@@ -302,6 +305,8 @@ public class MapLoader {
     	for (Entry<Continent, List<Country>> entry : map_elements.getContinentCountryMap().entrySet()) {
             Continent continent = entry.getKey();
             List<Country> countries = entry.getValue();
+            if(countries.size()==1&&countries.get(0).getNeighbourNodes().size()>0)
+            	return true;
             if(continent==null || countries.isEmpty())
             	return false;
             else{
@@ -309,6 +314,8 @@ public class MapLoader {
             	int countryCount=0;
             	for(Country neighbour:country.getNeighbourNodes()) {
             		neighbour=map_elements.getCountry(neighbour.getCountryName());
+            		if(neighbour==null)
+            			return false;
             		// check if all neighbors belongs to other continent
             		if(!neighbour.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
             			    countryCount++;

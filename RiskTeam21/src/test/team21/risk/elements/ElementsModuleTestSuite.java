@@ -13,7 +13,18 @@ import org.junit.runners.Suite;
 	TestRollDice.class,
 	TestExchangeArmies.class,
 	TestMaxDiceAttacker.class,
-	TestMaxDiceDefender.class
+	TestMaxDiceDefender.class,
+	TestAttack.class,
+	TestAttackContinue.class,
+	TestCalculateLosses.class,
+	TestDeckCards.class,
+	TestFortify.class,
+	TestReinforce.class,
+	TestStartupReinforce.class,
+	TestStartupAttack.class,
+	TestStartupFortification.class,
+	TestStrongestCountry.class,
+	TestWeakestCountry.class
 })
 
 /**

@@ -96,8 +96,6 @@ public class PlayPath extends StartGame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String selected_map = maps.getSelectedItem().toString();
-				System.out.println("SELECTED MAP"+selected_map);
-				
 				if(MapLoader.readMapFile(file_path+selected_map).isCorrectMap()){
 					map_elements=MapLoader.readMapFile(file_path+selected_map);
 					selectPlayers();

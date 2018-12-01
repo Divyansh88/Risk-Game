@@ -32,9 +32,9 @@ import app.team21.risk.views.GameScreen;
  */
 public class GamePlay extends Observable implements Serializable{
 	
-	static Player current_player;
-	static int player_count;
-	static int save_file_counter=1;
+	public static Player current_player;
+	public static int player_count;
+	public static int save_file_counter=1;
 	
 	/**
 	 * this method will distribute countries to players.

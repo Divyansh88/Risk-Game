@@ -27,7 +27,7 @@ public class TestReinforceArmies {
 	private MapElements elements;
     private MapLoader loader;
     GamePlay game_play;
-    private Player player1,player2;
+    private Player player1,player2,player3,player4,player5;
     String file_path="RiskTeam21/src/app/team21/risk/maps/World.map";
 	
     /**
@@ -41,6 +41,9 @@ public class TestReinforceArmies {
     	
     	player1 = new Player("Player 1",false,"human");
     	player2 = new Player("Player 2",false,"human");
+    	player3 = new Player("Player 3",false,"human");
+    	player4 = new Player("Player 4",false,"human");
+    	player5 = new Player("Player 4",false,"human");
     	
     	game_play = new GamePlay();
     	
