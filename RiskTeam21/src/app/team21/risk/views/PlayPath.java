@@ -66,16 +66,16 @@ public class PlayPath extends StartGame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
+				JFileChooser file_chooser = new JFileChooser();
 			  	 
-	  	        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
+	  	        file_chooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
 	  	        FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP file", "map");
-	  	        fileChooser.setFileFilter(filter);
-	  	        fileChooser.setAcceptAllFileFilterUsed(false);
+	  	        file_chooser.setFileFilter(filter);
+	  	        file_chooser.setAcceptAllFileFilterUsed(false);
 	  	 
-	  	        int bopen = fileChooser.showOpenDialog(null); //open the dialog box
+	  	        int bopen = file_chooser.showOpenDialog(null); //open the dialog box
 	  	        if (bopen == JFileChooser.APPROVE_OPTION) {
-	  	        	browse_file_path=fileChooser.getSelectedFile().toString();
+	  	        	browse_file_path=file_chooser.getSelectedFile().toString();
 //	  	        	map_elements=new MapElements();
 //	  	        	map_loader.readMapFile(browse_file_path);
 	  	        	if(MapLoader.readMapFile(browse_file_path).isCorrectMap()){

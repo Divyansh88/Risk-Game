@@ -19,7 +19,7 @@ import app.team21.risk.mapmodule.MapLoader;
 public class TestControlValue{
 	private MapElements elements;//gamemap
     private MapLoader loader;//mapmodel
-    private String filePath;
+    private String file_path;
     
     /**
      * This is method initializes important objects and variables used in the test.
@@ -29,19 +29,19 @@ public class TestControlValue{
     public void init() {
     	loader = new MapLoader();
     	elements = MapElements.getInstance();
-    	filePath = "RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
+    	file_path = "RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
     }
     
     /**
      * This method checks control values in map file.
      * 
-     * @throws Exception
+     * @throws Exception IO exceptions
      */
     @Test
     public void testControlValue() throws Exception {
     	System.out.println("**************************************\n");
 		System.out.println("TestControlValue");
-    	elements = loader.readMapFile(filePath + "test_control_values.map");
+    	elements = loader.readMapFile(file_path + "test_control_values.map");
         assertEquals(false, elements.isCorrectMap());
     }
 }

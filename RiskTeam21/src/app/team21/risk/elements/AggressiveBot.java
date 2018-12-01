@@ -18,7 +18,7 @@ import java.util.Random;
  * @version 3.0.0
  */
 public class AggressiveBot implements PlayerStrategy,Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serial_version_UID = 1L;
 	public Country country_from;
     public Country country_to;
     public Dice dice;
@@ -135,15 +135,15 @@ public class AggressiveBot implements PlayerStrategy,Serializable {
      * @return JOptionPane message
      */
     private int showDefenderDiceDialogBox(GameScreen game_view, Player current_player) {
-        Integer[] selectOptions = new Integer[current_player.getMaxDiceDefender(country_to)];
-        for (int i = 0; i < selectOptions.length; i++) {
-            selectOptions[i] = i + 1;
+        Integer[] select_options = new Integer[current_player.getMaxDiceDefender(country_to)];
+        for (int i = 0; i < select_options.length; i++) {
+            select_options[i] = i + 1;
         }
         current_player.updatePhaseDetails(country_to.getBelongsToPlayer().getName()+" is Defending ");
         return (Integer) JOptionPane.showInputDialog(null,
                 country_to.getBelongsToPlayer().getName() + ", you are defending " + country_to.getCountryName() + " from " + country_from.getBelongsToPlayer().getName() + "! How many dice will you roll?",
-                "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
-                selectOptions[0]);
+                "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), select_options,
+                select_options[0]);
     }
     
     /**

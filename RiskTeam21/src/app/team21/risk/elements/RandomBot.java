@@ -19,7 +19,7 @@ import java.util.Random;
  * @version 3.0.0
  */
 public class RandomBot implements PlayerStrategy ,Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serial_version_UID = 1L;
 	public Country country_from;
     public Country country_to;
 
@@ -50,8 +50,8 @@ public class RandomBot implements PlayerStrategy ,Serializable {
         country_to = map_elements.getCountry(country2);
         
         rng = new Random();
-        int randomTimeAttacks = rng.nextInt(9)+1;
-        while(randomTimeAttacks > 0){
+        int random_time_attacks = rng.nextInt(9)+1;
+        while(random_time_attacks > 0){
             if(checkPlayerTurnCanContinue(country_from,country_to)){
                 dice = new Dice();
 
@@ -91,8 +91,8 @@ public class RandomBot implements PlayerStrategy ,Serializable {
                     game_view.updateView(" " + attackerRoll + " ");
                 }
                 game_view.updateView("\n"+country_to.getBelongsToPlayer().getName()+" (defender) threw  dice(s) : ");
-                for (int defenderRoll : defender_rolls) {
-                    game_view.updateView(" " + defenderRoll + " ");
+                for (int defender_roll : defender_rolls) {
+                    game_view.updateView(" " + defender_roll + " ");
                 }
                 // Rolls arrays have been ordered in descending order. Index 0 = highest pair
                 compareDiceResultsAndCalculateLosses();
@@ -118,7 +118,7 @@ public class RandomBot implements PlayerStrategy ,Serializable {
                     game_view.updateView("" + current_player.getName() + " has won the game ! Congratulations ! ");
                     current_player.updatePhaseDetails(current_player.getName() + "Won");
                 }
-                randomTimeAttacks--;
+                random_time_attacks--;
 
             }else {
                 game_view.updateView("Looks like random player type cannot attack anymore ! ");
@@ -152,10 +152,10 @@ public class RandomBot implements PlayerStrategy ,Serializable {
         //The attacking player must then place a number of armies
         //in the conquered country which is greater or equal than the number of dice that was used in the attack that
         //resulted in conquering the country
-        int moveArmies = attacker_dice;
+        int move_armies = attacker_dice;
 
-        country_from.subtractArmy(moveArmies);
-        country_to.addArmy(moveArmies);
+        country_from.subtractArmy(move_armies);
+        country_to.addArmy(move_armies);
         current_player.setCanGetCard(true);
         //current_player.addObserver(new PlayerView());
         current_player.updateDominationDetails();
@@ -202,15 +202,15 @@ public class RandomBot implements PlayerStrategy ,Serializable {
      * @return JOptionPane message
      */
     private int showDefenderDiceDialogBox(GameScreen game_view, Player current_player) {
-        Integer[] selectOptions = new Integer[getMaxNumberOfDicesForDefender(country_to)];
-        for (int i = 0; i < selectOptions.length; i++) {
-            selectOptions[i] = i + 1;
+        Integer[] select_options = new Integer[getMaxNumberOfDicesForDefender(country_to)];
+        for (int i = 0; i < select_options.length; i++) {
+            select_options[i] = i + 1;
         }
         current_player.updatePhaseDetails(country_to.getBelongsToPlayer().getName()+" is Defending ");
         return (Integer) JOptionPane.showInputDialog(null,
                 country_to.getBelongsToPlayer().getName() + ", you are defending " + country_to.getCountryName() + " from " + country_from.getBelongsToPlayer().getName() + "! How many dice will you roll?",
-                "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
-                selectOptions[0]);
+                "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), select_options,
+                select_options[0]);
     }
     
     /**

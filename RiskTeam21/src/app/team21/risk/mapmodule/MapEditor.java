@@ -140,19 +140,19 @@ public class MapEditor {
         while (it.hasNext()) {
             Map.Entry<Country, List<Country>> pair = it.next();
             // get country object
-            Country keyCountry = pair.getKey();
+            Country key_country = pair.getKey();
             // get list of the neighbours
-            List<Country> neiCountryList = pair.getValue();
+            List<Country> nei_country_list = pair.getValue();
 
             // index of the country from the all countries of all continents
             // list
             start_pixel += 10;
             end_pixel += 10;
             // get values of each country object
-            territories.append(keyCountry.country_name).append(",").append(start_pixel).append(",").append(end_pixel).append(",").append(keyCountry.getBelongsToContinent());
+            territories.append(key_country.country_name).append(",").append(start_pixel).append(",").append(end_pixel).append(",").append(key_country.getBelongsToContinent());
 
             // get the index value of the neighbour
-            for (Country c : neiCountryList) {
+            for (Country c : nei_country_list) {
                 territories.append(",").append(c.country_name);
             }
             territories.append(System.getProperty("line.separator"));

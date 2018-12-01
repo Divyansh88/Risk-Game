@@ -14,7 +14,7 @@ import java.util.List;
  * @version 2.0.0
  */
 public class Continent implements Serializable{
-	private static final long serialVersionUID = 1L;
+	private static final long serial_version_UID = 1L;
 	public String continent_name;
     public List<Country> member_countries_list = new ArrayList<Country>();
     public int control_value;

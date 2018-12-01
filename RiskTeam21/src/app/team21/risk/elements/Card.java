@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @version 2.0.0
  */
 public final class Card implements Serializable{
-	private static final long serialVersionUID = 1L;
+	private static final long serial_version_UID = 1L;
 	private final String type;
     private final Country country;
 

@@ -18,7 +18,7 @@ import app.team21.risk.mapmodule.MapLoader;
 public class TestTerritoriesTag {
 	private MapElements elements;//gamemap
     private MapLoader loader;//mapmodel
-    private String filePath;
+    private String file_path;
     
     /**
      * This is method initializes important objects and variables used in the test.
@@ -28,19 +28,19 @@ public class TestTerritoriesTag {
     public void init() {
     	loader = new MapLoader();
     	elements = MapElements.getInstance();
-    	filePath = "RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
+    	file_path = "RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
     }
     
     /**
      * This method checks territory tag is missing or not.
      * 
-     * @throws Exception
+     * @throws Exception IO exceptions
      */
     @Test
     public void testTerritoriesTag() throws Exception {
     	System.out.println("**************************************\n");
 		System.out.println("TestTerritoriesTag");
-    	elements = loader.readMapFile(filePath + "no_territory_tag.map");
+    	elements = loader.readMapFile(file_path + "no_territory_tag.map");
         assertEquals(false, elements.isCorrectMap());
     }
 

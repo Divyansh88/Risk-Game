@@ -14,7 +14,7 @@ import app.team21.risk.views.GameScreen;
  * @version 3.0.0
  */
 public class BenevolentBot implements PlayerStrategy,Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serial_version_UID = 1L;
 	public Country country_from;
     public Country country_to;
     

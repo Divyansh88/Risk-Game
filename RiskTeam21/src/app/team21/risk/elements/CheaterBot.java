@@ -13,7 +13,7 @@ import app.team21.risk.views.GameScreen;
  * @version 3.0.0
  */
 public class CheaterBot implements PlayerStrategy,Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serial_version_UID = 1L;
 	public Country country_from;
     public Country country_to;
     
@@ -100,10 +100,10 @@ public class CheaterBot implements PlayerStrategy,Serializable {
         //The attacking player must then place a number of armies
         //in the conquered country which is greater or equal than the number of dice that was used in the attack that
         //resulted in conquering the country
-        int moveArmies = 1;
+        int move_armies = 1;
 
-        country_from.subtractArmy(moveArmies);
-        country_to.addArmy(moveArmies);
+        country_from.subtractArmy(move_armies);
+        country_to.addArmy(move_armies);
         current_player.setCanGetCard(true);
         //current_player.addObserver(new PlayerView());
         current_player.updateDominationDetails();

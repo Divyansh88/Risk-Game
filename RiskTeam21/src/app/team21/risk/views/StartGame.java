@@ -90,8 +90,8 @@ public class StartGame {
 				public void actionPerformed(ActionEvent e) {
 					
 					try {
-						File myFile = new File("RiskTeam21/Risk.pdf");
-				        Desktop.getDesktop().open(myFile);
+						File my_file = new File("RiskTeam21/Risk.pdf");
+				        Desktop.getDesktop().open(my_file);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}

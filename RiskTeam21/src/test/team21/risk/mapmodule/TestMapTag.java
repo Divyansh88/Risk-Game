@@ -19,7 +19,7 @@ import app.team21.risk.mapmodule.MapLoader;
 public class TestMapTag {
 	private MapElements elements;//gamemap
     private MapLoader loader;//mapmodel
-    private String filePath;
+    private String file_path;
     
     /**
      * This is method initializes important objects and variables used in the test.
@@ -29,19 +29,19 @@ public class TestMapTag {
     public void init() {
     	loader = new MapLoader();
     	elements = MapElements.getInstance();
-    	filePath = "RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
+    	file_path = "RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
     }
     
     /**
      * This method checks map tag is missing or not.
      * 
-     * @throws Exception
+     * @throws Exception IO exceptions
      */
     @Test
     public void testMapTag() throws Exception {
     	System.out.println("**************************************\n");
 		System.out.println("TestMapTag");
-    	elements = loader.readMapFile(filePath + "no_map_tag.map");
+    	elements = loader.readMapFile(file_path + "no_map_tag.map");
         assertEquals(false, elements.isCorrectMap());
     }
 

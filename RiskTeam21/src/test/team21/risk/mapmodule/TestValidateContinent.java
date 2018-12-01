@@ -45,7 +45,7 @@ public class TestValidateContinent {
     /**
      * This method checks continent is valid continent or not.
      * 
-     * @throws Exception
+     * @throws Exception IO exceptions
      */
     @Test
     public void testValidMap() throws Exception {

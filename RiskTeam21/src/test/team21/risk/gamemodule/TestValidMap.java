@@ -16,7 +16,7 @@ public class TestValidMap {
 
 	private MapElements elements;// gamemap
 	private MapLoader loader;// mapmodel
-	private String filePath;
+	private String file_path;
 
 	/**
      * This is method initializes important objects and variables used in the test.
@@ -26,19 +26,19 @@ public class TestValidMap {
 	public void init() {
 		loader = new MapLoader();
 		elements = MapElements.getInstance();
-		filePath = "RiskTeam21/src/app/team21/risk/maps/Testfiles/";
+		file_path = "RiskTeam21/src/app/team21/risk/maps/Testfiles/";
 	}
 
 	/**
 	 * This method checks a map file is valid or not.
 	 * 
-	 * @throws Exception
+	 * @throws Exception IO exceptions
 	 */
 	@Test
 	public void testValidMap() throws Exception {
 		System.out.println("**************************************\n");
 		System.out.println("TestValidMap");
-		elements = MapLoader.readMapFile(filePath + "valid_file.map");
+		elements = MapLoader.readMapFile(file_path + "valid_file.map");
 		boolean result=elements.isCorrectMap();
 		assertEquals(true, result);
 		

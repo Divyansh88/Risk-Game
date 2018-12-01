@@ -100,13 +100,13 @@ public class MapLoader {
 							}
 						}
 					}
-					// Parsing the [Territories] portion of the map file
-					if (id.equalsIgnoreCase("Territories")) {
-						System.out.println("Territories Tag Present");
+					// Parsing the [territories] portion of the map file
+					if (id.equalsIgnoreCase("territories")) {
+						System.out.println("territories Tag Present");
 						is_territory_present = true;
 						List<Continent> new_continent_list = new ArrayList<>();
 						if (is_map_present) {
-							readTerritories(reader);
+							readterritories(reader);
 							getContinentCountryMap(country_list, continent_list);
 							for (Country c : country_list) {
 								country_neighbour_map.put(c, c.getNeighbourNodes());
@@ -120,7 +120,7 @@ public class MapLoader {
 							map_elements.setCountryNeighboursMap(country_neighbour_map);
 							map_elements.setContinentCountryMap(continent_country_map);
 							map_elements.setContinentList(new_continent_list);
-							System.out.println("Reading of Territories Completed");
+							System.out.println("Reading of territories Completed");
 						}
 					}
 				}
@@ -140,11 +140,11 @@ public class MapLoader {
 			
 			if (!is_map_present && !is_continent_present && !is_territory_present) {
 				map_elements.setCorrectMap(false);
-				map_elements.setErrorMessage("Map or Continents or Territories tags not present");
+				map_elements.setErrorMessage("Map or Continents or territories tags not present");
 			}
 			
 			if(map_elements.isCorrectMap()){
-				System.out.println("Valid File.\nMap Continents and Territories tags are present");
+				System.out.println("Valid File.\nMap Continents and territories tags are present");
 			}
 			else{
 				System.out.println("\n\nInvalid Map File.\n"+map_elements.getErrorMessage());
@@ -189,16 +189,16 @@ public class MapLoader {
 	 *
 	 * @param reader BufferedReader class object 
 	 */
-	public static void readTerritories(BufferedReader reader) {
-		String Territories;
+	public static void readterritories(BufferedReader reader) {
+		String territories;
 
 		try {
-			while ((Territories = reader.readLine()) != null && !Territories.startsWith("[")) {
-				if (!Territories.isEmpty() && Territories != null && !Territories.equals("")) {
+			while ((territories = reader.readLine()) != null && !territories.startsWith("[")) {
+				if (!territories.isEmpty() && territories != null && !territories.equals("")) {
 					String country_name, continent_name = null;
 					int x_cordinate, y_cordinate = 0;
 					List<Country> neighbour_nodes = new ArrayList<>();
-					String[] terr_properties = Territories.split(",");
+					String[] terr_properties = territories.split(",");
 					country_name = terr_properties[0];
 					continent_name = terr_properties[3];
 					x_cordinate = Integer.parseInt(terr_properties[1].trim());
@@ -311,15 +311,15 @@ public class MapLoader {
             	return false;
             else{
             for(Country country: countries) {
-            	int countryCount=0;
+            	int country_count=0;
             	for(Country neighbour:country.getNeighbourNodes()) {
             		neighbour=map_elements.getCountry(neighbour.getCountryName());
             		if(neighbour==null)
             			return false;
             		// check if all neighbors belongs to other continent
             		if(!neighbour.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
-            			    countryCount++;
-                  			if(countryCount>=map_elements.getCountryNeighboursMap().get(country).size()) {
+            			    country_count++;
+                  			if(country_count>=map_elements.getCountryNeighboursMap().get(country).size()) {
             				map_elements.setCorrectMap(false);
             				map_elements.setErrorMessage("unconnected continent found"+continent.getContinentName());
             				return false;

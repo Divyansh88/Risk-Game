@@ -24,7 +24,7 @@ import app.team21.risk.views.StartGame;
  * @version 3.0.0
  */
 public class Player extends Observable implements Serializable{
-	private static final long serialVersionUID = 1L;
+	private static final long serial_version_UID = 1L;
 	public String name;
 	public String history_text;
 	public String status_text;

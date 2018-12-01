@@ -66,7 +66,7 @@ public class TestLoadGame{
 
 	/**
      * This method checks whether the deck cards has populated correctly.
-	 * @throws Exception 
+	 * @throws Exception IO exceptions
      */
     @Test
     public void checkSaveFile() throws Exception {

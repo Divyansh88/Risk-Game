@@ -16,7 +16,7 @@ import app.team21.risk.gamemodule.Deck;
  * @version 2.0.0
  */
 public class MapElements implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serial_version_UID = 1L;
 	private static MapElements map_elements;
 	public HashMap<String, String> map_details=new HashMap<String, String>();
 	public List<Continent> continent_list=new ArrayList<Continent>();

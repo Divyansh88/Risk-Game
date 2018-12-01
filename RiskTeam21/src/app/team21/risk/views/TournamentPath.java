@@ -160,15 +160,15 @@ public class TournamentPath {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
+				JFileChooser file_chooser = new JFileChooser();
 
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
+				file_chooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP file", "map");
-				fileChooser.setFileFilter(filter);
-				fileChooser.setAcceptAllFileFilterUsed(false);
+				file_chooser.setFileFilter(filter);
+				file_chooser.setAcceptAllFileFilterUsed(false);
 
-				int bopen = fileChooser.showOpenDialog(null); //open the dialog box
-				browse_file_path1=fileChooser.getSelectedFile().toString();
+				int bopen = file_chooser.showOpenDialog(null); //open the dialog box
+				browse_file_path1=file_chooser.getSelectedFile().toString();
 				
 				map_elements=MapLoader.readMapFile(browse_file_path1);
 				if(map_elements.isCorrectMap()){
@@ -186,15 +186,15 @@ public class TournamentPath {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
+				JFileChooser file_chooser = new JFileChooser();
 
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
+				file_chooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP file", "map");
-				fileChooser.setFileFilter(filter);
-				fileChooser.setAcceptAllFileFilterUsed(false);
+				file_chooser.setFileFilter(filter);
+				file_chooser.setAcceptAllFileFilterUsed(false);
 
-				int bopen = fileChooser.showOpenDialog(null); //open the dialog box
-				browse_file_path2=fileChooser.getSelectedFile().toString();
+				int bopen = file_chooser.showOpenDialog(null); //open the dialog box
+				browse_file_path2=file_chooser.getSelectedFile().toString();
 				map_elements=MapLoader.readMapFile(browse_file_path2);
 				if(map_elements.isCorrectMap()){
 					int index = browse_file_path2.lastIndexOf("\\");
@@ -210,15 +210,15 @@ public class TournamentPath {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
+				JFileChooser file_chooser = new JFileChooser();
 
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
+				file_chooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP file", "map");
-				fileChooser.setFileFilter(filter);
-				fileChooser.setAcceptAllFileFilterUsed(false);
+				file_chooser.setFileFilter(filter);
+				file_chooser.setAcceptAllFileFilterUsed(false);
 
-				int bopen = fileChooser.showOpenDialog(null); //open the dialog box
-				browse_file_path3=fileChooser.getSelectedFile().toString();
+				int bopen = file_chooser.showOpenDialog(null); //open the dialog box
+				browse_file_path3=file_chooser.getSelectedFile().toString();
 				map_elements=MapLoader.readMapFile(browse_file_path3);
 				if(map_elements.isCorrectMap()){
 					int index = browse_file_path3.lastIndexOf("\\");
@@ -234,15 +234,15 @@ public class TournamentPath {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
+				JFileChooser file_chooser = new JFileChooser();
 
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
+				file_chooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP file", "map");
-				fileChooser.setFileFilter(filter);
-				fileChooser.setAcceptAllFileFilterUsed(false);
+				file_chooser.setFileFilter(filter);
+				file_chooser.setAcceptAllFileFilterUsed(false);
 
-				int bopen = fileChooser.showOpenDialog(null); //open the dialog box
-				browse_file_path4=fileChooser.getSelectedFile().toString();
+				int bopen = file_chooser.showOpenDialog(null); //open the dialog box
+				browse_file_path4=file_chooser.getSelectedFile().toString();
 				map_elements=MapLoader.readMapFile(browse_file_path4);
 				if(map_elements.isCorrectMap()){
 					int index = browse_file_path4.lastIndexOf("\\");
@@ -258,15 +258,15 @@ public class TournamentPath {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
+				JFileChooser file_chooser = new JFileChooser();
 
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
+				file_chooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // For Directory
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP file", "map");
-				fileChooser.setFileFilter(filter);
-				fileChooser.setAcceptAllFileFilterUsed(false);
+				file_chooser.setFileFilter(filter);
+				file_chooser.setAcceptAllFileFilterUsed(false);
 
-				int bopen = fileChooser.showOpenDialog(null); //open the dialog box
-				browse_file_path5=fileChooser.getSelectedFile().toString();
+				int bopen = file_chooser.showOpenDialog(null); //open the dialog box
+				browse_file_path5=file_chooser.getSelectedFile().toString();
 				map_elements=MapLoader.readMapFile(browse_file_path5);
 				if(map_elements.isCorrectMap()){
 					int index = browse_file_path5.lastIndexOf("\\");

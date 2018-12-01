@@ -180,11 +180,11 @@ public class GamePlay extends Observable implements Serializable{
         player_count=player_list.size();
         while (players_left_for_assign > 0){
             if (player_list.get(j % player_count).getInitialArmies() > 0) {
-                List<Country> player_countryList = player_list.get(j % player_count).getAssignedCountries();
-                Country randomCountry = player_countryList.get(new Random().nextInt(player_countryList.size()));
-                randomCountry.addArmy(1);
+                List<Country> player_country_list = player_list.get(j % player_count).getAssignedCountries();
+                Country random_country = player_country_list.get(new Random().nextInt(player_country_list.size()));
+                random_country.addArmy(1);
                 player_list.get(j % player_count).setInitialArmies(player_list.get(j % player_count).getInitialArmies()- 1);
-                tb.append(player_list.get(j % player_count).getName() + " put 1 army on "+ randomCountry.getCountryName()+".\n");
+                tb.append(player_list.get(j % player_count).getName() + " put 1 army on "+ random_country.getCountryName()+".\n");
             } 
             else{
                 players_left_for_assign--;

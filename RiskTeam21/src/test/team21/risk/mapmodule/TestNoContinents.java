@@ -19,7 +19,7 @@ public class TestNoContinents {
 
 	private MapElements elements;//gamemap
     private MapLoader loader;//mapmodel
-    private String filePath;
+    private String file_path;
 	
     /**
      * This is method initializes important objects and variables used in the test.
@@ -29,19 +29,19 @@ public class TestNoContinents {
     public void init() {
     	loader = new MapLoader();
     	elements = MapElements.getInstance();
-    	filePath = "RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
+    	file_path = "RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
     }
     
     /**
      * This method checks number continent in map file.
      * 
-     * @throws Exception
+     * @throws Exception IO exceptions
      */
     @Test
     public void testNoContinents() throws Exception {
     	System.out.println("**************************************\n");
 		System.out.println("TestNoContinents");
-    	elements = loader.readMapFile(filePath + "no_continents.map");
+    	elements = loader.readMapFile(file_path + "no_continents.map");
         assertEquals(false, elements.isCorrectMap());
     }
 

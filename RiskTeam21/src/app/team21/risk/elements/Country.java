@@ -14,7 +14,7 @@ import app.team21.risk.elements.Player;
  * @version 2.0.0
  */
 public class Country implements Serializable{
-	private static final long serialVersionUID = 1L;
+	private static final long serial_version_UID = 1L;
 	public String country_name;
     public int x_cordinate;
     public int y_cordinate;

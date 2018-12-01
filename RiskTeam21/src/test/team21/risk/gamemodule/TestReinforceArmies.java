@@ -70,7 +70,7 @@ public class TestReinforceArmies {
     /**
      * This method checks reinforcement of armies.
      * 
-     * @throws Exception
+     * @throws Exception IO exceptions
      */
     @Test
     public void testReinforceArmies() throws Exception {
