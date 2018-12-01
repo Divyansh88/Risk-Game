@@ -13,6 +13,7 @@ import org.junit.runners.Suite;
 	TestDeckCards.class,
 	TestSaveGame.class,
 	TestLoadGame.class,
+	TestTournament.class
 	
 })
 

@@ -996,7 +996,7 @@ public class Player extends Observable implements Serializable{
 	 * @return true if attacker can attack else false
 	 */
 	public boolean isAttackValid(Player current_player, Country countryA, Country countryB, GameScreen game_view) {
-		if (countryA.getCurrentArmiesDeployed() > 1 && !current_player.hasBotWon()) {
+		if (countryA.getCurrentArmiesDeployed() > 1 && !current_player.hasBotWon()&&countryA.getNeighbourNodes().contains(countryB)) {
 			// Check if at-least 2 armies are there on the attacking country.
 			if (!current_player.getName().equals(countryB.getBelongsToPlayer().getName())
 					&& current_player.getName().equals(countryA.getBelongsToPlayer().getName())) {
@@ -1153,6 +1153,13 @@ public class Player extends Observable implements Serializable{
 		}
 		if (!has_bot_won) {
 			turns--;
+			if(isCanGetCard()){
+				Card new_turnin_card = game_view.deck.draw();
+				List<Card> new_card_list = current_player.getCards();
+				new_card_list.add(new_turnin_card);
+				current_player.setCards(new_card_list);
+				current_player.setCanGetCard(false);
+			}
 			game_view.view_visibility = false;
 			game_view.updateView("\n" + getName() + " ended the turn.\n**************************");
 			List<Player> player_list = game_view.getPlayerList();

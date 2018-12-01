@@ -59,11 +59,13 @@ public class TestFortify {
      * This method checks exchange of armies.
      */
     @Test
-    public void testFortification(){
+    public void testFortification1(){
     	Country country_from=elements.getCountry("Maharashtra");
+    	Country intermediate=elements.getCountry("Gujarat");
     	Country country_to=elements.getCountry("Punjab");
     	country_from.setBelongsToPlayer(player1);
     	country_to.setBelongsToPlayer(player1);
+    	intermediate.setBelongsToPlayer(player1);
 
     	
 		List<Country> unwanted = new ArrayList<>();
@@ -74,4 +76,23 @@ public class TestFortify {
     }
     
 
+    /**
+     * This method checks exchange of armies.
+     */
+    @Test
+    public void testFortification2(){
+    	Country country_from=elements.getCountry("Maharashtra");
+    	Country intermediate=elements.getCountry("Gujarat");
+    	Country country_to=elements.getCountry("Punjab");
+    	country_from.setBelongsToPlayer(player1);
+    	country_to.setBelongsToPlayer(player1);
+    	intermediate.setBelongsToPlayer(player2);
+
+    	
+		List<Country> unwanted = new ArrayList<>();
+
+    	boolean result=player1.isFortifyValid(country_from, country_to, unwanted, elements);
+    	assertEquals(false, result);
+    	
+    }    
 }

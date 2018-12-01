@@ -58,7 +58,7 @@ public class TestAttack {
      * This method checks exchange of armies.
      */
     @Test
-    public void testAttackValidation(){
+    public void testAttackValidation1(){
     	Country attack=player1.getAssignedCountries().get(0);
     	Country defender=null;
 
@@ -70,6 +70,53 @@ public class TestAttack {
     	
     	boolean result=player1.isAttackValid(player1, attack, defender, game_view);
     	assertEquals(true, result);
+    }
+
+    /**
+     * This method checks exchange of armies.
+     */
+    @Test
+    public void testAttackValidation2(){
+    	Country attack=elements.getCountry("New York");
+    	Country defender=elements.getCountry("Punjab");
+    	attack.setBelongsToPlayer(player1);
+    	defender.setBelongsToPlayer(player2);
+    	
+    	boolean result=player1.isAttackValid(player1, attack, defender, game_view);
+    	assertEquals(false, result);
+    }
+    
+    /**
+     * This method checks exchange of armies.
+     */
+    @Test
+    public void testAttackValidation3(){
+    	Country attack=player1.getAssignedCountries().get(0);
+    	attack.setCurrentArmiesDeployed(1);
+    	Country defender=null;
+
+    	for(Country c:attack.getNeighbourNodes()){
+    		c=elements.getCountry(c.getCountryName());
+    		c.setBelongsToPlayer(player2);
+    		defender=c;
+    	}
+    	
+    	boolean result=player1.isAttackValid(player1, attack, defender, game_view);
+    	assertEquals(false, result);    }
+    
+    /**
+     * This method checks exchange of armies.
+     */
+    @Test
+    public void testAttackValidation4(){
+    	Country attack=elements.getCountry("New York");
+    	Country defender=elements.getCountry("Gujarat");
+    	attack.setBelongsToPlayer(player1);
+    	defender.setBelongsToPlayer(player1);
+    	
+    	
+    	boolean result=player1.isAttackValid(player1, attack, defender, game_view);
+    	assertEquals(false, result);
     }
     
 

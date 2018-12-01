@@ -32,6 +32,10 @@ import app.team21.risk.views.GameScreen;
  */
 public class GamePlay extends Observable implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static Player current_player;
 	public static int player_count;
 	public static int save_file_counter=1;

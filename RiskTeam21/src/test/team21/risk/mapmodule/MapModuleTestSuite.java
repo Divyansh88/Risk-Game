@@ -15,7 +15,8 @@ import org.junit.runners.Suite;
 	TestNoContinents.class, 
 	TestNoCountries.class,  
 	TestValidateContinent.class,
-	TestValidateCountry.class 	
+	TestValidateCountry.class,
+	TestContinentConnectivity.class
 })
 
 /**

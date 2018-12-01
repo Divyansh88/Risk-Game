@@ -224,9 +224,7 @@ public class PlayPath extends StartGame{
 				
 			}
 		});
-//		choose_player.add(choose_number_of_player);
-//		choose_player.add(players);
-//		choose_player.add(lets_go);
+
 		test.add(choose_number_of_player);
 		test.add(players);
 		test.add(ok);

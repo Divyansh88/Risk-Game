@@ -14,10 +14,15 @@ import java.io.File;
 public class FileSelectDialog extends JFileChooser {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * This constructor allows to select the map file and load the file location.
      */
     public FileSelectDialog() {
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Map FILES", "map");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("SER FILES", "ser");
         setFileFilter(filter);
         setDialogTitle("Select a map file");
         setCurrentDirectory(new File(System.getProperty("user.home")));

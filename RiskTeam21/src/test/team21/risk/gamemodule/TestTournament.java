@@ -53,14 +53,11 @@ public class TestTournament{
     	game_play = new GamePlay();
     	game_view = new GameScreen();
     	game_view.map_elements=elements;
+    	game_view.tournament_mode=true;
     	List<Player> player_list=new ArrayList<>();
     	player_list.add(player1);
     	player_list.add(player2);
-    	
-		game_play.distributeCountries(player_list, elements.getCountries());
-		game_play.setInitialArmies(player_list);
-		game_play.placeInitialArmiesInRR(player_list);
-		
+		game_view.playerContinueButton(elements, player_list, 1);
     }
     
 
@@ -68,38 +65,9 @@ public class TestTournament{
      * This method checks whether the deck cards has populated correctly.
      */
     @Test
-    public void checkSaveFile() {
-        game_play.saveGame(elements, game_view);
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date today;
-        String file_name="";
-        try {
-			today = formatter.parse(formatter.format(new Date()));
-			file_name=today.toString().replaceAll("00:00:00"," ").replaceAll("\\s+","").concat("_"+(game_play.save_file_counter-1));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        boolean result=false;
-        File dir = new File(".");
-        File [] files = dir.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".ser");
-            }
-        });
-
-        for (File serfile : files) {
-        	System.out.println(serfile.getName());
-            if(serfile.getName().equals(file_name+".ser")){
-            	System.out.println("TRUE");
-            	result=true;
-            	break;
-            }
-            	
-        }
-        assertEquals(true, result);
+    public void checkTournamentMode() {
+        boolean result=game_view.tournament_mode;
+    	assertEquals(true, result);
         
     }
 }
