@@ -78,7 +78,7 @@ public class BenevolentBot implements PlayerStrategy,Serializable {
                 game_view.updateView(current_player.getName() + " has chosen to reinforce " + country_from.getCountryName() + " with " + armies + " armies.");
                 if (current_player.getTotalArmies() == 0) {
                     game_view.updateView("You do not have any armies left to reinforce");
-                    current_player.updatePhaseDetails("\nReinforcement Phase ends");
+                    game_view.updateStatus("\nReinforcement Phase ends");
                 }
                 current_player.updateDominationDetails();
             }

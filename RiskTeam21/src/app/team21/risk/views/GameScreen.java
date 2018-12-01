@@ -650,8 +650,12 @@ public class GameScreen implements Observer {
 						break;
 					}
 				}
-				current_player.playerAttacks(map_elements, selected_from, selected_to, game_view,
-						combobox_mode.getSelectedItem().toString(), deck);
+				try {
+					current_player.playerAttacks(map_elements, selected_from, selected_to, game_view,
+							combobox_mode.getSelectedItem().toString(), deck);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 
 		});

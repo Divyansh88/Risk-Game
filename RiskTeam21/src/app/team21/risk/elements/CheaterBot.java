@@ -38,7 +38,7 @@ public class CheaterBot implements PlayerStrategy,Serializable {
         if (current_player.getAssignedCountries().size() == map_elements.getCountries().size()) {
             current_player.setHasBotWon(true);
             game_view.updateView("" + current_player.getName() + " has won the game ! Congratulations ! ");
-            current_player.updatePhaseDetails(current_player.getName() + "Won");
+            game_view.updateStatus(current_player.getName() + "Won");
         }
     }
     /**
@@ -105,7 +105,6 @@ public class CheaterBot implements PlayerStrategy,Serializable {
         country_from.subtractArmy(move_armies);
         country_to.addArmy(move_armies);
         current_player.setCanGetCard(true);
-        //current_player.addObserver(new PlayerView());
         current_player.updateDominationDetails();
     }
 

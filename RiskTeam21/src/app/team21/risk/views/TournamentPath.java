@@ -128,7 +128,6 @@ public class TournamentPath {
 		cb_player4 = new JComboBox(types);
 
 		no_players = Integer.valueOf(players.getSelectedItem().toString());
-		System.out.println("items"+no_players);
 		if(no_players==2) {
 			player_type_panel.add(tf_player1);
 			player_type_panel.add(cb_player1);

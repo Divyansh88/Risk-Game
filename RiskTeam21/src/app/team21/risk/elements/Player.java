@@ -1,5 +1,6 @@
 package app.team21.risk.elements;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,7 @@ public class Player extends Observable implements Serializable{
 
 	public boolean is_tournament_mode;
 	public int turns=100000;
-	
+
 	public String phase_details;
 	public String update_message;
 	public boolean load_game=false;
@@ -571,7 +572,7 @@ public class Player extends Observable implements Serializable{
 						"\nATTACK PHASE \n-----------------------------------------------------------------------");
 				load_game=false;
 				game_view.AttackButton(this, map_elements);
-				
+
 			}
 			else if(!isCanAttack()&&isCanFortify()){
 				setPhaseDetails(name + " can Fortify now.");
@@ -659,9 +660,10 @@ public class Player extends Observable implements Serializable{
 	 * @param game_view
 	 * @param mode_string
 	 * @param deck
+	 * @throws IOException 
 	 */
 	public void playerAttacks(MapElements map_elements, Country country_from, Country country_to, GameScreen game_view,
-			String mode_string, Deck deck) {
+			String mode_string, Deck deck) throws IOException {
 		int mode;
 		if (mode_string.equalsIgnoreCase("ALL OUT ATTACK")) {
 			mode = 1;
@@ -680,8 +682,7 @@ public class Player extends Observable implements Serializable{
 						attacker_dice = getMaxDiceAttacker(country_from);
 						defender_dice = getMaxDiceDefender(country_to);
 					}
-
-					if (mode != 1 && country_to.getBelongsToPlayer().isBot()) {
+					else if (mode != 1 && country_to.getBelongsToPlayer().isBot()) {
 						attacker_dice = showAttackDiceDialog(country_from);
 						defender_dice = getMaxDiceDefender(country_to);
 					} else {
@@ -1000,22 +1001,22 @@ public class Player extends Observable implements Serializable{
 			if (!current_player.getName().equals(countryB.getBelongsToPlayer().getName())
 					&& current_player.getName().equals(countryA.getBelongsToPlayer().getName())) {
 				// Check if another country is occupied by an opponent and not by the currentPlayer.
-					return true;
+				return true;
 			} else {
 				if (!current_player.is_tournament_mode) {
 					game_view.updateView("You cannot attack your own country.");
-					
+
 				}
 				return false;
 			}
 		} else {
 			if (!has_bot_won) {
 				game_view.updateView("You must have more than 1 army on " + countryA.getCountryName()
-						+ " if you wish to attack from it.");
+				+ " if you wish to attack from it.");
 			}
 			return false;
 		}
-		
+
 	}
 
 	/**
@@ -1025,7 +1026,7 @@ public class Player extends Observable implements Serializable{
 	 *            Country class object
 	 * @return integer number of dices which attacker select to throw
 	 */
-	public int showAttackDiceDialog(Country country) {
+	public int showAttackDiceDialog(Country country) throws IOException{
 
 		int dices = getMaxDiceAttacker(country);
 
@@ -1063,7 +1064,7 @@ public class Player extends Observable implements Serializable{
 	 *            Country class object
 	 * @return integer number of dices which attacker select to throw
 	 */
-	public int showDefenceDiceDialog(Country country) {
+	public int showDefenceDiceDialog(Country country)throws IOException {
 
 		int dices = getMaxDiceDefender(country);
 
@@ -1101,8 +1102,8 @@ public class Player extends Observable implements Serializable{
 	 */
 	public int showMoveArmiesDialogBox(Country country, GameScreen game_view) {
 		Integer[] choices = new Integer[country.getCurrentArmiesDeployed() - 1];
-		for (int i = attacker_dice; i < choices.length; i++) {
-			choices[i] = i + 1;
+		for (int i = 0; i < choices.length; i++) {
+			choices[i] =  i + 1;
 		}
 
 		return (Integer) JOptionPane.showInputDialog(null, "Select Armies",
@@ -1220,25 +1221,24 @@ public class Player extends Observable implements Serializable{
 
 			// reinforce for bot
 			game_view.updateView("\nREINFORCEMENT PHASE \n-----------------------------------------------------------------------");
-			List<Country> cheaterCountries = new ArrayList<>();
+			List<Country> cheater_countries = new ArrayList<>();
 			for (Country country : getAssignedCountries()) {
 				executeReinforce(country.getCountryName(), game_view, this, map_elements);
-				cheaterCountries.add(country);
+				cheater_countries.add(country);
 			}
 
 
 			// attack phase for bot
 			game_view.updateView("\nATTACK PHASE \n-----------------------------------------------------------------------");
-			attackPhase: for (Country attackingCountry : cheaterCountries) {
-				game_view.updateView("Cheater is attacking with " + attackingCountry.getCountryName() + " country...");
-				List<Country> neighbors = attackingCountry.getNeighbourNodes();
+			attack_phase: for (Country attacking_country : cheater_countries) {
+				game_view.updateView("Cheater is attacking with " + attacking_country.getCountryName() + " country...");
+				List<Country> neighbors = attacking_country.getNeighbourNodes();
 				for (Country neighbor : neighbors) {
 					Country defenderCountry = map_elements.getCountry(neighbor.getCountryName());
-					if (isAttackValidForCheater(current_player, attackingCountry, defenderCountry)) {
-						executeAttack(attackingCountry.getCountryName(), neighbor.getCountryName(), game_view, this,
-								map_elements);
+					if (isAttackValidForCheater(current_player, attacking_country, defenderCountry)) {
+						executeAttack(attacking_country.getCountryName(), neighbor.getCountryName(), game_view, this,map_elements);
 						if (has_bot_won) {
-							break attackPhase;
+							break attack_phase;
 						}
 						break;
 					}
@@ -1247,20 +1247,20 @@ public class Player extends Observable implements Serializable{
 
 			// fortification phase for bot
 			game_view.updateView("\nFORTIFICATION PHASE \n-----------------------------------------------------------------------");
-			List<Country> priorityCountries = new ArrayList<>();
-			List<Country> eligibleFortificationCountry = getAssignedCountries();
-			for (Country country : eligibleFortificationCountry) {
+			List<Country> priority_countries = new ArrayList<>();
+			List<Country> eligible_countries = getAssignedCountries();
+			for (Country country : eligible_countries) {
 				List<Country> neighbors = country.getNeighbourNodes();
 				for (Country neighbor : neighbors) {
 					Country c = map_elements.getCountry(neighbor.getCountryName());
 					if (c != null && !c.getBelongsToPlayer().getName().equalsIgnoreCase(getName())) {
-						priorityCountries.add(country);
+						priority_countries.add(country);
 						break;
 					}
 				}
 			}
-			if (priorityCountries.size() > 0) {
-				for (Country country : priorityCountries) {
+			if (priority_countries.size() > 0) {
+				for (Country country : priority_countries) {
 					executeFortification(country.getCountryName(), null, game_view, this, map_elements);
 				}
 			}
@@ -1327,7 +1327,7 @@ public class Player extends Observable implements Serializable{
 			// fortification phase for bot
 			// AI fortify
 			game_view.updateView("\nFORTIFICATION PHASE \n-----------------------------------------------------------------------");
-			List<Country> priorityTargets = new ArrayList<>();
+			List<Country> priority_targets = new ArrayList<>();
 
 			for (Country country : getAssignedCountries()) {
 				for (Country neighbor : country.getNeighbourNodes()) {
@@ -1336,32 +1336,32 @@ public class Player extends Observable implements Serializable{
 					Country n = map_elements.getCountry(neighbor.getCountryName());
 					if (n != null) {
 						if (n.getBelongsToPlayer().getName().equals(getName())) {
-							priorityTargets.add(country);
+							priority_targets.add(country);
 						}
 					}
 				}
 			}
 
-			if (priorityTargets.size() > 0) {
-				List<Country> priorityCountries = new ArrayList<Country>();
-				int r1 = rng.nextInt(priorityTargets.size());
+			if (priority_targets.size() > 0) {
+				List<Country> priority_countries = new ArrayList<Country>();
+				int r1 = rng.nextInt(priority_targets.size());
 
-				for (int i = 0; i < priorityTargets.get(r1).getNeighbourNodes().size(); i++) {
+				for (int i = 0; i < priority_targets.get(r1).getNeighbourNodes().size(); i++) {
 					Country c = map_elements
-							.getCountry(priorityTargets.get(r1).getNeighbourNodes().get(i).getCountryName());
+							.getCountry(priority_targets.get(r1).getNeighbourNodes().get(i).getCountryName());
 
 					if (c != null && c.getBelongsToPlayer().equals(this) && c.getCurrentArmiesDeployed() > 1) {
-						priorityCountries.add(c);
+						priority_countries.add(c);
 					}
 				}
-				if (priorityCountries.size() > 0) {
-					int r2 = rng.nextInt(priorityCountries.size());
+				if (priority_countries.size() > 0) {
+					int r2 = rng.nextInt(priority_countries.size());
 					game_view.updateView(" Fortifying...");
-					executeFortification(priorityCountries.get(r2).getCountryName(),
-							priorityTargets.get(r1).getCountryName(), game_view, this, map_elements);
+					executeFortification(priority_countries.get(r2).getCountryName(),
+							priority_targets.get(r1).getCountryName(), game_view, this, map_elements);
 					game_view.updateView("Successful fortify");
 				} else {
-					game_view.updateView(priorityTargets.get(r1).getCountryName()
+					game_view.updateView(priority_targets.get(r1).getCountryName()
 							+ " does not have any valid neighbours from which it can fortify ! ");
 				}
 			} else {
@@ -1395,7 +1395,7 @@ public class Player extends Observable implements Serializable{
 			// fortification phase for bot
 			// AI fortify
 			game_view.updateView("\nFORTIFICATION PHASE \n-----------------------------------------------------------------------");
-			List<Country> priorityTargets = new ArrayList<>();
+			List<Country> priority_targets = new ArrayList<>();
 
 			for (Country country : getAssignedCountries()) {
 				for (Country neighbor : country.getNeighbourNodes()) {
@@ -1404,33 +1404,33 @@ public class Player extends Observable implements Serializable{
 					Country n = map_elements.getCountry(neighbor.getCountryName());
 					if (n != null) {
 						if (n.getBelongsToPlayer().getName().equals(getName())) {
-							priorityTargets.add(country);
+							priority_targets.add(country);
 						}
 					}
 				}
 
 			}
 
-			if (priorityTargets.size() > 0) {
-				List<Country> priorityCountries = new ArrayList<Country>();
-				int r1 = rng.nextInt(priorityTargets.size());
+			if (priority_targets.size() > 0) {
+				List<Country> priority_countries = new ArrayList<Country>();
+				int r1 = rng.nextInt(priority_targets.size());
 
-				for (int i = 0; i < priorityTargets.get(r1).getNeighbourNodes().size(); i++) {
+				for (int i = 0; i < priority_targets.get(r1).getNeighbourNodes().size(); i++) {
 					Country c = map_elements
-							.getCountry(priorityTargets.get(r1).getNeighbourNodes().get(i).getCountryName());
+							.getCountry(priority_targets.get(r1).getNeighbourNodes().get(i).getCountryName());
 
 					if (c != null && c.getBelongsToPlayer().equals(this) && c.getCurrentArmiesDeployed() > 1) {
-						priorityCountries.add(c);
+						priority_countries.add(c);
 					}
 				}
-				if (priorityCountries.size() > 0) {
-					int r2 = rng.nextInt(priorityCountries.size());
+				if (priority_countries.size() > 0) {
+					int r2 = rng.nextInt(priority_countries.size());
 					game_view.updateView(" Fortifying...");
-					executeFortification(priorityCountries.get(r2).getCountryName(),
-							priorityTargets.get(r1).getCountryName(), game_view, this, map_elements);
+					executeFortification(priority_countries.get(r2).getCountryName(),
+							priority_targets.get(r1).getCountryName(), game_view, this, map_elements);
 					game_view.updateView("Successful fortify");
 				} else {
-					game_view.updateView(priorityTargets.get(r1).getCountryName()
+					game_view.updateView(priority_targets.get(r1).getCountryName()
 							+ " does not have any valid neighbours from which it can fortify ! ");
 				}
 			} else {
@@ -1462,8 +1462,7 @@ public class Player extends Observable implements Serializable{
 			List<Country> neighbors = strongest_country.getNeighbourNodes();
 			for (Country neighbor : neighbors) {
 				Country defender_country = map_elements.getCountry(neighbor.getCountryName());
-				if (!defender_country.belongs_to_player.equals(this)
-						&& strongest_country.getCurrentArmiesDeployed() > 1) {
+				if (!defender_country.getBelongsToPlayer().equals(this)&& strongest_country.getCurrentArmiesDeployed() > 1) {
 					executeAttack(strongest_country.getCountryName(), neighbor.getCountryName(), game_view, this,map_elements);
 					break;
 				}
@@ -1472,7 +1471,7 @@ public class Player extends Observable implements Serializable{
 			// fortification phase for bot
 			// AI fortify
 			game_view.updateView("\nFORTIFICATION PHASE \n-----------------------------------------------------------------------");
-			List<Country> priorityTargets = new ArrayList<>();
+			List<Country> priority_targets = new ArrayList<>();
 
 			for (Country country : getAssignedCountries()) {
 
@@ -1482,32 +1481,32 @@ public class Player extends Observable implements Serializable{
 					Country n = map_elements.getCountry(neighbor.getCountryName());
 					if (n != null) {
 						if (n.getBelongsToPlayer().getName().equals(getName())) {
-							priorityTargets.add(country);
+							priority_targets.add(country);
 						}
 					}
 				}
 			}
 
-			if (priorityTargets.size() > 0) {
-				List<Country> priorityCountries = new ArrayList<Country>();
-				int r1 = rng.nextInt(priorityTargets.size());
+			if (priority_targets.size() > 0) {
+				List<Country> priority_countries = new ArrayList<Country>();
+				int r1 = rng.nextInt(priority_targets.size());
 
-				for (int i = 0; i < priorityTargets.get(r1).getNeighbourNodes().size(); i++) {
+				for (int i = 0; i < priority_targets.get(r1).getNeighbourNodes().size(); i++) {
 					Country c = map_elements
-							.getCountry(priorityTargets.get(r1).getNeighbourNodes().get(i).getCountryName());
+							.getCountry(priority_targets.get(r1).getNeighbourNodes().get(i).getCountryName());
 
 					if (c != null && c.getBelongsToPlayer().equals(this) && c.getCurrentArmiesDeployed() > 1) {
-						priorityCountries.add(c);
+						priority_countries.add(c);
 					}
 				}
-				if (priorityCountries.size() > 0) {
-					int r2 = rng.nextInt(priorityCountries.size());
+				if (priority_countries.size() > 0) {
+					int r2 = rng.nextInt(priority_countries.size());
 					game_view.updateView("Fortifying...");
-					executeFortification(priorityCountries.get(r2).getCountryName(),
-							priorityTargets.get(r1).getCountryName(), game_view, this, map_elements);
+					executeFortification(priority_countries.get(r2).getCountryName(),
+							priority_targets.get(r1).getCountryName(), game_view, this, map_elements);
 					game_view.updateView("Successful fortify");
 				} else {
-					game_view.updateView(priorityTargets.get(r1).getCountryName()
+					game_view.updateView(priority_targets.get(r1).getCountryName()
 							+ " does not have any valid neighbours from which it can fortify ! ");
 				}
 			} else {

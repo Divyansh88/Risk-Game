@@ -280,7 +280,6 @@ public class PlayPath extends StartGame{
 		cb_player5 = new JComboBox(types);
 		
 		int no_players = Integer.valueOf(players.getSelectedItem().toString());
-		System.out.println("items"+no_players);
 		switch (no_players) {
 		case 2:
 			test.add(tf_player1);

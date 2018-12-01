@@ -120,7 +120,7 @@ public class AggressiveBot implements PlayerStrategy,Serializable {
             if (current_player.getAssignedCountries().size() == map_elements.getCountries().size()) {
                 current_player.has_bot_won = true;
                 game_view.updateView("\n" + current_player.getName() + " has won the game ! Congratulations ! ");
-                current_player.updatePhaseDetails(current_player.getName() + "Won.  ");
+                game_view.updateStatus(current_player.getName() + "Won.  ");
             }
             game_view.updateView("");
         }
@@ -139,7 +139,7 @@ public class AggressiveBot implements PlayerStrategy,Serializable {
         for (int i = 0; i < select_options.length; i++) {
             select_options[i] = i + 1;
         }
-        current_player.updatePhaseDetails(country_to.getBelongsToPlayer().getName()+" is Defending ");
+        game_view.updateStatus(country_to.getBelongsToPlayer().getName()+" is Defending ");
         return (Integer) JOptionPane.showInputDialog(null,
                 country_to.getBelongsToPlayer().getName() + ", you are defending " + country_to.getCountryName() + " from " + country_from.getBelongsToPlayer().getName() + "! How many dice will you roll?",
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), select_options,
@@ -179,7 +179,7 @@ public class AggressiveBot implements PlayerStrategy,Serializable {
         }
         // Set country player to attacker
         country_to.setBelongsToPlayer(country_from.getBelongsToPlayer());
-        current_player.updatePhaseDetails("\n"+country_to.getCountryName()+" has been captured ! ");
+        game_view.updateStatus("\n"+country_to.getCountryName()+" has been captured ! ");
 
         //The attacking player must then place a number of armies
         //in the conquered country which is greater or equal than the number of dice that was used in the attack that
@@ -258,7 +258,7 @@ public class AggressiveBot implements PlayerStrategy,Serializable {
                 country_from.addArmy(armies);
                 game_view.updateView(current_player.getName() + " has chosen to reinforce " + country_from.getCountryName() + " with " + armies + " armies.");
                 if (current_player.getReinforceArmies() == 0) {
-                    current_player.updatePhaseDetails("Reinforcement Phase ends");
+                    game_view.updateStatus("Reinforcement Phase ends");
                 }
             }
         } catch (Exception e) {
