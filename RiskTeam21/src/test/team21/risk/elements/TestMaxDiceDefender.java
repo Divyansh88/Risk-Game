@@ -28,7 +28,7 @@ public class TestMaxDiceDefender {
     private GamePlay game_play;
     private GameScreen game_view;
     Player player1,player2; 
-    String file_path="C:/Users/yashe/git/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/India.map";
+    String file_path="RiskTeam21/src/app/team21/risk/maps/India.map";
     
     /**
      * This is method initializes important objects and variables used in the test.

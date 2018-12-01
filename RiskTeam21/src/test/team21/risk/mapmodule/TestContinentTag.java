@@ -33,7 +33,7 @@ public class TestContinentTag {
     public void init() {
     	loader = new MapLoader();
     	elements = MapElements.getInstance();
-    	filePath = "C:/Users/yashe/git/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
+    	filePath = "RiskTeam21/src/app/team21/risk/maps/Testfiles/";	
     }
     
     /**

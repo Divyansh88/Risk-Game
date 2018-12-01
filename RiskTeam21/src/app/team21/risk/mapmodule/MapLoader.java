@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import app.team21.risk.elements.Continent;
 import app.team21.risk.elements.Country;
@@ -128,6 +129,12 @@ public class MapLoader {
 				return map_elements;
 			}
 			checkControlValue(map_elements);
+			if(!checkUnconnectedContinent(map_elements)){
+				map_elements.setCorrectMap(false);
+				System.out.println("Inalid Map File. Unconnected Continent Found.");
+			}
+			
+			
 			if (!is_map_present && !is_continent_present && !is_territory_present) {
 				map_elements.setCorrectMap(false);
 				map_elements.setErrorMessage("Map or Continents or Territories tags not present");
@@ -282,5 +289,39 @@ public class MapLoader {
                 break;
         	}
         }
+	}
+	
+	
+	/**
+     * 
+     * @param map_elements current GameMap object
+     * @return true if there is no unconnected continent found. false if there is unconnected continent present in the map.
+     */
+    public static boolean checkUnconnectedContinent(MapElements map_elements) {
+    	// iterate over each continent 
+    	for (Entry<Continent, List<Country>> entry : map_elements.getContinentCountryMap().entrySet()) {
+            Continent continent = entry.getKey();
+            List<Country> countries = entry.getValue();
+            if(continent==null || countries.isEmpty())
+            	return false;
+            else{
+            for(Country country: countries) {
+            	int countryCount=0;
+            	for(Country neighbour:country.getNeighbourNodes()) {
+            		neighbour=map_elements.getCountry(neighbour.getCountryName());
+            		// check if all neighbors belongs to other continent
+            		if(!neighbour.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
+            			    countryCount++;
+                  			if(countryCount>=map_elements.getCountryNeighboursMap().get(country).size()) {
+            				map_elements.setCorrectMap(false);
+            				map_elements.setErrorMessage("unconnected continent found"+continent.getContinentName());
+            				return false;
+            			}
+            		}
+            	}
+            }
+        }
+    	}
+		return true;
 	}
 }

@@ -24,7 +24,7 @@ import app.team21.risk.mapmodule.MapLoader;
 public class TestValidateContinent {
 	private MapElements elements;
     private MapLoader loader;
-    private String file_path="C:/Users/yashe/git/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/World.map";    
+    private String file_path="RiskTeam21/src/app/team21/risk/maps/World.map";    
     private MapEditor editor;    
     
     /**

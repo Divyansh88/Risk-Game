@@ -26,7 +26,7 @@ public class TestValidMap {
 	public void init() {
 		loader = new MapLoader();
 		elements = MapElements.getInstance();
-		filePath = "C:/Users/yashe/git/RiskTeam21/RiskTeam21/src/app/team21/risk/maps/Testfiles/";
+		filePath = "RiskTeam21/src/app/team21/risk/maps/Testfiles/";
 	}
 
 	/**
@@ -38,8 +38,9 @@ public class TestValidMap {
 	public void testValidMap() throws Exception {
 		System.out.println("**************************************\n");
 		System.out.println("TestValidMap");
-		elements = loader.readMapFile(filePath + "valid_file.map");
-		assertEquals(false, !elements.isCorrectMap());
+		elements = MapLoader.readMapFile(filePath + "valid_file.map");
+		boolean result=elements.isCorrectMap();
+		assertEquals(true, result);
 		
 	}
 
