@@ -1,0 +1,10 @@
+[Map]
+author=Yash Sheth
+name=Mini3
+
+[Continents]
+ASIA=10
+
+[Territories]
+China,55,70,ASIA,India
+India,65,80,ASIA,China
