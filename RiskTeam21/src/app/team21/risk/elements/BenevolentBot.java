@@ -54,7 +54,7 @@ public class BenevolentBot implements PlayerStrategy,Serializable {
     
     /**
      * Overrides the reinforcement phase for benevolent bot from the PlayerStrategy interface.
-     * @param country name of the the player's country
+     * @param country_name of the the player's country
      * @param game_view object of GameScreen class
      * @param current_player object of Player class
      * @param map_elements map elements

@@ -442,14 +442,14 @@ public class Player extends Observable implements Serializable{
 	}
 
 	/**
-	 * @return the bot_type
+	 * @return the type
 	 */
 	public String getBotType() {
 		return type;
 	}
 
 	/**
-	 * @param bot_type
+	 * @param type
 	 *            the bot_type to set
 	 */
 	public void setBotType(String type) {
@@ -987,7 +987,7 @@ public class Player extends Observable implements Serializable{
 	 * This method will check if attacker can attack to selected defender's
 	 * country
 	 * 
-	 * @param currentPlayer
+	 * @param current_player
 	 *            attacker
 	 * @param countryA
 	 *            attacker's country

@@ -84,10 +84,11 @@ public class TestFortify {
     	Country country_from=elements.getCountry("Maharashtra");
     	Country intermediate=elements.getCountry("Gujarat");
     	Country country_to=elements.getCountry("Punjab");
+    	Country intermediate2=elements.getCountry("British Columbia");
     	country_from.setBelongsToPlayer(player1);
     	country_to.setBelongsToPlayer(player1);
     	intermediate.setBelongsToPlayer(player2);
-
+    	intermediate2.setBelongsToPlayer(player2);
     	
 		List<Country> unwanted = new ArrayList<>();
 

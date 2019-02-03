@@ -58,7 +58,7 @@ public class TournamentPath {
 	public List<Player> getFinalPlayerList() {
 		return final_player_list;
 	}
-	
+
 	/**
 	 * This method will set final player list.
 	 * 
@@ -67,7 +67,7 @@ public class TournamentPath {
 	public void setFinalPlayerList(List<Player> final_player_list) {
 		this.final_player_list = final_player_list;
 	}
-	
+
 	/**
 	 * This method will ask about various tournament details.
 	 */
@@ -98,7 +98,7 @@ public class TournamentPath {
 		number_of_turn_panel.setPreferredSize(new Dimension(600, 60));
 		number_of_turn_panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbl_tournament_mode = new JLabel("Tournament Mode");
-		
+
 		result_panel=new JPanel();
 		result_panel.setPreferredSize(new Dimension(600, 300));
 		result_panel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -111,7 +111,7 @@ public class TournamentPath {
 		scroll_panel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		result_panel.add(lbl_result,BorderLayout.NORTH);
 		result_panel.add(scroll_panel,BorderLayout.SOUTH);
-		
+
 		tournament_master_panel.add(lbl_tournament_mode, BorderLayout.PAGE_START);
 		tournament_master_panel.add(player_maps_master_panel, BorderLayout.NORTH);
 		tournament_master_panel.add(number_of_turn_panel, BorderLayout.CENTER);
@@ -168,7 +168,7 @@ public class TournamentPath {
 
 				int bopen = file_chooser.showOpenDialog(null); //open the dialog box
 				browse_file_path1=file_chooser.getSelectedFile().toString();
-				
+
 				map_elements=MapLoader.readMapFile(browse_file_path1);
 				if(map_elements.isCorrectMap()){
 					int index = browse_file_path1.lastIndexOf("\\");
@@ -177,7 +177,7 @@ public class TournamentPath {
 					map_names.add(file_name);
 					mapper.add(map_elements);
 				}
-				
+
 			}
 		});
 		btn_map2 = new JButton("Map 2");
@@ -288,14 +288,14 @@ public class TournamentPath {
 		lbl_number_of_games = new JLabel("Select number of games");
 		cb_games = new JComboBox(games);
 		btn_start_game = new JButton("Start game");
-		
-		
+
+
 		number_of_turn_panel.add(lbl_number_of_turns);
 		number_of_turn_panel.add(tf_turn_value);
 		number_of_turn_panel.add(lbl_number_of_games);
 		number_of_turn_panel.add(cb_games);
 		number_of_turn_panel.add(btn_start_game);
-		
+
 
 		btn_start_game.addActionListener(new ActionListener() {
 
@@ -371,7 +371,7 @@ public class TournamentPath {
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 	}
-	
+
 	public void playTournament(){
 		List<Player> player_list = new ArrayList<Player>();
 
@@ -396,13 +396,13 @@ public class TournamentPath {
 			p.setTournamentMode(true);
 			p.turns=10;
 			player_list.add(p);
-			
+
 			type=cb_player2.getSelectedItem().toString();
 			p=new Player(tf_player2.getText(),true,type.toLowerCase());
 			p.setTournamentMode(true);
 			p.turns=10;
 			player_list.add(p);
-			
+
 			type=cb_player3.getSelectedItem().toString();
 			p=new Player(tf_player3.getText(),true,type.toLowerCase());
 			p.setTournamentMode(true);
@@ -416,19 +416,19 @@ public class TournamentPath {
 			p.setTournamentMode(true);
 			p.turns=10;
 			player_list.add(p);
-			
+
 			type=cb_player2.getSelectedItem().toString();
 			p=new Player(tf_player2.getText(),true,type.toLowerCase());
 			p.setTournamentMode(true);
 			p.turns=10;
 			player_list.add(p);
-			
+
 			type=cb_player3.getSelectedItem().toString();
 			p=new Player(tf_player3.getText(),true,type.toLowerCase());
 			p.setTournamentMode(true);
 			p.turns=10;
 			player_list.add(p);
-			
+
 			type=cb_player4.getSelectedItem().toString();
 			p=new Player(tf_player4.getText(),true,type.toLowerCase());
 			p.setTournamentMode(true);
@@ -439,28 +439,50 @@ public class TournamentPath {
 			System.out.println("INVALID");
 		}
 		setFinalPlayerList(player_list);
-		
+
 		int games=Integer.valueOf(cb_games.getSelectedItem().toString());
+		String s=tf_turn_value.getText().toString();
 		StringBuilder sb=new StringBuilder();
 		
-		int turns=Integer.valueOf(tf_turn_value.getText().toString());
+		sb.append("M: ");
+		for(String me:map_names){
+			sb.append(me+", ");
+		}
+		sb.append("\nP: ");
+		for(Player p:player_list){
+			sb.append(p.getBotType()+", ");
+		}
+		sb.append("\nG: "+games);
+		sb.append("\nD: "+s);
 		
-		for(int i=0;i<mapper.size();i++){
-			sb.append("\n"+map_names.get(i)+"\n");
-			for(int j=1;j<=games;j++){
-				sb.append("\nGAME "+j);
-				for(Player p:getFinalPlayerList()){
-					p.resetData(turns);
+		
+		if(s != null && s.matches("^[0-9]*$")){
+			int turns=Integer.valueOf(s);
+			if(turns<=50 && turns>=10){
+				for(int i=0;i<mapper.size();i++){
+					sb.append("\n\n"+map_names.get(i));
+					for(int j=1;j<=games;j++){
+						sb.append("\nGAME "+j);
+						for(Player p:getFinalPlayerList()){
+							p.resetData(turns);
+						}
+						player_list=new ArrayList<Player>(getFinalPlayerList());
+						MapElements map=mapper.get(i);
+						GameScreen gs=new GameScreen();
+						gs.tournament_mode=true;
+						gs.playerContinueButton(map,player_list, 1);
+						sb.append(" "+gs.result);
+					}
 				}
-				player_list=new ArrayList<Player>(getFinalPlayerList());
-				MapElements map=mapper.get(i);
-				GameScreen gs=new GameScreen();
-				gs.tournament_mode=true;
-				gs.playerContinueButton(map,player_list, 1);
-				sb.append(" "+gs.result);
+				text_area_result.setText("\n\n"+sb.toString());
+				System.out.println(""+sb.toString());
+			}
+			else{
+				text_area_result.setText("Invalid Number of turns");
 			}
 		}
-		text_area_result.setText("\n\n"+sb.toString());
-		System.out.println(""+sb.toString());
+		else{
+			text_area_result.setText("Invalid Number of turns");
+		}
 	}
 }
